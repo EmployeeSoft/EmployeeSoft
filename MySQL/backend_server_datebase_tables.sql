@@ -28,7 +28,7 @@ CREATE TABLE visa_status(
 	id INT NOT NULL AUTO_INCREMENT,
     visa_type VARCHAR(50) NOT NULL,
     is_active BOOLEAN NOT NULL,
-	date_modified TIMESTAMP DEFAULT 0 ON UPDATE CURRENT_TIMESTAMP,
+	date_modified DATE,
     create_user VARCHAR(50) NOT NULL,
     PRIMARY KEY(id)
 );
@@ -41,8 +41,8 @@ CREATE TABLE employee(
     person_id INT UNIQUE NOT NULL,
     title VARCHAR(100),
     manager_id INT,
-    start_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    end_date TIMESTAMP DEFAULT 0 ON UPDATE CURRENT_TIMESTAMP,
+    start_date DATE,
+    end_date DATE,
     avatar BLOB,
     car VARCHAR(100),
     visa_status_id INT UNIQUE,
@@ -87,7 +87,7 @@ CREATE TABLE personal_doc(
     path VARCHAR(200) NOT NULL,
     title VARCHAR(100) NOT NULL,
     comment TEXT,
-    date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    date_created DATE,
     created_by VARCHAR(100) NOT NULL,
     PRIMARY KEY(id),
     FOREIGN KEY(employee_id) REFERENCES employee(id) ON DELETE CASCADE
@@ -96,8 +96,8 @@ CREATE TABLE personal_doc(
 CREATE TABLE app_workflow(
 	id INT NOT NULL AUTO_INCREMENT,
     employee_id INT UNIQUE NOT NULL,
-    date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    date_modified TIMESTAMP DEFAULT 0 ON UPDATE CURRENT_TIMESTAMP,
+    date_created DATE,
+    date_modified DATE,
     status TINYINT NOT NULL,
     comment TEXT,
     type VARCHAR(50) NOT NULL,

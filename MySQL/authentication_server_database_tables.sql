@@ -16,8 +16,8 @@ CREATE TABLE user(
     username VARCHAR(50) UNIQUE NOT NULL,
     email VARCHAR(254) UNIQUE NOT NULL,
     pwd VARCHAR(256) NOT NULL,
-    date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    date_modified TIMESTAMP DEFAULT 0 ON UPDATE CURRENT_TIMESTAMP,
+    date_created DATE,
+    date_modified DATE,
     PRIMARY KEY (id)
 ) engine=InnoDB;
 
@@ -25,8 +25,8 @@ CREATE TABLE role(
 	id INT NOT NULL AUTO_INCREMENT,
     role_name VARCHAR(50) UNIQUE NOT NULL,
     description TEXT,
-    date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    date_modified TIMESTAMP DEFAULT 0 ON UPDATE CURRENT_TIMESTAMP,
+    date_created DATE,
+    date_modified DATE,
     PRIMARY KEY (id)
 ) engine=InnoDB;
 
@@ -39,9 +39,9 @@ CREATE TABLE user_role(
     user_id INT UNIQUE NOT NULL,
     role_id INT,
     active_flag BOOLEAN NOT NULL,
-    date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    date_modified TIMESTAMP DEFAULT 0 ON UPDATE CURRENT_TIMESTAMP,
-    last_midified_user TIMESTAMP DEFAULT 0 ON UPDATE CURRENT_TIMESTAMP,
+    date_created DATE,
+    date_modified DATE,
+    last_midified_user DATE,
     PRIMARY KEY (id),
     FOREIGN KEY (user_id) REFERENCES user(id),
     FOREIGN KEY (role_id) REFERENCES role(id) ON DELETE SET NULL
