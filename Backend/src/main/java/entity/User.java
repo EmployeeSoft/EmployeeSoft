@@ -36,6 +36,10 @@ public class User {
     @JoinColumn(name = "person_id")
     private Person person;
 
+    @OneToOne
+    @JoinColumn(name = "email")
+    private RegistrationToken registrationToken;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.MERGE)
     List<UserRole> userRoles = new ArrayList<>();
 }

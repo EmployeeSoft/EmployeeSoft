@@ -32,4 +32,8 @@ public class RegistrationToken {
 
     @Column(name = "created_by")
     private String createdBy;
+
+    @OneToOne
+    @JoinColumn(name = "email")
+    private User user;
 }
