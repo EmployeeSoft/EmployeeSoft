@@ -11,7 +11,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="personal_doc")
+@Table(name="personal_doc", schema = "backend")
 public class PersonalDocument {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

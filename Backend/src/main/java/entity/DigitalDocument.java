@@ -10,7 +10,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="digital_doc")
+@Table(name="digital_doc", schema = "backend")
 public class DigitalDocument {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

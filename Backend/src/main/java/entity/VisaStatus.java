@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="visa_status")
+@Table(name="visa_status", schema = "backend")
 public class VisaStatus {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

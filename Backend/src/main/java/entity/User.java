@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="user")
+@Table(name="user", schema = "authentication")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -11,7 +11,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="user_role")
+@Table(name="user_role", schema = "authentication")
 public class UserRole {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

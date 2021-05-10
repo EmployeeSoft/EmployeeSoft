@@ -11,7 +11,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="app_workflow")
+@Table(name="app_workflow", schema = "backend")
 public class ApplicationWorkFlow {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
