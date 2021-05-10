@@ -3,7 +3,7 @@ package entity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Date;
 
 @Getter
 @Setter
@@ -51,8 +51,7 @@ public class Person {
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "person")
     private Contact contact;
 
-    @OneToOne
-    @JoinColumn(name = "address_id")
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "address")
     private Address address;
 
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "person")
