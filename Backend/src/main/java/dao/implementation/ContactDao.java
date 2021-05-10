@@ -51,4 +51,10 @@ public class ContactDao implements InterfaceContactDao {
         // TODO
         return false;
     }
+
+    // Get the person's contact information from the contact ID
+    public Contact getContactByContactId(Integer contactId) {
+        // TODO
+        return new Contact();
+    }
 }

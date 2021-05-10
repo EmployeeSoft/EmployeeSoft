@@ -6,6 +6,12 @@ import entity.Person;
 import java.sql.Date;
 
 public class PersonDao implements InterfacePersonDao {
+    // Given the ID, get the person's information
+    public Person getPersonById(Integer id) {
+        // TODO
+        return new Person();
+    }
+
     // Given the person's SSN, get the person's information
     public Person getPersonBySSN(String ssn) {
         // TODO

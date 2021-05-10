@@ -1,6 +1,7 @@
 package dao.implementation;
 
 import dao.InterfaceEmployeeDao;
+import entity.Employee;
 
 import java.io.File;
 import java.sql.Date;
@@ -88,5 +89,11 @@ public class EmployeeDao implements InterfaceEmployeeDao {
     public Date getDriverLicenseExpDateByLicenseNumber(String driverLicenseNum) {
         // TODO
         return new Date(1234567890);
+    }
+
+    // Given the employeeId, get the employee information
+    public Employee getEmployeeByEmployeeId(Integer id) {
+        // TODO
+        return new Employee();
     }
 }

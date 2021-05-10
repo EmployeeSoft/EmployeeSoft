@@ -1,5 +1,7 @@
 package dao;
 
+import entity.VisaStatus;
+
 import java.sql.Date;
 
 public interface InterfaceVisaStatusDao {
@@ -17,4 +19,7 @@ public interface InterfaceVisaStatusDao {
 
     // Given the visa status ID, get the create user ?
     String getCreateUserById(Integer id);
+
+    // Given the ID, get the visa status information
+    VisaStatus getVisaStatusById(Integer id);
 }

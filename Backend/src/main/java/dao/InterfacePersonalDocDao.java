@@ -1,5 +1,7 @@
 package dao;
 
+import entity.PersonalDocument;
+
 import java.sql.Date;
 
 public interface InterfacePersonalDocDao {
@@ -24,4 +26,7 @@ public interface InterfacePersonalDocDao {
 
     // Given the personal document ID, get the person who created the file
     String getCreatedByById(Integer id);
+
+    // Given the ID, get the Personal document information
+    PersonalDocument getPersonalDocumentById(Integer id);
 }

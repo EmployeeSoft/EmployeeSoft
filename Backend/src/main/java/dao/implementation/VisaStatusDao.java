@@ -1,6 +1,7 @@
 package dao.implementation;
 
 import dao.InterfaceVisaStatusDao;
+import entity.VisaStatus;
 
 import java.sql.Date;
 
@@ -33,5 +34,11 @@ public class VisaStatusDao implements InterfaceVisaStatusDao {
     public String getCreateUserById(Integer id) {
         // TODO
         return "";
+    }
+
+    // Given the ID, get the visa status information
+    public VisaStatus getVisaStatusById(Integer id) {
+        // TODO
+        return new VisaStatus();
     }
 }

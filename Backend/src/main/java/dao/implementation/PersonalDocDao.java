@@ -1,6 +1,7 @@
 package dao.implementation;
 
 import dao.InterfacePersonalDocDao;
+import entity.PersonalDocument;
 
 import java.sql.Date;
 
@@ -46,5 +47,11 @@ public class PersonalDocDao implements InterfacePersonalDocDao {
     public String getCreatedByById(Integer id) {
         // TODO
         return "";
+    }
+
+    // Given the ID, get the Personal document information
+    public PersonalDocument getPersonalDocumentById(Integer id) {
+        // TODO
+        return new PersonalDocument();
     }
 }

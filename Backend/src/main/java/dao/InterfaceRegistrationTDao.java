@@ -1,5 +1,7 @@
 package dao;
 
+import entity.RegistrationToken;
+
 import java.sql.Date;
 
 public interface InterfaceRegistrationTDao {
@@ -20,4 +22,7 @@ public interface InterfaceRegistrationTDao {
 
     // Get the HR member who created the token
     String getCreatedByById(Integer id);
+
+    // Given the ID, get the registration token information
+    RegistrationToken getRegistrationTokenById(Integer id);
 }

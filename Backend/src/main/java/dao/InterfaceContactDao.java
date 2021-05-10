@@ -26,4 +26,7 @@ public interface InterfaceContactDao {
 
     // Given the contact ID, get if the contact is landlord
     boolean getIsLandlordById(Integer contactId);
+
+    // Get the person's contact information from the contact ID
+    Contact getContactByContactId(Integer contactId);
 }

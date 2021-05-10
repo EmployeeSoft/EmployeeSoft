@@ -1,5 +1,7 @@
 package dao;
 
+import entity.Employee;
+
 import java.io.File;
 import java.sql.Date;
 
@@ -45,4 +47,7 @@ public interface InterfaceEmployeeDao {
 
     // Given the driver license number, get the license exp date
     Date getDriverLicenseExpDateByLicenseNumber(String driverLicenseNum);
+
+    // Given the employeeId, get the employee information
+    Employee getEmployeeByEmployeeId(Integer id);
 }

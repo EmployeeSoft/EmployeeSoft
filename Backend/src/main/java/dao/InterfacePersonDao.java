@@ -5,6 +5,9 @@ import entity.Person;
 import java.sql.Date;
 
 public interface InterfacePersonDao {
+    // Given the ID, get the person's information
+    Person getPersonById(Integer id);
+
     // Given the person's SSN, get the person's information
     Person getPersonBySSN(String ssn);
 
