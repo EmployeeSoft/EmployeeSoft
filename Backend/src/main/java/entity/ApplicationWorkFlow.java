@@ -29,7 +29,7 @@ public class ApplicationWorkFlow {
     private Date dateModified;
 
     @Column(name = "status")
-    private Boolean status;
+    private Integer status;
 
     @Column(name = "comment")
     private String comment;
