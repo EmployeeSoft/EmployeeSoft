@@ -8,4 +8,10 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 public class ContactDomain {
+    private Integer id;
+    private String relationship;
+    private String title;
+    private Boolean isReference;
+    private Boolean isEmergency;
+    private Boolean isLandlord;
 }
