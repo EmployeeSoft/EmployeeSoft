@@ -1,2 +1,4 @@
-package test;public class TestAddress {
+package test;
+
+public class TestAddress {
 }

@@ -35,6 +35,7 @@ public class Address {
     @Column(name = "state_abbr")
     private String stateAbbr;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "address")
+    @OneToOne
+    @JoinColumn(name = "person_id")
     private Person person;
 }
