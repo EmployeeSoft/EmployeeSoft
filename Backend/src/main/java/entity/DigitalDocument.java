@@ -2,8 +2,7 @@ package entity;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Getter
 @Setter
@@ -11,6 +10,22 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name="")
+@Table(name="digital_doc")
 public class DigitalDocument {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Integer id;
+
+    @Column(name = "type")
+    private String type;
+
+    @Column(name = "required")
+    private Boolean required;
+
+    @Column(name = "template_location")
+    private String templateLocation;
+
+    @Column(name = "description")
+    private String description;
 }
