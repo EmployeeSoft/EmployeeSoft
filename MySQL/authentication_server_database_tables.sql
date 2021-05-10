@@ -41,7 +41,7 @@ CREATE TABLE user_role(
     active_flag BOOLEAN NOT NULL,
     date_created DATE,
     date_modified DATE,
-    last_midified_user DATE,
+    last_modified_user VARCHAR(100) NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (user_id) REFERENCES user(id),
     FOREIGN KEY (role_id) REFERENCES role(id) ON DELETE SET NULL
