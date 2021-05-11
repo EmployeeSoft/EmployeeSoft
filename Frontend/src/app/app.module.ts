@@ -12,6 +12,8 @@ import { EmployeeMainComponent } from './employee/employee-main/employee-main.co
 import { HrMainComponent } from './hr/hr-main/hr-main.component';
 import { AlertComponent } from './common/_components';
 import { HomeComponent } from './common/home';
+import { HireComponent } from './hr/hire/hire.component';
+import { RegisterNewHireComponent } from './hr/hire/register-new-hire/register-new-hire.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,9 @@ import { HomeComponent } from './common/home';
     EmployeeMainComponent,
     HrMainComponent,
     AlertComponent,
-    HomeComponent
+    HomeComponent,
+    HireComponent,
+    RegisterNewHireComponent
   ],
   imports: [
     BrowserModule,
