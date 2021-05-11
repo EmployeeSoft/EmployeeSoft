@@ -2,9 +2,12 @@ package com.example.demo.dao.implementation;
 
 import com.example.demo.dao.InterfaceRegistrationTDao;
 import com.example.demo.entity.RegistrationToken;
+<<<<<<< HEAD:Backend/AuthServer/src/main/java/com/example/demo/dao/implementation/RegistrationTDao.java
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
+=======
+>>>>>>> eb9e0aaf826cf8645d51b999e902ffc00040a823:Backend/AuthServer/src/main/java/dao/implementation/RegistrationTDao.java
 
 import java.sql.Date;
 import java.util.List;

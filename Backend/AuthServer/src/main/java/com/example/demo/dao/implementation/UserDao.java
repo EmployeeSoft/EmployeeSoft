@@ -1,15 +1,36 @@
 package com.example.demo.dao.implementation;
 
+<<<<<<< HEAD:Backend/AuthServer/src/main/java/com/example/demo/dao/implementation/UserDao.java
 import com.example.demo.dao.InterfaceUserDao;
 import com.example.demo.entity.User;
+=======
+import com.example.demo.config.HibernateConfig;
+import com.example.demo.dao.InterfaceUserDao;
+import com.example.demo.entity.User;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.query.Query;
+>>>>>>> eb9e0aaf826cf8645d51b999e902ffc00040a823:Backend/AuthServer/src/main/java/dao/implementation/UserDao.java
 
 import java.sql.Date;
 
 public class UserDao implements InterfaceUserDao {
     // Given the ID, get the user information
+    // Used in Authentication server instead
     public User getUserById(Integer id) {
-        // TODO
-        return new User();
+        Transaction transaction = null;
+        try {
+            Session session = HibernateConfig.getCurrentSession();
+            transaction = session.beginTransaction();
+            Query query = session.createQuery("FROM User WHERE id = :id");
+            query.setParameter("id", id);
+            User user = (User) query.uniqueResult();
+            transaction.commit();
+            return user;
+        } catch (Exception e) {
+            if (transaction != null) transaction.rollback();
+        }
+        return null;
     }
 
     // Given the user's username, get the user's information

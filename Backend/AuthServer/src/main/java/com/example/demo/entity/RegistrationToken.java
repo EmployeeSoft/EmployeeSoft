@@ -34,8 +34,14 @@ public class RegistrationToken implements Serializable {
     @Column(name = "created_by")
     private String createdBy;
 
+<<<<<<< HEAD:Backend/AuthServer/src/main/java/com/example/demo/entity/RegistrationToken.java
     //Remove the relationship because name="email" is repeated
 //    @OneToOne
 //    @JoinColumn(name = "email")
 //    private User user;
+=======
+    @OneToOne
+    @JoinColumn(name = "email", insertable = false, updatable = false)
+    private User user;
+>>>>>>> eb9e0aaf826cf8645d51b999e902ffc00040a823:Backend/AuthServer/src/main/java/entity/RegistrationToken.java
 }
