@@ -6,6 +6,22 @@ import com.example.demo.entity.Person;
 import java.util.List;
 
 public interface InterfaceAddressDao {
+    // Given the Address information, get the Person who live at that address
+    Person getPersonByAddress(Address address);
+
+    // Given the person ID, get the address ID that belongs to that person
+    int getAddressIdByPersonId(Integer personId);
+
+    // Given the Address ID, get the address information
+    Address getAddressById(Integer id);
+
+
+    ///// REQUIRED METHODS BELOW /////
+
+
+    // Get a list of address that is associated with the given person ID
+    List<Address> getAddressListById(Integer id);
+
     // Given person ID, get the person's address line 1
     String getAddressLine1ByPersonId(Integer personId);
 
@@ -25,16 +41,6 @@ public interface InterfaceAddressDao {
     String getStateAbbrByPersonId(Integer personId);
 
     // Given the person ID, get the person's address information
-    Address getAddressByPersonId(Integer personId);
+    List<Address> getAddressListByPersonId(Integer personId);
 
-    // Given the Address information, get the Person who live at that address
-    Person getPersonByAddress(Address address);
-
-    // Given the person ID, get the address ID that belongs to that person
-    int getAddressIdByPersonId(Integer personId);
-
-    // Given the Address ID, get the address information
-    Address getAddressById(Integer id);
-
-    List<Address> getAddressList();
 }

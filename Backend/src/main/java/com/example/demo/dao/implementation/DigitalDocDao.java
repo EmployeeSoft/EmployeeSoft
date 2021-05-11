@@ -1,7 +1,13 @@
 package com.example.demo.dao.implementation;
 
+import com.example.demo.config.HibernateConfig;
 import com.example.demo.dao.InterfaceDigitalDocDao;
 import com.example.demo.entity.DigitalDocument;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.query.Query;
+
+import java.util.List;
 
 public class DigitalDocDao implements InterfaceDigitalDocDao {
     // Given the Digital Document ID, return the document information
@@ -50,5 +56,41 @@ public class DigitalDocDao implements InterfaceDigitalDocDao {
     public String getTemplateLocationByType(String docType) {
         // TODO
         return "";
+    }
+
+
+    ///// REQUIRED METHODS BELOW /////
+
+
+    // After user completes the application form, the documentation page should be loaded with all documents
+    public List<DigitalDocument> getAddDigitalDocuments() {
+        Transaction transaction = null;
+        try {
+            Session session = HibernateConfig.getCurrentSession();
+            transaction = session.beginTransaction();
+            Query query = session.createQuery("FROM DigitalDocument");
+            List<DigitalDocument> digitalDocuments = query.list();
+            transaction.commit();
+            return digitalDocuments;
+        } catch (Exception e) {
+            if (transaction != null) transaction.rollback();
+        }
+        return null;
+    }
+
+    // All required documents should be validated before user can submit the application
+    public List<DigitalDocument> getRequiredDocuments() {
+        Transaction transaction = null;
+        try {
+            Session session = HibernateConfig.getCurrentSession();
+            transaction = session.beginTransaction();
+            Query query = session.createQuery("FROM DigitalDocument WHERE required = true");
+            List<DigitalDocument> digitalDocuments = query.list();
+            transaction.commit();
+            return digitalDocuments;
+        } catch (Exception e) {
+            if (transaction != null) transaction.rollback();
+        }
+        return null;
     }
 }

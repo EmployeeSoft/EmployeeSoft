@@ -17,6 +17,9 @@ public class Contact {
     @Column(name = "id")
     private Integer id;
 
+    @Column(name = "person_id")
+    private Integer personId;
+
     @Column(name = "relationship")
     private String relationship;
 
@@ -32,7 +35,21 @@ public class Contact {
     @Column(name = "is_landlord")
     private Boolean isLandlord;
 
-    @OneToOne
-    @JoinColumn(name = "person_id")
+    @ManyToOne
+    @JoinColumn(name = "person_id", insertable = false, updatable = false)
     private Person person;
+
+    @Override
+    public String toString() {
+        return "Contact{" +
+                "id=" + id +
+                ", personId=" + personId +
+                ", relationship='" + relationship + '\'' +
+                ", title='" + title + '\'' +
+                ", isReference=" + isReference +
+                ", isEmergency=" + isEmergency +
+                ", isLandlord=" + isLandlord +
+                ", person=" + person +
+                '}';
+    }
 }

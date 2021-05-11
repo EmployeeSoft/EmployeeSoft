@@ -146,6 +146,10 @@ public class AppWorkFlowDao implements InterfaceAppWorkFlowDao {
         return null;
     }
 
+
+    ///// REQUIRED METHODS BELOW /////
+
+
     // Given the Application WorkFlow ID, get the application's information
     public ApplicationWorkFlow getApplicationWorkFlowById(Integer id) {
         Transaction transaction = null;

@@ -13,7 +13,7 @@ INSERT INTO employee(person_id, title, manager_id, start_date, end_date, avatar,
     "Title",
     10,
     "2021-05-05",
-    "2021-50-10",
+    "2021-05-10",
     null,
     "Honda_civic_white",
     1,
@@ -25,7 +25,7 @@ INSERT INTO employee(person_id, title, manager_id, start_date, end_date, avatar,
 
 
 INSERT INTO app_workflow(employee_id, date_created, date_modified, status, comment, type) VALUES(
-	1,
+	2,
     "2021-05-09",
     "2021-05-10",
     1,

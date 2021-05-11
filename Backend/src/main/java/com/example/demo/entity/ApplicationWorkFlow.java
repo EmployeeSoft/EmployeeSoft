@@ -22,12 +22,8 @@ public class ApplicationWorkFlow {
     @Column(name = "employee_id")
     private Integer employeeId;
 
-//    @ManyToOne
-//    @JoinColumn(name = "employee_id" , insertable = false, updatable = false)
-//    private Employee employee;
-
-    @OneToOne
-    @JoinColumn(name = "employee_id", insertable = false, updatable = false)
+    @ManyToOne
+    @JoinColumn(name = "employee_id" , insertable = false, updatable = false)
     private Employee employee;
 
     @Column(name = "date_created")

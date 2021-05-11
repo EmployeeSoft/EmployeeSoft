@@ -65,13 +65,28 @@ public class Employee {
     @JoinColumn(name = "person_id", insertable = false, updatable = false)
     private Person person;
 
-//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "employee", cascade = CascadeType.MERGE)
-//    List<PersonalDocument> personalDocuments = new ArrayList<>();
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "employee", cascade = CascadeType.MERGE)
+    List<PersonalDocument> personalDocuments = new ArrayList<>();
 
-//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "employee", cascade = CascadeType.MERGE)
-//    List<ApplicationWorkFlow> applicationWorkFlows = new ArrayList<>();
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "employee", cascade = CascadeType.MERGE)
+    List<ApplicationWorkFlow> applicationWorkFlows = new ArrayList<>();
 
-    @OneToOne
-    @JoinColumn(name = "id")
-    private ApplicationWorkFlow applicationWorkFlow;
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "id=" + id +
+                ", personId=" + personId +
+                ", title='" + title + '\'' +
+                ", managerId=" + managerId +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", avatar=" + avatar +
+                ", car='" + car + '\'' +
+                ", visaStatus=" + visaStatus +
+                ", visaStartDate=" + visaStartDate +
+                ", visaEndDate=" + visaEndDate +
+                ", driverLicense='" + driverLicense + '\'' +
+                ", driverLicenseExpDate=" + driverLicenseExpDate +
+                '}';
+    }
 }

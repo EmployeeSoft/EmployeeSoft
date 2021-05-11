@@ -55,7 +55,8 @@ CREATE TABLE registration_token(
     end_time DATE NOT NULL,
     email VARCHAR(254) UNIQUE NOT NULL,
 	created_by VARCHAR(200) NOT NULL,
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
+    FOREIGN KEY(email) REFERENCES user(email)
 ) engine=InnoDB;
 
 # End of authentication database table declarations 

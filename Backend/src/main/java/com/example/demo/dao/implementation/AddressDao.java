@@ -12,8 +12,68 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class AddressDao extends AbstractHibernateDao implements InterfaceAddressDao {
-    private AbstractHibernateDao hibernateDao;
+public class AddressDao implements InterfaceAddressDao {
+    // Given the Address information, get the Person who live at that address
+    public Person getPersonByAddress(Address address) {
+        // TODO
+        return new Person();
+    }
+
+    // Given the person ID, get the address ID that belongs to that person
+    public int getAddressIdByPersonId(Integer personId) {
+        Transaction transaction = null;
+        try {
+            Session session = HibernateConfig.getCurrentSession();
+            transaction = session.beginTransaction();
+            Query query = session.createQuery("SELECT id FROM Address WHERE personId = :personId");
+            query.setParameter("personId", personId);
+            int id = (int) query.uniqueResult();
+            transaction.commit();
+            return id;
+        } catch (Exception e) {
+            if (transaction != null) transaction.rollback();
+        }
+
+        return -1;
+    }
+
+    // Given the Address ID, get the address information
+    public Address getAddressById(Integer id) {
+        Transaction transaction = null;
+        try {
+            Session session = HibernateConfig.getCurrentSession();
+            transaction = session.beginTransaction();
+            Query query = session.createQuery("FROM Address WHERE id = :id");
+            query.setParameter("id", id);
+            Address address = (Address) query.uniqueResult();
+            transaction.commit();
+            return address;
+        } catch (Exception e) {
+            if (transaction != null) transaction.rollback();
+        }
+        return null;
+    }
+
+    public List<Address> getAddressList() {
+        Session session = null;
+        Transaction transaction = null;
+        try {
+            session = HibernateConfig.getCurrentSession();
+            transaction = session.beginTransaction();
+            Query query = session.createQuery("FROM Address");
+            List<Address> addressList = query.list();
+            transaction.commit();
+            System.out.println("Got Address List");
+            return addressList;
+        } catch (Exception e) {
+            if (transaction != null) transaction.rollback();
+        }
+        return null;
+    }
+
+
+    ///// REQUIRED METHODS BELOW /////
+
 
     // Given person ID, get the person's address line 1
     public String getAddressLine1ByPersonId(Integer personId) {
@@ -178,73 +238,32 @@ public class AddressDao extends AbstractHibernateDao implements InterfaceAddress
     }
 
     // Given the person ID, get the person's address information
-    public Address getAddressByPersonId(Integer personId) {
+    public List<Address> getAddressListByPersonId(Integer personId) {
         Transaction transaction = null;
         try {
             Session session = HibernateConfig.getCurrentSession();
             transaction = session.beginTransaction();
             Query query = session.createQuery("FROM Address WHERE personId = :personId");
             query.setParameter("personId", personId);
-            Address address = (Address) query.uniqueResult();
+            List<Address> addressList = query.list();
             transaction.commit();
-            return address;
+            return addressList;
         } catch (Exception e) {
             if (transaction != null) transaction.rollback();
         }
         return null;
     }
 
-    // Given the Address information, get the Person who live at that address
-    public Person getPersonByAddress(Address address) {
-        // TODO
-        return new Person();
-    }
-
-    // Given the person ID, get the address ID that belongs to that person
-    public int getAddressIdByPersonId(Integer personId) {
-        Transaction transaction = null;
-        try {
-            Session session = HibernateConfig.getCurrentSession();
-            transaction = session.beginTransaction();
-            Query query = session.createQuery("SELECT id FROM Address WHERE personId = :personId");
-            query.setParameter("personId", personId);
-            int id = (int) query.uniqueResult();
-            transaction.commit();
-            return id;
-        } catch (Exception e) {
-            if (transaction != null) transaction.rollback();
-        }
-
-        return -1;
-    }
-
-    // Given the Address ID, get the address information
-    public Address getAddressById(Integer id) {
+    // Get a list of address that is associated with the given person ID
+    public List<Address> getAddressListById(Integer id) {
         Transaction transaction = null;
         try {
             Session session = HibernateConfig.getCurrentSession();
             transaction = session.beginTransaction();
             Query query = session.createQuery("FROM Address WHERE id = :id");
             query.setParameter("id", id);
-            Address address = (Address) query.uniqueResult();
-            transaction.commit();
-            return address;
-        } catch (Exception e) {
-            if (transaction != null) transaction.rollback();
-        }
-        return null;
-    }
-
-    public List<Address> getAddressList() {
-        Session session = null;
-        Transaction transaction = null;
-        try {
-            session = HibernateConfig.getCurrentSession();
-            transaction = session.beginTransaction();
-            Query query = session.createQuery("FROM Address");
             List<Address> addressList = query.list();
             transaction.commit();
-            System.out.println("Got Address List");
             return addressList;
         } catch (Exception e) {
             if (transaction != null) transaction.rollback();

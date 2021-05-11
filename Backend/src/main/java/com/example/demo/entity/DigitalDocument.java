@@ -28,4 +28,15 @@ public class DigitalDocument {
 
     @Column(name = "description")
     private String description;
+
+    @Override
+    public String toString() {
+        return "DigitalDocument{" +
+                "id=" + id +
+                ", type='" + type + '\'' +
+                ", required=" + required +
+                ", templateLocation='" + templateLocation + '\'' +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }

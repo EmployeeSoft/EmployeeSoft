@@ -1,9 +1,9 @@
 # Start of backend database table declaractions below 
 
-DROP DATABASE IF EXISTS employee_soft;
-CREATE DATABASE employee_soft;
+DROP DATABASE IF EXISTS backend;
+CREATE DATABASE backend;
 
-USE employee_soft;
+USE backend;
 
 # Reference on Foreign Key Constraints
 # https://dev.mysql.com/doc/refman/8.0/en/create-table-foreign-keys.html
@@ -58,7 +58,7 @@ CREATE TABLE employee(
 
 CREATE TABLE contact(
 	id INT NOT NULL AUTO_INCREMENT,
-    person_id INT UNIQUE NOT NULL,		# If unique, person only have one contact. Can a user have multiple?
+    person_id INT NOT NULL,		# If unique, person only have one contact. Can a user have multiple?
     relationship VARCHAR(50),
     title VARCHAR(100),
     is_reference BOOLEAN NOT NULL,		# ?
@@ -76,7 +76,7 @@ CREATE TABLE address(
     zipcode VARCHAR(5) NOT NULL,
     state_name VARCHAR(50) NOT NULL,
     state_abbr VARCHAR(2) NOT NULL,
-    person_id INT UNIQUE NOT NULL,
+    person_id INT NOT NULL,
     PRIMARY KEY(id),
     FOREIGN KEY(person_id) REFERENCES person(id) ON DELETE CASCADE
 ) engine=InnoDB;

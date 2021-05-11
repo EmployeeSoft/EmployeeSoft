@@ -30,6 +30,10 @@ public interface InterfaceAppWorkFlowDao {
     // Given the Application WorkFlow ID, get the application type
     String getTypeById(Integer id);
 
+
+    ///// REQUIRED METHODS BELOW /////
+
+
     // Given the Application WorkFlow ID, get the application's information
     ApplicationWorkFlow getApplicationWorkFlowById(Integer id);
 }

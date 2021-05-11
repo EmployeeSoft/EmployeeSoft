@@ -8,7 +8,7 @@ import java.sql.Date;
 public class TestAppWorkFlow {
     public static void test() {
         AppWorkFlowDao appWorkFlowDao = new AppWorkFlowDao();
-        ApplicationWorkFlow result = appWorkFlowDao.getApplicationWorkFlowById(2);
+        ApplicationWorkFlow result = appWorkFlowDao.getApplicationWorkFlowById(3);
         System.out.println("Result: " + result);
     }
     public static void main(String[] args) {

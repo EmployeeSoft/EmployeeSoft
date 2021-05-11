@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -50,14 +51,31 @@ public class Person {
 
 //    @OneToOne(fetch = FetchType.LAZY, mappedBy = "person")
 //    private User user;
-//
-//    @OneToOne(fetch = FetchType.LAZY, mappedBy = "person")
-//    private Contact contact;
-//
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id")
-    private Address address;
-//
-//    @OneToOne(fetch = FetchType.LAZY, mappedBy = "person")
-//    private Employee employee;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "person")
+    private List<Contact> contacts;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "person")
+    private List<Address> addressList;
+
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "person")
+    private Employee employee;
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", middleName='" + middleName + '\'' +
+                ", email='" + email + '\'' +
+                ", cellPhone='" + cellPhone + '\'' +
+                ", altPhone='" + altPhone + '\'' +
+                ", gender=" + gender +
+                ", ssn='" + ssn + '\'' +
+                ", dob=" + dob +
+                ", userId=" + userId +
+//                ", address=" + address +
+                '}';
+    }
 }

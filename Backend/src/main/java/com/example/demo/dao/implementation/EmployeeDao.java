@@ -1,7 +1,11 @@
 package com.example.demo.dao.implementation;
 
+import com.example.demo.config.HibernateConfig;
 import com.example.demo.dao.InterfaceEmployeeDao;
 import com.example.demo.entity.Employee;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 import java.io.File;
 import java.sql.Date;
@@ -23,12 +27,6 @@ public class EmployeeDao implements InterfaceEmployeeDao {
     public String getTitleByEmployeeId(Integer id) {
         // TODO
         return "";
-    }
-
-    // Given the employee ID, get the manager ID
-    public int getManagerIdByEmployeeId(Integer id) {
-        // TODO
-        return 0;
     }
 
     // Given the employee ID, get the start date of that employee
@@ -91,9 +89,41 @@ public class EmployeeDao implements InterfaceEmployeeDao {
         return new Date(1234567890);
     }
 
+
+    ///// REQUIRED METHODS BELOW /////
+
+
+    // Given the employee ID, get the manager ID
+    public int getManagerIdByEmployeeId(Integer id) {
+        Transaction transaction = null;
+        try {
+            Session session = HibernateConfig.getCurrentSession();
+            transaction = session.beginTransaction();
+            Query query = session.createQuery("SELECT managerId FROM Employee WHERE id = :id");
+            query.setParameter("id", id);
+            int mId = (int) query.uniqueResult();
+            transaction.commit();
+            return mId;
+        } catch (Exception e) {
+            if (transaction != null) transaction.rollback();
+        }
+        return -1;
+    }
+
     // Given the employeeId, get the employee information
     public Employee getEmployeeByEmployeeId(Integer id) {
-        // TODO
-        return new Employee();
+        Transaction transaction = null;
+        try {
+            Session session = HibernateConfig.getCurrentSession();
+            transaction = session.beginTransaction();
+            Query query = session.createQuery("FROM Employee WHERE id = :id");
+            query.setParameter("id", id);
+            Employee employee = (Employee) query.uniqueResult();
+            transaction.commit();
+            return employee;
+        } catch (Exception e) {
+            if (transaction != null) transaction.rollback();
+        }
+        return null;
     }
 }

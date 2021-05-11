@@ -1,15 +1,16 @@
 package com.example.demo.dao.implementation;
 
+import com.example.demo.config.HibernateConfig;
 import com.example.demo.dao.InterfaceContactDao;
 import com.example.demo.entity.Contact;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.query.Query;
+
+import java.util.LinkedList;
+import java.util.List;
 
 public class ContactDao implements InterfaceContactDao {
-    // Get the person's contact information from the person ID
-    public Contact getContactByPersonId(Integer personId) {
-        // TODO
-        return new Contact();
-    }
-
     // Given the contact ID, get the person ID who that contact belongs to
     public int getPersonIdByContactId(Integer id) {
         // TODO
@@ -56,5 +57,44 @@ public class ContactDao implements InterfaceContactDao {
     public Contact getContactByContactId(Integer contactId) {
         // TODO
         return new Contact();
+    }
+
+
+    ///// REQUIRED METHODS BELOW /////
+
+
+    // There can be many contacts for one person. Given the person ID, get all of their contacts
+    public List<Contact> getContactListByPersonId(Integer personId) {
+        Transaction transaction = null;
+        try {
+            Session session = HibernateConfig.getCurrentSession();
+            transaction = session.beginTransaction();
+            Query query = session.createQuery("FROM Contact WHERE personId = :personId");
+            query.setParameter("personId", personId);
+            List<Contact> contacts = query.list();
+            transaction.commit();
+            return contacts;
+        } catch (Exception e) {
+            if (transaction != null) transaction.rollback();
+        }
+
+        return null;
+    }
+
+    // Find the contact who recommended the employee and return the requirements
+    public List<Contact> getContactByReference(Integer personId) {
+        Transaction transaction = null;
+        try {
+            Session session = HibernateConfig.getCurrentSession();
+            transaction = session.beginTransaction();
+            Query query = session.createQuery("FROM Contact WHERE isReference = true AND personId = :personId");
+            query.setParameter("personId", personId);
+            List<Contact> referencedContact = query.list();
+            transaction.commit();
+            return referencedContact;
+        } catch (Exception e) {
+            if (transaction != null) transaction.rollback();
+        }
+        return null;
     }
 }

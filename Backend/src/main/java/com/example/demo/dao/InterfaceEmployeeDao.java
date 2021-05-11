@@ -15,9 +15,6 @@ public interface InterfaceEmployeeDao {
     // Given the employee ID, get the title
     String getTitleByEmployeeId(Integer id);
 
-    // Given the employee ID, get the manager ID
-    int getManagerIdByEmployeeId(Integer id);
-
     // Given the employee ID, get the start date of that employee
     Date getStartDateByEmployeeId(Integer id);
 
@@ -47,6 +44,14 @@ public interface InterfaceEmployeeDao {
 
     // Given the driver license number, get the license exp date
     Date getDriverLicenseExpDateByLicenseNumber(String driverLicenseNum);
+
+
+
+    ///// REQUIRED METHODS BELOW /////
+
+
+    // Given the employee ID, get the manager ID
+    int getManagerIdByEmployeeId(Integer id);
 
     // Given the employeeId, get the employee information
     Employee getEmployeeByEmployeeId(Integer id);

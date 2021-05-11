@@ -34,4 +34,15 @@ public class VisaStatus {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "visaStatus", cascade = CascadeType.MERGE)
     List<Employee> employees = new ArrayList<>();
+
+    @Override
+    public String toString() {
+        return "VisaStatus{" +
+                "id=" + id +
+                ", visaType='" + visaType + '\'' +
+                ", isActive=" + isActive +
+                ", dateModified=" + dateModified +
+                ", createUser='" + createUser + '\'' +
+                '}';
+    }
 }

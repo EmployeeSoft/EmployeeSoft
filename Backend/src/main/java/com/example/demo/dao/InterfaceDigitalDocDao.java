@@ -2,6 +2,8 @@ package com.example.demo.dao;
 
 import com.example.demo.entity.DigitalDocument;
 
+import java.util.List;
+
 public interface InterfaceDigitalDocDao {
     // Given the Digital Document ID, return the document information
     DigitalDocument getDigitalDocumentById(Integer id);
@@ -26,4 +28,14 @@ public interface InterfaceDigitalDocDao {
 
     // Given the document type, get the template location
     String getTemplateLocationByType(String docType);
+
+
+    ///// REQUIRED METHODS BELOW /////
+
+
+    // After user completes the application form, the documentation page should be loaded with all documents
+    List<DigitalDocument> getAddDigitalDocuments();
+
+    // All required documents should be validated before user can submit the application
+    List<DigitalDocument> getRequiredDocuments();
 }

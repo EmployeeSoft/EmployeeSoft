@@ -38,7 +38,7 @@ public class Address {
     @Column(name = "person_id")
     private Integer personId;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "person_id", insertable = false, updatable = false)
     private Person person;
 

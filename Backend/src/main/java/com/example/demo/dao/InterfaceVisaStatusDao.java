@@ -17,9 +17,15 @@ public interface InterfaceVisaStatusDao {
     // Given the visa status ID, get the date last modified
     Date getDateModifiedById(Integer id);
 
-    // Given the visa status ID, get the create user ?
-    String getCreateUserById(Integer id);
+
+    ///// REQUIRED METHODS BELOW /////
 
     // Given the ID, get the visa status information
     VisaStatus getVisaStatusById(Integer id);
+
+    // Visa Status Management is only available if the user is NOT a citizen or a green card holder
+    Boolean visaStatusManagementAble(String createUser);
+
+    // Given the visa status ID, get the create user ?
+    String getCreateUserById(Integer id);
 }
