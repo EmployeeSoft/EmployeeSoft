@@ -7,4 +7,5 @@
     token: string;
     isDeleting: boolean;
     role: string;
+    email: string
 }
