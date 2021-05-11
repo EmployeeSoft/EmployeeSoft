@@ -7,6 +7,7 @@ import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Date;
+import java.util.List;
 
 @Repository
 public class RegistrationTDao extends AbstractHibernateDao<RegistrationToken> implements InterfaceRegistrationTDao {
@@ -55,11 +56,11 @@ public class RegistrationTDao extends AbstractHibernateDao<RegistrationToken> im
     }
 
     @Override
-    public RegistrationToken getRegistrationTokenByEmail(String email) {
+    public List<RegistrationToken> getRegistrationTokenByEmail(String email) {
         Session session = getCurrentSession();
         Query query = session.createQuery("FROM RegistrationToken rt WHERE rt.email = :email");
         query.setParameter("email", email);
-        return (RegistrationToken) query.getResultList();
+        return (List<RegistrationToken>) query.getResultList();
     }
 
     @Override

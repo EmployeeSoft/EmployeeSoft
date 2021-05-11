@@ -24,13 +24,14 @@ public class RegistrationTokenController {
         RegistrationTokenResponse response = new RegistrationTokenResponse();
         String token = UUID.randomUUID().toString();
         String recipient = registrationTokenDomain.getEmail();
-        if (!registrationTokenService.createRegistrationToken(token, recipient)) {
+        String createdBy = registrationTokenDomain.getCreatedBy();
+        if (!registrationTokenService.createRegistrationToken(token, recipient, createdBy)) {
             response.setServiceStatus(new ServiceStatus("FAIL", false, "This email has" +
                     " already existed in the Database"));
             return response;
         }
         String subject = "Registration Link";
-        String registrationUrl = "http://localhost:8080/register";
+        String registrationUrl = "http://localhost:8080/register?token=" + token;
         String message = "Please use the link below to register new account:";
 
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();

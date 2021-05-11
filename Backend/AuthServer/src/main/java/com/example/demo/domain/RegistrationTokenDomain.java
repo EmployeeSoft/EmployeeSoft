@@ -9,4 +9,5 @@ import lombok.*;
 @Builder
 public class RegistrationTokenDomain {
     private String email;
+    private String createdBy;
 }

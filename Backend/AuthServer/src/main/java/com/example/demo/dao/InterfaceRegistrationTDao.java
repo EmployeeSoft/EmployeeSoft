@@ -3,6 +3,7 @@ package com.example.demo.dao;
 import com.example.demo.entity.RegistrationToken;
 
 import java.sql.Date;
+import java.util.List;
 
 public interface InterfaceRegistrationTDao {
     // Given the token, get the ID
@@ -27,7 +28,7 @@ public interface InterfaceRegistrationTDao {
     RegistrationToken getRegistrationTokenById(Integer id);
 
     //Given the email, check if there is a RegisToken associated with that email already existed in the database
-    RegistrationToken getRegistrationTokenByEmail(String email);
+    List<RegistrationToken> getRegistrationTokenByEmail(String email);
 
     //Create new Registration Token
     void createNewRegistrationToken(RegistrationToken registrationToken);
