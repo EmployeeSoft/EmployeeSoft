@@ -8,18 +8,20 @@ import { ErrorInterceptor, fakeBackendProvider, JwtInterceptor } from './common/
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { EmployeeMainComponent } from './employee/employee-main/employee-main.component';
 import { HrMainComponent } from './hr/hr-main/hr-main.component';
 import { AlertComponent } from './common/_components';
 import { HomeComponent } from './common/home';
+import { EmployeeHomeComponent} from './employee/employee-home/employee-home.component';
+import {NavbarComponent} from './employee/navbar/navbar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    EmployeeMainComponent,
     HrMainComponent,
     AlertComponent,
-    HomeComponent
+    HomeComponent,
+    EmployeeHomeComponent,
+    NavbarComponent,
   ],
   imports: [
     BrowserModule,
