@@ -6,9 +6,11 @@ import com.example.demo.entity.User;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import org.springframework.stereotype.Repository;
 
 import java.sql.Date;
 
+@Repository
 public class UserDao implements InterfaceUserDao {
     // Given the ID, get the user information
     // Used in Authentication server instead
