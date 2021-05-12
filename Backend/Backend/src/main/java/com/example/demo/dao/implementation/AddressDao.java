@@ -1,11 +1,9 @@
 package com.example.demo.dao.implementation;
 
-import com.example.demo.config.HibernateConfig;
 import com.example.demo.dao.InterfaceAddressDao;
 import com.example.demo.entity.Address;
 import com.example.demo.entity.Person;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 

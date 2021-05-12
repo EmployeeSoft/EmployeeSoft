@@ -1,10 +1,12 @@
 package com.example.demo.controller;
 
+import com.example.demo.domain.EmployeeDomain;
 import com.example.demo.entity.Employee;
 import com.example.demo.service.EmployeeService;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,9 +20,9 @@ public class EmployeeController {
     }
 
     @ResponseBody
-    @PostMapping("/employee")
+    @RequestMapping("/employee")
     public String getEmployee() {
-        Employee employee = employeeService.getEmployeeByEmployeeId(1);
+        EmployeeDomain employee = employeeService.getEmployeeByEmployeeId(1);
         Gson gson = new Gson();
         String json = gson.toJson(employee);
         System.out.println(json);
@@ -30,7 +32,7 @@ public class EmployeeController {
     @ResponseBody
     @PostMapping("/manager")
     public int getManager() {
-        int employee = employeeService.getManager(1);
+        int employee = employeeService.getManagerIdByEmployeeId(1);
         return employee;
     }
 }

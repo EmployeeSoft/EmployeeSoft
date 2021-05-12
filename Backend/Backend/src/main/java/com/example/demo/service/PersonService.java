@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.dao.InterfacePersonDao;
+import com.example.demo.domain.PersonDomain;
 import com.example.demo.entity.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,25 +11,74 @@ import java.sql.Date;
 
 @Service
 public class PersonService {
-    private InterfacePersonDao interfacePersonDao;
+    private InterfacePersonDao personDao;
 
     @Autowired
-    public void setInterfacePersonDao(InterfacePersonDao interfacePersonDao) {
-        this.interfacePersonDao = interfacePersonDao;
+    public void setInterfacePersonDao(InterfacePersonDao personDao) {
+        this.personDao = personDao;
     }
 
     @Transactional
-    public Person getPersonById(Integer id) {
-        return interfacePersonDao.getPersonById(id);
+    public PersonDomain getPersonById(Integer id) {
+        Person person = personDao.getPersonById(id);
+        PersonDomain personDomain = PersonDomain.builder()
+                .id(person.getId())
+                .firstName(person.getFirstName())
+                .lastName(person.getLastName())
+                .middleName(person.getMiddleName())
+                .cellPhone(person.getCellPhone())
+                .altPhone(person.getAltPhone())
+                .gender(person.getGender())
+                .ssn(person.getSsn())
+                .dob(person.getDob())
+                .build();
+
+        return personDomain;
+    }
+
+
+    @Transactional
+    public String getFirstNameById(Integer id) {
+        return personDao.getFirstNameById(id);
     }
 
     @Transactional
-    public Person getPersonBySSN(String ssn) {
-        return interfacePersonDao.getPersonBySSN(ssn);
+    public String getLastNameById(Integer id) {
+        return personDao.getLastNameById(id);
     }
 
     @Transactional
-    public Person getPersonByInfo(String firstName, String lastName, Date dob) {
-        return getPersonByInfo(firstName, lastName, dob);
+    String getMiddleNameById(Integer id) {
+        return personDao.getMiddleNameById(id);
+    }
+
+    @Transactional
+    public String getEmailById(Integer id) {
+        return personDao.getEmailById(id);
+    }
+
+    @Transactional
+    public String getCellPhoneById(Integer id) {
+        return personDao.getCellPhoneById(id);
+    }
+
+    @Transactional
+    public String getAltPhoneById(Integer id) {
+        return personDao.getAltPhoneById(id);
+    }
+
+    @Transactional
+    public String getGenderById(Integer id) {
+        return personDao.getGenderById(id);
+    }
+
+    @Transactional
+    public String getLastFourDigitSSNById(Integer id) {
+        return personDao.getLastFourDigitSSNById(id);
+    }
+
+    @Transactional
+    public Date getDobById(Integer id) {
+        return personDao.getDobById(id);
     }
 }

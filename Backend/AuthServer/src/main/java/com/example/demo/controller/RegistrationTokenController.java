@@ -30,6 +30,7 @@ public class RegistrationTokenController {
                     " already existed in the Database"));
             return response;
         }
+
         String subject = "Registration Link";
         String registrationUrl = "http://localhost:8080/register?token=" + token;
         String message = "Please use the link below to register new account:";
