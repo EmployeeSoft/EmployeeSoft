@@ -17,12 +17,8 @@
         <mapping class="com.example.demo.entity.Contact"/>
         <mapping class="com.example.demo.entity.Employee"/>
         <mapping class="com.example.demo.entity.VisaStatus"/>
-<!--        <mapping class="com.example.demo.entity.User"/>-->
-<!--        <mapping class="com.example.demo.entity.RegistrationToken"/>-->
         <mapping class="com.example.demo.entity.ApplicationWorkFlow"/>
         <mapping class="com.example.demo.entity.PersonalDocument"/>
-<!--        <mapping class="com.example.demo.entity.UserRole"/>-->
-<!--        <mapping class="com.example.demo.entity.Role"/>-->
         <mapping class="com.example.demo.entity.DigitalDocument"/>
 
 
