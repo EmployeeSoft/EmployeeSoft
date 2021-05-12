@@ -1,11 +1,19 @@
 package com.example.demo.dao.implementation;
 
 import com.example.demo.dao.InterfaceUserRoleDao;
+import com.example.demo.entity.Role;
+import com.example.demo.entity.User;
 import com.example.demo.entity.UserRole;
+import org.hibernate.Session;
+import org.hibernate.query.Query;
+import org.springframework.stereotype.Repository;
 
 import java.sql.Date;
 
-public class UserRoleDao implements InterfaceUserRoleDao {
+@Repository
+public class UserRoleDao extends AbstractHibernateDao<UserRole> implements InterfaceUserRoleDao {
+    public UserRoleDao() {setClazz(UserRole.class);}
+
     // Given the user role ID, get the user role
     public UserRole getUserRoleById(Integer id) {
         // TODO
@@ -46,5 +54,24 @@ public class UserRoleDao implements InterfaceUserRoleDao {
     public Date getDateModifiedById(Integer id) {
         // TODO
         return new Date(1234567890);
+    }
+
+    @Override
+    public void createUserRole(UserRole userRole) {
+        merge(userRole);
+    }
+
+    @Override
+    public Role getRoleByUser(User user) {
+        Session session = getCurrentSession();
+        Query query = session.createQuery("FROM UserRole ur WHERE ur.user.id = :userId");
+        System.out.println(user.getId());
+        query.setParameter("userId", user.getId());
+        UserRole userRole = (UserRole) query.uniqueResult();
+        if (userRole == null) {
+            System.out.println("userRoll null");
+            return null;
+        }
+        return userRole.getRole();
     }
 }

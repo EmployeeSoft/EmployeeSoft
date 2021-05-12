@@ -30,5 +30,5 @@ public interface InterfaceUserDao {
     // Given the ID, get the date modified
     Date getDateModifiedById(Integer id);
 
-    void createUser(User newUser);
+    User createUser(User newUser);
 }

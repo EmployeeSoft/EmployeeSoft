@@ -3,6 +3,7 @@ package com.example.demo.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Date;
 
 @Getter
@@ -12,7 +13,7 @@ import java.sql.Date;
 @Builder
 @Entity
 @Table(name="user_role", schema = "authentication")
-public class UserRole {
+public class UserRole implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

@@ -19,4 +19,9 @@ public class EmployeeService {
     public Employee getEmployeeByEmployeeId(Integer id) {
         return interfaceEmployeeDao.getEmployeeByEmployeeId(id);
     }
+
+    @Transactional
+    public int getManager(Integer id) {
+        return interfaceEmployeeDao.getManagerIdByEmployeeId(1);
+    }
 }
