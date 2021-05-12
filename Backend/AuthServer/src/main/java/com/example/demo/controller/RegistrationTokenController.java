@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.domain.RegistrationTokenDomain;
+import com.example.demo.domain.UserDomain;
 import com.example.demo.domain.common.ServiceStatus;
 import com.example.demo.domain.response.RegistrationTokenResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ public class RegistrationTokenController {
 
     @Autowired
     private JavaMailSender emailSender;
-    @ResponseBody
+
     @PostMapping("/generateToken")
     public RegistrationTokenResponse generateToken(@RequestBody RegistrationTokenDomain registrationTokenDomain) {
         RegistrationTokenResponse response = new RegistrationTokenResponse();
@@ -40,6 +41,35 @@ public class RegistrationTokenController {
         simpleMailMessage.setSubject(subject);
         simpleMailMessage.setText(message + "\r\n" + registrationUrl);
         emailSender.send(simpleMailMessage);
+        response.setServiceStatus(new ServiceStatus("SUCCESS", true, ""));
+        return response;
+    }
+
+    @GetMapping("/register/{token}")
+    public RegistrationTokenResponse checkRegistrationTokenValidity(@PathVariable String token) {
+        RegistrationTokenResponse response = new RegistrationTokenResponse();
+        RegistrationTokenDomain registrationTokenDomain = new RegistrationTokenDomain();
+        String email = registrationTokenService.getEmailFromToken(token);
+        if (email.equals("error")) {
+            response.setServiceStatus(new ServiceStatus("FAIL", false, "Invalid Registration Token"));
+            return response;
+        }
+        registrationTokenDomain.setEmail(email);
+        response.setRegistrationTokenDomain(registrationTokenDomain);
+        response.setServiceStatus(new ServiceStatus("SUCCESS", true, ""));
+        return response;
+    }
+
+    @PostMapping("/register")
+    public RegistrationTokenResponse doRegister(@RequestBody UserDomain userDomain) {
+        RegistrationTokenResponse response = new RegistrationTokenResponse();
+        String username = userDomain.getUsername();
+        String pwd = userDomain.getPassword();
+        String email = userDomain.getEmail();
+        if (username == null || pwd == null || !registrationTokenService.createUser(username, pwd, email)) {
+            response.setServiceStatus(new ServiceStatus("FAIL", false, "Duplicate username"));
+            return response;
+        }
         response.setServiceStatus(new ServiceStatus("SUCCESS", true, ""));
         return response;
     }

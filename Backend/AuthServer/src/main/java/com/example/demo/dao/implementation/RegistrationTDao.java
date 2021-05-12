@@ -2,13 +2,11 @@ package com.example.demo.dao.implementation;
 
 import com.example.demo.dao.InterfaceRegistrationTDao;
 import com.example.demo.entity.RegistrationToken;
-<<<<<<< HEAD:Backend/AuthServer/src/main/java/com/example/demo/dao/implementation/RegistrationTDao.java
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
-=======
->>>>>>> eb9e0aaf826cf8645d51b999e902ffc00040a823:Backend/AuthServer/src/main/java/dao/implementation/RegistrationTDao.java
 
+import javax.persistence.NoResultException;
 import java.sql.Date;
 import java.util.List;
 
@@ -54,20 +52,37 @@ public class RegistrationTDao extends AbstractHibernateDao<RegistrationToken> im
 
     // Given the ID, get the registration token information
     public RegistrationToken getRegistrationTokenById(Integer id) {
-        // TODO
-        return new RegistrationToken();
+        RegistrationToken registrationToken = new RegistrationToken();
+        registrationToken = getCurrentSession().get(RegistrationToken.class, 1);
+        return registrationToken;
     }
 
     @Override
-    public List<RegistrationToken> getRegistrationTokenByEmail(String email) {
+    public RegistrationToken getRegistrationTokenByEmail(String email) {
         Session session = getCurrentSession();
         Query query = session.createQuery("FROM RegistrationToken rt WHERE rt.email = :email");
         query.setParameter("email", email);
-        return (List<RegistrationToken>) query.getResultList();
+        RegistrationToken registrationToken = (RegistrationToken) query.uniqueResult();
+        return registrationToken;
+//        RegistrationToken registrationToken;
+//        try {
+//            registrationToken = (RegistrationToken) query.getSingleResult();
+//            return registrationToken;
+//        } catch (NoResultException e) {
+//            return null;
+//        }
     }
 
     @Override
     public void createNewRegistrationToken(RegistrationToken registrationToken) {
         merge(registrationToken);
+    }
+
+    @Override
+    public List<RegistrationToken> getRegistrationTokenByToken(String token) {
+        Session session = getCurrentSession();
+        Query query = session.createQuery("FROM RegistrationToken rt WHERE rt.token = :token");
+        query.setParameter("token", token);
+        return (List<RegistrationToken>) query.getResultList();
     }
 }
