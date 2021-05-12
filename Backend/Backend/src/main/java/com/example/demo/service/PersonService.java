@@ -81,4 +81,37 @@ public class PersonService {
     public Date getDobById(Integer id) {
         return personDao.getDobById(id);
     }
+
+    @Transactional
+    public PersonDomain getPersonByUserId(Integer userId) {
+        Person person = personDao.getPersonByUserId(userId);
+        PersonDomain personDomain = PersonDomain.builder()
+                .id(person.getId())
+                .firstName(person.getFirstName())
+                .lastName(person.getLastName())
+                .middleName(person.getMiddleName())
+                .cellPhone(person.getCellPhone())
+                .altPhone(person.getAltPhone())
+                .gender(person.getGender())
+                .ssn(person.getSsn())
+                .dob(person.getDob())
+                .build();
+
+        return personDomain;
+    }
+
+    @Transactional
+    public String getGenderByUserId(Integer userId) {
+        return personDao.getGenderByUserId(userId);
+    }
+
+    @Transactional
+    public String getLastFourDigitSSNByUserId(Integer userId) {
+        return personDao.getLastFourDigitSSNByUserId(userId);
+    }
+
+    @Transactional
+    public int getPersonIdByUserId(Integer userId) {
+        return personDao.getPersonIdByUserId(userId);
+    }
 }

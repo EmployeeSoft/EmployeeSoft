@@ -55,4 +55,7 @@ public interface InterfaceEmployeeDao {
 
     // Given the employeeId, get the employee information
     Employee getEmployeeByEmployeeId(Integer id);
+
+    // Using the employee personId, determine if they hold a green card or a US citizen
+    boolean isStatusManagementAble(Integer personId);
 }

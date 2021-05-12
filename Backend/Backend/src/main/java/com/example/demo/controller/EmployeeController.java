@@ -19,20 +19,20 @@ public class EmployeeController {
         this.employeeService = employeeService;
     }
 
-    @ResponseBody
-    @RequestMapping("/employee")
-    public String getEmployee() {
-        EmployeeDomain employee = employeeService.getEmployeeByEmployeeId(1);
-        Gson gson = new Gson();
-        String json = gson.toJson(employee);
-        System.out.println(json);
-        return json;
-    }
-
-    @ResponseBody
-    @PostMapping("/manager")
-    public int getManager() {
-        int employee = employeeService.getManagerIdByEmployeeId(1);
-        return employee;
-    }
+//    @ResponseBody
+//    @RequestMapping("/employee")
+//    public String getEmployee() {
+//        EmployeeDomain employee = employeeService.getEmployeeByEmployeeId(1);
+//        Gson gson = new Gson();
+//        String json = gson.toJson(employee);
+//        System.out.println(json);
+//        return json;
+//    }
+//
+//    @ResponseBody
+//    @PostMapping("/manager")
+//    public int getManager() {
+//        int employee = employeeService.getManagerIdByEmployeeId(1);
+//        return employee;
+//    }
 }

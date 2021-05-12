@@ -51,4 +51,16 @@ public interface InterfacePersonDao {
 
     // Get the person's Date of Birth by the person ID
     Date getDobById(Integer id);
+
+    // Get the person's information from the user ID
+    Person getPersonByUserId(Integer userId);
+
+    // Given the user ID, get the person's gender and return either Male or female
+    String getGenderByUserId(Integer userId);
+
+    // Get the last four digits of the SSN, by user ID
+    String getLastFourDigitSSNByUserId(Integer userId);
+
+    // Given the user ID get the person ID
+    int getPersonIdByUserId(Integer userId);
 }

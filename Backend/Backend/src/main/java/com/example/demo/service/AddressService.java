@@ -82,6 +82,7 @@ public class AddressService {
 
             for (Address address : addressList) {
                 AddressDomain domain = AddressDomain.builder()
+                        .id(address.getId())
                         .addressLine1(address.getAddressLine1())
                         .addressLine2(address.getAddressLine2())
                         .city(address.getCity())
