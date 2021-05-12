@@ -3,6 +3,7 @@ package com.example.demo.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.List;
 @Builder
 @Entity
 @Table(name="user", schema = "authentication")
-public class User {
+public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -22,6 +23,9 @@ public class User {
 
     @Column(name = "username")
     private String username;
+
+    @Column(name = "pwd")
+    private String pwd;
 
     @Column(name = "email")
     private String email;
@@ -31,10 +35,6 @@ public class User {
 
     @Column(name = "date_modified")
     private Date dateModified;
-
-    @OneToOne
-    @JoinColumn(name = "person_id")
-    private Person person;
 
     //Remove the relationship because name="email" is repeated
 //    @OneToOne

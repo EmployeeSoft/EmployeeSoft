@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.File;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.sql.Date;
 import java.util.List;
@@ -15,7 +16,7 @@ import java.util.List;
 @Builder
 @Entity
 @Table(name="employee", schema = "backend")
-public class Employee {
+public class Employee implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
