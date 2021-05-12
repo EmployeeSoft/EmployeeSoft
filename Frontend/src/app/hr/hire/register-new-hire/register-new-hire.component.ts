@@ -27,7 +27,7 @@ export class RegisterNewHireComponent implements OnInit {
 
   ngOnInit() {
       this.form = this.formBuilder.group({
-          email: ['', Validators.required]
+          email: ['', [Validators.required, Validators.email]]
       });
   }
 
@@ -51,9 +51,8 @@ export class RegisterNewHireComponent implements OnInit {
           .subscribe({
               next: (data) => {
                   console.log(data);    // data we received from the backend
-                  // get return url from query parameters or default to home page
-                  const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/users';
-                  this.router.navigateByUrl(returnUrl);
+
+                  this.alertService.success(`Registration Token sent to: ` + this.f.email.value);
               },
               error: error => {
                   this.alertService.error(error);

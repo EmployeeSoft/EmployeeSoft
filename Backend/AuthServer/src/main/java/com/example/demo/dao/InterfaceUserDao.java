@@ -10,7 +10,7 @@ public interface InterfaceUserDao {
     User getUserById(Integer id);
 
     // Given the user's username, get the user's information
-    List<User> getUserByUsername(String username);
+    User getUserByUsername(String username);
 
     // Given the user's email, get the user's information
     User getUserByEmail(String email);
