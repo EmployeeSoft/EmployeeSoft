@@ -35,7 +35,7 @@ public class LoginController {
         String jwt = JwtUtil.generateToken(username, JwtConstant.JWT_VALID_DURATION);
         CookieUtil.create(response, JwtConstant.JWT_COOKIE_NAME, jwt, false, -1, "localhost");
         loginResponse.setServiceStatus(new ServiceStatus("SUCCESS", true, ""));
-        loginResponse.setRedirectUrl("http://localhost:8080/home?id=" + user.getId());
+        loginResponse.setRedirectUrl("http://localhost:4200/home?id=" + user.getId());
         loginResponse.setRole(role.getRoleName());
         return loginResponse;
     }
@@ -45,7 +45,7 @@ public class LoginController {
         LoginResponse loginResponse = new LoginResponse();
         CookieUtil.clear(response, JwtConstant.JWT_COOKIE_NAME, "localhost");
         loginResponse.setServiceStatus(new ServiceStatus("SUCCESS", true, ""));
-        loginResponse.setRedirectUrl("http://localhost:9999/login");
+        loginResponse.setRedirectUrl("http://localhost:4200/login");
         return loginResponse;
     }
 }
