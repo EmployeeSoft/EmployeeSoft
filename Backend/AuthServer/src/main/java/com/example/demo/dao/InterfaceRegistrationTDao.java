@@ -28,8 +28,10 @@ public interface InterfaceRegistrationTDao {
     RegistrationToken getRegistrationTokenById(Integer id);
 
     //Given the email, check if there is a RegisToken associated with that email already existed in the database
-    List<RegistrationToken> getRegistrationTokenByEmail(String email);
+    RegistrationToken getRegistrationTokenByEmail(String email);
 
     //Create new Registration Token
     void createNewRegistrationToken(RegistrationToken registrationToken);
+
+    List<RegistrationToken> getRegistrationTokenByToken(String token);
 }
