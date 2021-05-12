@@ -30,8 +30,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return updateUser();
                 case url.match(/\/users\/\d+$/) && method === 'DELETE':
                     return deleteUser();
-                case url.endsWith('/generateToken') && method === 'POST':
-                  return generateToken();
+              //  case url.endsWith('/generateToken') && method === 'POST':
+              //    return generateToken();
                 default:
                     // pass through any requests not handled above
                     return next.handle(request);
@@ -66,12 +66,13 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
         function generateToken() {
           const user = body
-
+          /*
           if (users.find((x: any) => x.email === user.email)) {
               return error('Email "' + user.email + '" is already in the database')
           }
+          */
 
-          user.id = users.length ? Math.max(...users.map((x: any) => x.id)) + 1 : 1;
+          // user.id = users.length ? Math.max(...users.map((x: any) => x.id)) + 1 : 1;
           users.push(user);
           localStorage.setItem(usersKey, JSON.stringify(users));
           console.log("sending generate token request to backend")

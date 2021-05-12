@@ -3,6 +3,7 @@ package com.example.demo.dao;
 import com.example.demo.entity.User;
 
 import java.sql.Date;
+import java.util.List;
 
 public interface InterfaceUserDao {
     // Given the ID, get the user information
@@ -28,4 +29,6 @@ public interface InterfaceUserDao {
 
     // Given the ID, get the date modified
     Date getDateModifiedById(Integer id);
+
+    User createUser(User newUser);
 }
