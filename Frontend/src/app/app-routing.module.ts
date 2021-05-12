@@ -18,7 +18,7 @@ const routes: Routes = [
     { path: 'onboard', component: OnboardComponent},
 
     // otherwise redirect to home
-    { path: '**', redirectTo: '' }
+    // { path: '**', redirectTo: '' }
 ];
 
 
