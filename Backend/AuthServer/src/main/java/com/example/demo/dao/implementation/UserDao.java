@@ -33,11 +33,11 @@ public class UserDao extends AbstractHibernateDao<User> implements InterfaceUser
     }
 
     // Given the user's username, get the user's information
-    public List<User> getUserByUsername(String username) {
+    public User getUserByUsername(String username) {
         Session session = getCurrentSession();
         Query query = session.createQuery("FROM User u WHERE u.username = :username");
         query.setParameter("username", username);
-        return (List<User>) query.getResultList();
+        return (User) query.uniqueResult();
     }
 
     // Given the user's email, get the user's information
@@ -77,7 +77,7 @@ public class UserDao extends AbstractHibernateDao<User> implements InterfaceUser
     }
 
     @Override
-    public void createUser(User newUser) {
-        merge(newUser);
+    public User createUser(User newUser) {
+        return merge(newUser);
     }
 }

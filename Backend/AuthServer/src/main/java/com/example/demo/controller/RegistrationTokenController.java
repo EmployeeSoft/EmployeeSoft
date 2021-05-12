@@ -32,7 +32,7 @@ public class RegistrationTokenController {
         }
         registrationTokenService.createRegistrationToken(token, recipient, createdBy);
         String subject = "Registration Link";
-        String registrationUrl = "http://localhost:8080/register?token=" + token;
+        String registrationUrl = "http://localhost:9999/register?token=" + token;
         String message = "Please use the link below to register new account:";
 
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
