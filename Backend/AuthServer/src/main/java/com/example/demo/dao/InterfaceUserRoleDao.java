@@ -1,5 +1,7 @@
 package com.example.demo.dao;
 
+import com.example.demo.entity.Role;
+import com.example.demo.entity.User;
 import com.example.demo.entity.UserRole;
 
 import java.sql.Date;
@@ -25,4 +27,9 @@ public interface InterfaceUserRoleDao {
 
     // Given the user role ID, get the date last modified
     Date getDateModifiedById(Integer id);
+
+    void createUserRole(UserRole userRole);
+
+    //Given User object, return his Role object
+    Role getRoleByUser(User user);
 }

@@ -1,9 +1,13 @@
 package com.example.demo.service;
 
 import com.example.demo.dao.InterfaceRegistrationTDao;
+import com.example.demo.dao.InterfaceRoleDao;
 import com.example.demo.dao.InterfaceUserDao;
+import com.example.demo.dao.InterfaceUserRoleDao;
 import com.example.demo.entity.RegistrationToken;
+import com.example.demo.entity.Role;
 import com.example.demo.entity.User;
+import com.example.demo.entity.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,8 +18,22 @@ import java.util.List;
 @Service
 public class RegistrationTokenService {
     private static final int VALID_TIME_IN_MILLIS = 24 * 60 * 60 * 1000;
+    private static final int EMPLOYEE_ROLE_ID = 2;
+
     private InterfaceRegistrationTDao interfaceRegistrationTDao;
     private InterfaceUserDao interfaceUserDao;
+    private InterfaceRoleDao interfaceRoleDao;
+    private InterfaceUserRoleDao interfaceUserRoleDao;
+
+    @Autowired
+    public void setInterfaceRoleDao(InterfaceRoleDao interfaceRoleDao) {
+        this.interfaceRoleDao = interfaceRoleDao;
+    }
+
+    @Autowired
+    public void setInterfaceUserRoleDao(InterfaceUserRoleDao interfaceUserRoleDao) {
+        this.interfaceUserRoleDao = interfaceUserRoleDao;
+    }
 
     @Autowired
     public void setInterfaceRegistrationTDao(InterfaceRegistrationTDao interfaceRegistrationTDao) {
@@ -57,17 +75,28 @@ public class RegistrationTokenService {
 
     @Transactional
     public boolean createUser(String username, String pwd, String email) {
-        List<User> users = interfaceUserDao.getUserByUsername(username);
-        if (!users.isEmpty()) {
+        User user = interfaceUserDao.getUserByUsername(username);
+        if (user != null) {
             return false;
         }
-        User newUser = new User();
-        newUser.setUsername(username);
-        newUser.setPwd(pwd);
-        newUser.setEmail(email);
-        newUser.setDateCreated(new Date(System.currentTimeMillis()));
-        newUser.setDateModified(new Date(System.currentTimeMillis()));
-        interfaceUserDao.createUser(newUser);
+        user = new User();
+        user.setUsername(username);
+        user.setPwd(pwd);
+        user.setEmail(email);
+        user.setDateCreated(new Date(System.currentTimeMillis()));
+        user.setDateModified(new Date(System.currentTimeMillis()));
+        user = interfaceUserDao.createUser(user);
+
+        Role role = interfaceRoleDao.getRoleById(EMPLOYEE_ROLE_ID);
+
+        UserRole userRole = new UserRole();
+        userRole.setUser(user);
+        userRole.setRole(role);
+        userRole.setDateCreated(new Date(System.currentTimeMillis()));
+        userRole.setDateModified(new Date(System.currentTimeMillis()));
+        userRole.setActiveFlag(true);
+
+        interfaceUserRoleDao.createUserRole(userRole);
         return true;
     }
 }

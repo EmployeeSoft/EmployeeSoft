@@ -10,4 +10,6 @@ import lombok.*;
 @Builder
 public class LoginResponse {
     private ServiceStatus serviceStatus;
+    private String redirectUrl;
+    private String role;
 }
