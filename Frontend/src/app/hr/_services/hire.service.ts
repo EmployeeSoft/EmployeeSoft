@@ -5,24 +5,29 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
-import { User } from '../../common/_models';
+import { Token } from '../../common/_models/token';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HireService {
-  private userSubject: BehaviorSubject<User>;
-  public user: Observable<User>;
+  private tokenSubject: BehaviorSubject<Token>;
+  public token: Observable<Token>;
 
   constructor(
     private router: Router,
     private http: HttpClient
 ) {
-    this.userSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('user')!));
-    this.user = this.userSubject.asObservable();
+    this.tokenSubject = new BehaviorSubject<Token>(JSON.parse(localStorage.getItem('token')!));
+    this.token = this.tokenSubject.asObservable();
 }
 
   sendRegistrationToken(email: string) {
-    return this.http.post<User>(`${environment.apiUrl}/generateToken`, { email })
+    return this.http.post<Token>(`${environment.apiUrl}/generateToken`, {
+      "RegistrationTokenDomain": {
+        "email": email,
+        "createdBy": "HRAdmin"
+      }
+    })
   }
 }
