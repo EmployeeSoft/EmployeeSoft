@@ -13,7 +13,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 @Repository
-public class PersonalDocDao implements InterfacePersonalDocDao {
+public class PersonalDocDao extends AbstractHibernateDao<PersonalDocument> implements InterfacePersonalDocDao {
+    public PersonalDocDao() { setClazz(PersonalDocument.class); }
+
     // Given the personal document ID, get the title of the document
     public String getTitleById(Integer id) {
         // TODO

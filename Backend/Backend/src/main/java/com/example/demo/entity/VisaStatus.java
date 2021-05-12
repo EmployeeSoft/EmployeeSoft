@@ -3,6 +3,7 @@ package com.example.demo.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.sql.Date;
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.List;
 @Builder
 @Entity
 @Table(name="visa_status", schema = "backend")
-public class VisaStatus {
+public class VisaStatus implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
