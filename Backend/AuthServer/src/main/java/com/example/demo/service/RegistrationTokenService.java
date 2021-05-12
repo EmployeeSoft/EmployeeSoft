@@ -29,16 +29,7 @@ public class RegistrationTokenService {
 
     @Transactional
     public boolean createRegistrationToken(String token, String email, String createdBy) {
-        System.out.println(email);
-        System.out.println(createdBy);
-//        RegistrationToken test = interfaceRegistrationTDao.getRegistrationTokenById(1);
-//        System.out.println(test.getEmail());
-        RegistrationToken registrationToken = interfaceRegistrationTDao.getRegistrationTokenByEmail(email);
-//        System.out.println(registrationToken.isEmpty());
-        if (registrationToken != null) {
-            return false;
-        }
-        registrationToken = new RegistrationToken();
+        RegistrationToken registrationToken = new RegistrationToken();
         registrationToken.setToken(token);
         registrationToken.setEmail(email);
         registrationToken.setStartTime(new Date(System.currentTimeMillis()));
