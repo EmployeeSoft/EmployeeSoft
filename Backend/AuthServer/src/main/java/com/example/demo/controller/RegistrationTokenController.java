@@ -20,6 +20,7 @@ public class RegistrationTokenController {
     @Autowired
     private JavaMailSender emailSender;
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/generateToken")
     public RegistrationTokenResponse generateToken(@RequestBody RegistrationTokenDomain registrationTokenDomain) {
         RegistrationTokenResponse response = new RegistrationTokenResponse();
