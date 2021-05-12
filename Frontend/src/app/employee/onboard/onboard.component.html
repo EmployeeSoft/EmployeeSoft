@@ -1,1 +1,60 @@
-<p>onboard works!</p>
+<app-navbar></app-navbar>
+<div class="container-fluid">
+  <form [formGroup]="formData" (ngSubmit)="onSubmit(formData)")>
+    <div>
+      <label>First Name</label>
+      <input type = 'text' placeholder="First Name" formControlName="firstName">
+    </div>
+    <div>
+      <label>Last Name</label>
+      <input type = 'text' placeholder="Last Name" formControlName="lastName">
+    </div>
+    <div>
+      <label>Middle Name</label>
+      <input type = 'text' placeholder="Middle Name" formControlName="middleName">
+    </div>
+    <div>
+      <label>Prefer Name</label>
+      <input type = 'text' placeholder="Prefer Name" formControlName="preferName">
+    </div>
+    <div>
+      <label>Please upload avatar</label>
+      <input type = 'file' formControlName="avatar" (change)="fileChange($event,getAvatar)">
+    </div>
+    <div>
+      <label>Current Address</label>
+      <input type = 'text' placeholder="Current Address" formControlName="address">
+    </div>
+    <div>
+      <label>Car Info</label>
+      <input type = 'text' placeholder="Car" formControlName="car">
+    </div>
+    <div>
+      <label>SSN</label>
+      <input type = 'text' placeholder="SSN" formControlName="ssn">
+    </div>
+    <div>
+      <label>Date of Birth</label>
+      <input type = 'text' placeholder="Date of Birth" formControlName="dob">
+    </div>
+    <div>
+      <label>Gender</label>
+      <select formControlName="gender">
+        <option *ngFor="let op of genderOp">{{op}</option>
+      </select>
+    </div>
+    <div>
+      <label>Are you a citizen or permanent resident of the U.S?</label>
+      <input type="radio" name = "citizenOrNot" value="yes" (click)="deleteVisa()" formControlName="citizen"> Yes
+      <input type="radio" name = "citizenOrNot" value="no" (click)="addVisa()" formControlName="citizen"> No
+    </div>
+    <div *ngIf="!citizenOrNot">
+
+    </div>
+    <div *ngIf="citizenOrNot">
+      <label>Identity Type</label>
+      <input type="radio" name = "citizen" value="GreenCard" formControlName="citizenType"> Green Card
+      <input type="radio" name = "citizen" value="Citizen" formControlName="citizenType"> Citizen
+    </div>
+  </form>
+</div>
