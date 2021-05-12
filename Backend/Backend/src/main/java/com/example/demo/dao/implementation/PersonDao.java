@@ -129,4 +129,40 @@ public class PersonDao extends AbstractHibernateDao<Person> implements Interface
         Date dob = (Date) query.uniqueResult();
         return dob;
     }
+
+    // Get the person's information from the user ID
+    public Person getPersonByUserId(Integer userId) {
+        Session session = getCurrentSession();
+        Query query = session.createQuery("FROM Person WHERE userId = :userId");
+        query.setParameter("userId", userId);
+        Person person = (Person) query.uniqueResult();
+        return person;
+    }
+
+    // Given the user ID, get the person's gender and return either Male or Female
+    public String getGenderByUserId(Integer userId) {
+        Session session = getCurrentSession();
+        Query query = session.createQuery("SELECT gender FROM Person WHERE userId = :userId");
+        query.setParameter("userId", userId);
+        int gender = (int) query.uniqueResult();
+        return (gender == 1) ? "Female" : "Male";
+    }
+
+    // Get the last four digits of the SSN, by user ID
+    public String getLastFourDigitSSNByUserId(Integer userId) {
+        Session session = getCurrentSession();
+        Query query = session.createQuery("SELECT ssn FROM Person WHERE userId = :userId");
+        query.setParameter("userId", userId);
+        String ssn = (String) query.uniqueResult();
+        return ssn.substring(5);
+    }
+
+    // Given the user ID get the person ID
+    public int getPersonIdByUserId(Integer userId) {
+        Session session = getCurrentSession();
+        Query query = session.createQuery("SELECT id FROM Person WHERE userId = :userId");
+        query.setParameter("userId", userId);
+        int id = (int) query.uniqueResult();
+        return id;
+    }
 }
