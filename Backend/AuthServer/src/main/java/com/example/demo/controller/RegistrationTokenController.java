@@ -12,6 +12,7 @@ import com.example.demo.service.RegistrationTokenService;
 
 import java.util.UUID;
 
+@CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true")
 @RestController
 public class RegistrationTokenController {
     @Autowired
@@ -20,7 +21,6 @@ public class RegistrationTokenController {
     @Autowired
     private JavaMailSender emailSender;
 
-    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/generateToken")
     public RegistrationTokenResponse generateToken(@RequestBody RegistrationTokenDomain registrationTokenDomain) {
         RegistrationTokenResponse response = new RegistrationTokenResponse();
