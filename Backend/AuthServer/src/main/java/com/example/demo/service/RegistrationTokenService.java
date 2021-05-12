@@ -75,6 +75,7 @@ public class RegistrationTokenService {
 
     @Transactional
     public boolean createUser(String username, String pwd, String email) {
+
         User user = interfaceUserDao.getUserByUsername(username);
         if (user != null) {
             return false;

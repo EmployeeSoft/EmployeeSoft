@@ -49,7 +49,8 @@ export class RegisterNewHireComponent implements OnInit {
       this.hireService.sendRegistrationToken(this.f.email.value)
           .pipe(first())
           .subscribe({
-              next: () => {
+              next: (data) => {
+                  console.log(data);    // data we received from the backend
                   // get return url from query parameters or default to home page
                   const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/users';
                   this.router.navigateByUrl(returnUrl);

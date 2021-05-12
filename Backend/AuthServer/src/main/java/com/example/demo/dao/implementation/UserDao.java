@@ -32,7 +32,7 @@ public class UserDao extends AbstractHibernateDao<User> implements InterfaceUser
         return null;
     }
 
-    // Given the user's username, get the user's information
+
     public User getUserByUsername(String username) {
         Session session = getCurrentSession();
         Query query = session.createQuery("FROM User u WHERE u.username = :username");
