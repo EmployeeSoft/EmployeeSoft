@@ -8,8 +8,8 @@ import { FormBuilder, FormGroup, FormControl, FormArray } from '@angular/forms';
 })
 export class OnboardComponent implements OnInit {
   public formData: any;
-  public genderOp: ['Male', 'Female', 'Do not want to answer'];
-  public visaOp: ['H1-B', 'L2', 'F1(CPT/OPT)', 'H4', 'others'];
+  public genderOp: any;
+  public visaOp: any;
   public citizenOrNot: boolean;
   public hasLicence: boolean;
 
@@ -50,6 +50,8 @@ export class OnboardComponent implements OnInit {
         })
       ])
     });
+    this.genderOp = ['Male', 'Female', 'Do not want to answer'];
+    this.visaOp = ['H1-B', 'L2', 'F1(CPT/OPT)', 'H4', 'others'];
   }
 
   get getAvatar() {
