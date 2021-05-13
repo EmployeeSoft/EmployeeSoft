@@ -1,8 +1,5 @@
 package com.example.demo.controller;
 
-import com.amazonaws.auth.AWSCredentials;
-import com.amazonaws.services.s3.transfer.Upload;
-import com.example.demo.config.AWSConfig;
 import com.example.demo.domain.*;
 import com.example.demo.domain.common.ServiceStatus;
 import com.example.demo.domain.response.HomePageResponse;

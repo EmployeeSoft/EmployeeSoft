@@ -95,6 +95,11 @@ public class EmployeeService {
     }
 
     @Transactional
+    public boolean isStatusManagementAble(Integer personId) {
+        return employeeDao.isStatusManagementAble(personId);
+    }
+
+    @Transactional
     public EmployeeDomain getEmployeeByPersonId(Integer personId) {
         Employee employee = employeeDao.getEmployeeByPersonId(personId);
 
