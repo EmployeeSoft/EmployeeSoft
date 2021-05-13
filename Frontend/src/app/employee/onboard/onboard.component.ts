@@ -9,7 +9,7 @@ import { FormBuilder, FormGroup, FormControl, FormArray } from '@angular/forms';
 export class OnboardComponent implements OnInit {
   public formData: any;
   public genderOp: ['Male', 'Female', 'Do not want to answer'];
-  public visaOp: ['H1-B', 'L2', 'F1(CPT/OPT)', 'H4'];
+  public visaOp: ['H1-B', 'L2', 'F1(CPT/OPT)', 'H4', 'others'];
   public citizenOrNot: boolean;
   public hasLicence: boolean;
 
@@ -51,43 +51,66 @@ export class OnboardComponent implements OnInit {
       ])
     });
   }
-  // tslint:disable-next-line:typedef
+
   get getAvatar() {
     return this.formData.get('avatar') as FormControl;
   }
 
-  // tslint:disable-next-line:typedef
   get getVisa(){
     return this.formData.get('visa') as FormArray;
   }
 
-  // tslint:disable-next-line:typedef
+  get getWorkAuthDoc() {
+    return this.formData.get('visa')?.get('workAuthDoc') as FormControl;
+  }
+
+  get getEC() {
+    return this.formData.get('emergencyContact') as FormArray;
+  }
+
   addVisa() {
     this.citizenOrNot = false;
     const visa = this.getVisa;
     visa.clear();
-    const content = this.fb.group({
+    const visaContent = this.fb.group({
       workAuthType: ['', Validators.required],
       startDate: ['', Validators.required],
       endDate: ['', Validators.required],
       workAuthDoc: ['', Validators.required],
     });
-    visa.insert(0, content);
+    visa.insert(0, visaContent);
   }
 
-  // tslint:disable-next-line:typedef
   deleteVisa() {
     this.citizenOrNot = true;
     const visa = this.getVisa;
     visa.clear();
   }
 
-  // tslint:disable-next-line:typedef
-  onSubmit(from: any) {
-    console.log(from);
+  addEC() {
+    const temp = this.getEC;
+    const list = this.fb.group({
+      emergencyFirstName: [''],
+      emergencyLastName: [''],
+      emergencyMidName: [''],
+      emergencyPhone: [''],
+      emergencyEmail: [''],
+      emergencyRelation: [''],
+    });
+    temp.insert(0, list);
   }
 
-  // tslint:disable-next-line:typedef
+  deleteEC() {
+    if (this.getEC.length > 1) {
+      const temp = this.getEC;
+      temp.removeAt(temp.length - 1);
+    }
+  }
+
+  onSubmit(form: any) {
+    console.log(form);
+  }
+
   fileChange(event: any, c: FormControl) {
     const reader = new FileReader();
 
