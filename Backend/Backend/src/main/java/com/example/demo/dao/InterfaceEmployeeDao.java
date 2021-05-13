@@ -58,4 +58,34 @@ public interface InterfaceEmployeeDao {
 
     // Using the employee personId, determine if they hold a green card or a US citizen
     boolean isStatusManagementAble(Integer personId);
+
+    // Given the person ID, get the employee avatar url link
+    String getAvatarLink(Integer personId);
+
+    // Given the person ID, get the Visa Type as a string
+    String getVisaTypeByPersonId(Integer personId);
+
+    // Given the person ID, get the visa start date
+    Date getVisaStartDateByPersonId(Integer personId);
+
+    // Given the person ID, get the visa end date
+    Date getVisaEndDateByPersonId(Integer personId);
+
+    // Given the person ID, get the employee start date
+    Date getEmployeeStartDateByPersonId(Integer personId);
+
+    // Given the person ID, get the employee end date
+    Date getEmployeeEndDateByPersonId(Integer personId);
+
+    // Get the employee title by person ID
+    String getTitleByPersonId(Integer personId);
+
+    // Get the employee car
+    String getCarByPersonId(Integer personId);
+
+    // Get the employee information from the person ID
+    Employee getEmployeeByPersonId(Integer personId);
+
+    // Given the personId, merge the file
+    void updateEmployeeAvatarByPersonId(Integer personId, String avatar);
 }
