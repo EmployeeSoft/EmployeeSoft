@@ -5,11 +5,11 @@
   <div class="card-body" style="width: 23rem;" *ngIf="!nameSecEdit">
     <div>
       <p class="card-text">Full Name</p>
-      <h5 class="card-title">{{nameSection[0]}}</h5>
+      <h5 class="card-title">{{formData.controls['fullName'].value}}</h5>
     </div>
     <div>
       <p class="card-text">Prefer Name</p>
-      <h5 class="card-title">{{nameSection[1]}}</h5>
+      <h5 class="card-title">{{formData.controls['preferName'].value}}</h5>
     </div>
     <div>
       <p class="card-text">Avatar</p>
@@ -17,19 +17,19 @@
     </div>
     <div>
       <p class="card-text">Date of Birth</p>
-      <h5 class="card-title">{{nameSection[2]}}</h5>
+      <h5 class="card-title">{{formData.controls['dob'].value}}</h5>
     </div>
     <div>
       <p class="card-text">Age</p>
-      <h5 class="card-title">{{nameSection[3]}}</h5>
+      <h5 class="card-title">{{formData.controls['age'].value}}</h5>
     </div>
     <div>
       <p class="card-text">Gender</p>
-      <h5 class="card-title">{{nameSection[4]}}</h5>
+      <h5 class="card-title">{{formData.controls['gender'].value}}</h5>
     </div>
     <div>
       <p class="card-text">SSN</p>
-      <h5 class="card-title">{{nameSection[5]}}</h5>
+      <h5 class="card-title">{{formData.controls['ssn'].value}}</h5>
     </div>
     <button type="button" class="btn btn-primary" (click)="startEdit()">Edit</button>
   </div>

@@ -19,6 +19,9 @@ import { OnboardComponent } from './employee/onboard/onboard.component';
 import { HrHomeComponent } from './hr/hr-home/hr-home.component';
 import { PersonalInfoComponent } from './employee/personal-info/personal-info.component';
 import { NameSectionComponent } from './employee/personal-info/name-section/name-section.component';
+import { AddressSectionComponent } from './employee/personal-info/address-section/address-section.component';
+import { ContactSectionComponent } from './employee/personal-info/contact-section/contact-section.component';
+import { EmploymentSectionComponent } from './employee/personal-info/employment-section/employment-section.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +37,9 @@ import { NameSectionComponent } from './employee/personal-info/name-section/name
     HrHomeComponent,
     PersonalInfoComponent,
     NameSectionComponent,
+    AddressSectionComponent,
+    ContactSectionComponent,
+    EmploymentSectionComponent,
   ],
   imports: [
     BrowserModule,
