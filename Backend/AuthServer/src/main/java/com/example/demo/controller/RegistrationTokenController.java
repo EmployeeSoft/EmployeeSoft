@@ -12,6 +12,7 @@ import com.example.demo.service.RegistrationTokenService;
 
 import java.util.UUID;
 
+@CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true")
 @RestController
 public class RegistrationTokenController {
     @Autowired
@@ -20,7 +21,6 @@ public class RegistrationTokenController {
     @Autowired
     private JavaMailSender emailSender;
 
-    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/generateToken")
     public RegistrationTokenResponse generateToken(@RequestBody RegistrationTokenDomain registrationTokenDomain) {
         RegistrationTokenResponse response = new RegistrationTokenResponse();
@@ -34,7 +34,7 @@ public class RegistrationTokenController {
 
         registrationTokenService.createRegistrationToken(token, recipient, createdBy);
         String subject = "Registration Link";
-        String registrationUrl = "http://localhost:4200/register?token=" + token;
+        String registrationUrl = "http://localhost:4200/account/register?token=" + token;
         String message = "Please use the link below to register new account:";
 
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();

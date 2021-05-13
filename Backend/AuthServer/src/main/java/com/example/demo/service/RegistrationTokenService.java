@@ -17,7 +17,7 @@ import java.util.List;
 
 @Service
 public class RegistrationTokenService {
-    private static final int VALID_TIME_IN_MILLIS = 24 * 60 * 60 * 1000;
+    private static final int VALID_TIME_IN_MILLIS = 5 * 60 * 1000;
     private static final int EMPLOYEE_ROLE_ID = 2;
 
     private InterfaceRegistrationTDao interfaceRegistrationTDao;
