@@ -88,4 +88,9 @@ public class EmployeeService {
     public String getCarByPersonId(Integer personId){
         return employeeDao.getCarByPersonId(personId);
     }
+
+    @Transactional
+    public boolean isStatusManagementAble(Integer personId) {
+        return employeeDao.isStatusManagementAble(personId);
+    }
 }

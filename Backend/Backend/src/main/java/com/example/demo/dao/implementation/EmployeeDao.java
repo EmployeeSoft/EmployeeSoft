@@ -115,13 +115,18 @@ public class EmployeeDao extends AbstractHibernateDao<Employee> implements Inter
 
     // Using the employee personId, determine if they hold a green card or a US citizen
     public boolean isStatusManagementAble(Integer personId) {
-//        Session session1 = openSession();
-//        Session session2 = openSession();
-//
-//        Query query1 = session1.createQuery("");
-//        Query query2 = session2.createQuery("SELECT type FROM VisaStatus WHERE id = :id");
+        Session session1 = openSession();
+        Session session2 = openSession();
 
-        return false;
+        Query query1 = session1.createQuery("SELECT visaStatus FROM Employee WHERE personId = :personId");
+        query1.setParameter("personId", personId);
+        int visaStatusId = (int) query1.uniqueResult();
+
+        Query query2 = session2.createQuery("SELECT visaType FROM VisaStatus WHERE id = :visaStatusId");
+        query2.setParameter("visaStatusId", visaStatusId);
+        String visaType = (String) query2.uniqueResult();
+
+        return !visaType.equals("Green Card") && !visaType.equals("Citizen");
     }
 
     // Given the person ID, get the employee avatar url link
