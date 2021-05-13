@@ -10,6 +10,7 @@ export class LoginComponent implements OnInit {
     form: FormGroup;
     loading = false;
     submitted = false;
+    data: any;
 
     constructor(
         private formBuilder: FormBuilder,
@@ -44,10 +45,17 @@ export class LoginComponent implements OnInit {
         this.accountService.login(this.f.username.value, this.f.password.value)
             .pipe(first())
             .subscribe({
-                next: () => {
-                    // get return url from query parameters or default to home page
-                    const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/users';
-                    this.router.navigateByUrl(returnUrl);
+                next: (data) => {
+                  if (data.serviceStatus.success) {
+                    if (data.role === "hr") {
+                      this.router.navigateByUrl('hr/home');
+                    } else if (data.role === "employee") {
+                      const id = data.redirectUrl.split("=")[1];
+                      this.router.navigateByUrl('employee/home?id=' + id);
+                    }
+                  } else {
+                    this.router.navigateByUrl('/account/login');
+                  }
                 },
                 error: error => {
                     this.alertService.error(error);

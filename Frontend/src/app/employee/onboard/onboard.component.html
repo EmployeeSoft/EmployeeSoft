@@ -1,0 +1,144 @@
+<div class="card">
+  <h4 class="card-header">Register</h4>
+  <div class="card-body">
+    <form [formGroup]="formData" (ngSubmit)="onSubmit(formData)">
+      <div class="form-group">
+        <label>First Name</label>
+        <input type = 'text' placeholder="First Name" formControlName="firstName">
+      </div>
+      <div class="form-group">
+        <label>Last Name</label>
+        <input type = 'text' placeholder="Last Name" formControlName="lastName">
+      </div>
+      <div class="form-group">
+        <label>Middle Name</label>
+        <input type = 'text' placeholder="Middle Name" formControlName="midName">
+      </div>
+      <div class="form-group">
+        <label>Prefer Name</label>
+        <input type = 'text' placeholder="Prefer Name" formControlName="preferName">
+      </div>
+      <div class="form-group">
+        <label>Please upload avatar</label>
+        <input type = 'file' formControlName="avatar" (change)="fileChange($event,getAvatar)">
+      </div>
+      <div class="form-group">
+        <label>Current Address</label>
+        <input type = 'text' placeholder="Current Address" formControlName="address">
+      </div>
+      <div class="form-group">
+        <label>Car Info</label>
+        <input type = 'text' placeholder="Car" formControlName="car">
+      </div>
+      <div class="form-group">
+        <label>SSN</label>
+        <input type = 'text' placeholder="SSN" formControlName="ssn">
+      </div>
+      <div class="form-group">
+        <label>Date of Birth</label>
+        <input type = 'text' placeholder="Date of Birth" formControlName="dob">
+      </div>
+      <div class="form-group">
+        <label>Gender</label>
+        <select formControlName="gender">
+          <option *ngFor="let op of genderOp">{{op}}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Are you a citizen or permanent resident of the U.S?</label>
+        <input type="radio" name = "citizenOrNot" value="yes" (click)="deleteVisa()" formControlName="citizenOrNot"> Yes
+        <input type="radio" name = "citizenOrNot" value="no" (click)="addVisa()" formControlName="citizenOrNot"> No
+      </div>
+<!--      <div *ngIf="!citizenOrNot">-->
+<!--        <div *ngFor="let visaContent of getVisa.controls">-->
+<!--          <div [formGroup]="visaContent">-->
+<!--            <div class="form-group">-->
+<!--              <label>Visa Type</label>-->
+<!--              <select formControlName="workAuthType">-->
+<!--                <option *ngFor="let visaOp of visaOp">{{visaOp}}</option>-->
+<!--              </select>-->
+<!--            </div>-->
+<!--            <div class="form-group">-->
+<!--              <label>Start Date</label>-->
+<!--              <input type = 'text' placeholder="Start Date" formControlName="startDate">-->
+<!--            </div>-->
+<!--            <div class="form-group">-->
+<!--              <label>End Date</label>-->
+<!--              <input type = 'text' placeholder="End Date" formControlName="endDate">-->
+<!--            </div>-->
+<!--            <div class="form-group">-->
+<!--              <label>Please upload visa document</label>-->
+<!--              <input type = 'file' formControlName="workAuthDoc" (change)="fileChange($event,getWorkAuthDoc)">-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+      <div class="form-group" *ngIf="citizenOrNot">
+        <label>Identity Type</label>
+        <input type="radio" name = "citizenType" value="GreenCard" formControlName="citizenType"> Green Card
+        <input type="radio" name = "citizenType" value="Citizen" formControlName="citizenType"> Citizen
+      </div>
+      <div class="form-group">
+        <label>Reference First Name</label>
+        <input type = 'text' placeholder="First Name" formControlName="refFirstName">
+      </div>
+      <div class="form-group">
+        <label>Reference Last Name</label>
+        <input type = 'text' placeholder="Last Name" formControlName="refLastName">
+      </div>
+      <div class="form-group">
+        <label>Reference Middle Name</label>
+        <input type = 'text' placeholder="Middle Name" formControlName="refMidName">
+      </div>
+      <div class="form-group">
+        <label>Reference Phone</label>
+        <input type = 'text' placeholder="Phone" formControlName="refPhone">
+      </div>
+      <div class="form-group">
+        <label>Reference Address</label>
+        <input type = 'text' placeholder="Address" formControlName="refAddress">
+      </div>
+      <div class="form-group">
+        <label>Reference Email</label>
+        <input type = 'text' placeholder="Email" formControlName="refEmail">
+      </div>
+      <div class="form-group">
+        <label>Reference Relation</label>
+        <input type = 'text' placeholder="Relation" formControlName="refRelation">
+      </div>
+<!--      <div>-->
+<!--        <input type = 'button' value="Add Emergency Contact" (click)="addEC()">-->
+<!--        <input type = 'button' value="Delete Emergency Contact" (click)="deleteEC()">-->
+<!--        <div *ngFor="let item of getEC.controls">-->
+<!--          <div [formGroup]="item">-->
+<!--            <div class="form-group">-->
+<!--              <label>First Name</label>-->
+<!--              <input type = 'text' placeholder="First Name" formControlName="emergencyFirstName">-->
+<!--            </div>-->
+<!--            <div class="form-group">-->
+<!--              <label>Last Name</label>-->
+<!--              <input type = 'text' placeholder="Last Name" formControlName="emergencyLastName">-->
+<!--            </div>-->
+<!--            <div class="form-group">-->
+<!--              <label>Middle Name</label>-->
+<!--              <input type = 'text' placeholder="Middle Name" formControlName="emergencyMidName">-->
+<!--            </div>-->
+<!--            <div class="form-group">-->
+<!--              <label>Phone</label>-->
+<!--              <input type = 'text' placeholder="Phone" formControlName="emergencyPhone">-->
+<!--            </div>-->
+<!--            <div class="form-group">-->
+<!--              <label>Email</label>-->
+<!--              <input type = 'text' placeholder="Email" formControlName="emergencyEmail">-->
+<!--            </div>-->
+<!--            <div class="form-group">-->
+<!--              <label>Relation</label>-->
+<!--              <input type = 'text' placeholder="Relation" formControlName="emergencyRelation">-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+      <button type="submit" >Submit</button>
+    </form>
+  </div>
+</div>

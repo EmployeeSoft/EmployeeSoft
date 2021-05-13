@@ -1,0 +1,46 @@
+<div class="card">
+  <div class="card-header">
+    Contact Information Section
+  </div>
+  <div class="card-body" style="width: 23rem;" *ngIf="!SecEdit">
+    <div>
+      <p class="card-text">Personal Email</p>
+      <h5 class="card-title">{{formData.controls['email'].value}}</h5>
+    </div>
+    <div>
+      <p class="card-text">Work Email</p>
+      <h5 class="card-title">{{formData.controls['workEmail'].value}}</h5>
+    </div>
+    <div>
+      <p class="card-text">Cellphone</p>
+      <h5 class="card-title">{{formData.controls['phone'].value}}</h5>
+    </div>
+    <div>
+      <p class="card-text">Work Phone</p>
+      <h5 class="card-title">{{formData.controls['workPhone'].value}}</h5>
+    </div>
+    <button type="button" class="btn btn-primary" (click)="startEdit()">Edit</button>
+  </div>
+  <div class="card-body" style="width: 23rem;" *ngIf="SecEdit">
+    <form [formGroup]="formData" (ngSubmit)="endEdit()">
+      <div class="form-group">
+        <p class="card-text">Personal Email</p>
+        <input type = 'text' formControlName="email">
+      </div>
+      <div class="form-group">
+        <p class="card-text">Work Email</p>
+        <input type = 'text' formControlName="workEmail">
+      </div>
+      <div class="form-group">
+        <p class="card-text">Cellphone</p>
+        <input type = 'text' formControlName="phone">
+      </div>
+      <div class="form-group">
+        <p class="card-text">Work Phone</p>
+        <input type = 'text' formControlName="workPhone">
+      </div>
+      <button type="button" class="btn btn-primary" (click)="endEdit()">Cancel</button>
+      <button type="submit" class="btn btn-primary" (click)="endEdit()">Save</button>
+    </form>
+  </div>
+</div>

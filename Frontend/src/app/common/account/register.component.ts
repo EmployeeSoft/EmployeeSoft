@@ -44,44 +44,15 @@ export class RegisterComponent implements OnInit {
     // convenience getter for easy access to form fields
     get f() { return this.form.controls; }
 
-    /*
-    onSubmit() {
-        this.submitted = true;
-
-        // reset alerts on submit
-        this.alertService.clear();
-
-        // stop here if form is invalid
-        if (this.form.invalid) {
-            return;
-        }
-
-        this.loading = true;
-        this.accountService.register(this.form.value)
-            .pipe(first())
-            .subscribe({
-                next: () => {
-                    this.alertService.success('Registration successful', { keepAfterRouteChange: true });
-                    this.router.navigate(['../login'], { relativeTo: this.route });
-                },
-                error: error => {
-                    this.alertService.error(error);
-                    this.loading = false;
-                }
-            });
-    }
-    */
     onSubmit() {
       this.submitted = true;
 
       // reset alerts on submit
       this.alertService.clear();
-
       // stop here if form is invalid
       if (this.form.invalid) {
           return;
       }
-      console.log("clicked");
       this.loading = true;
       this.accountService.registerNewHire(this.f.email.value, this.f.username.value, this.f.password.value)
           .pipe(first())
@@ -89,7 +60,7 @@ export class RegisterComponent implements OnInit {
               next: (x) => {
                   console.log(x);
                   this.alertService.success('Registration successful', { keepAfterRouteChange: true });
-                  this.router.navigate(['../login'], { relativeTo: this.route });
+                  this.router.navigateByUrl('/onboard');
               },
               error: error => {
                   this.alertService.error(error);
