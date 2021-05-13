@@ -96,6 +96,7 @@ public class RegistrationTokenService {
         userRole.setDateCreated(new Date(System.currentTimeMillis()));
         userRole.setDateModified(new Date(System.currentTimeMillis()));
         userRole.setActiveFlag(true);
+        userRole.setLastModifiedUser("Elliot");
 
         interfaceUserRoleDao.createUserRole(userRole);
         return true;

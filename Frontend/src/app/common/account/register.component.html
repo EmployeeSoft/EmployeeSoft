@@ -3,9 +3,9 @@
     <h4 class="card-header">Register</h4>
     <div class="card-body">
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
-            <div *ngIf="data.registrationTokenDomain.email" class="form-group">
+            <div *ngIf="data && data.registrationTokenDomain.email" class="form-group">
                 <label for="email">Email</label>
-                <input type="text" formControlName="email" class="form-control" placeholder="{{email}}" value="{{email}}" [readonly]=true />
+                <input type="text" formControlName="email" class="form-control" placeholder="{{email}}" [(ngModel)]="email" [readonly]=true />
             </div>
             <div class="form-group">
                 <label for="username">Username</label>
