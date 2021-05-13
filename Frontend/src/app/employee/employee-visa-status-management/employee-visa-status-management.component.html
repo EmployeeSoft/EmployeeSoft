@@ -1,0 +1,33 @@
+<div class="container">
+  <h2>Employee - Visa Status Management</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Document</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody class="documents">
+      <tr *ngFor="let document of documents">
+        <td>{{document[0]}}</td>
+        <td>{{document[1]}}</td>
+        <td>
+          <div *ngIf="document[0] === 'OPT Receipt' && document[1] === 'INCOMPLETE'">Please upload OPT EAD
+            <button>Upload</button>
+          </div>
+
+          <div *ngIf="document[0] === 'OPT EAD less than 100 days' && document[1] === 'INCOMPLETE'">Please download and fill your I-983 form
+            <button>Download I-983 Form</button>
+            <button>Download Sample I-983 Template</button>
+            <button>Upload Student Completed I-983</button>
+          </div>
+
+          <div *ngIf="document[0] === 'Form I-20' && document[1] === 'INCOMPLETE'">Please send I-983 and submit I-20
+            <button>Upload</button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
