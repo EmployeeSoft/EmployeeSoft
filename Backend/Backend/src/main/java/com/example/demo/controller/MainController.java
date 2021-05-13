@@ -1,22 +1,24 @@
 package com.example.demo.controller;
 
-import com.example.demo.domain.AddressDomain;
-import com.example.demo.domain.ContactDomain;
-import com.example.demo.domain.PersonDomain;
+import com.example.demo.domain.*;
 import com.example.demo.domain.common.ServiceStatus;
 import com.example.demo.domain.response.HomePageResponse;
+import com.example.demo.domain.response.UploadResponse;
 import com.example.demo.service.*;
 import com.example.demo.util.CalculateAge;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.Date;
 import java.util.ArrayList;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class MainController {
-//    @Autowired
-//    private EmployeeService employeeService;
+    @Autowired
+    private EmployeeService employeeService;
 
     @Autowired
     private AddressService addressService;
@@ -30,55 +32,126 @@ public class MainController {
     @Autowired
     private VisaStatusService visaStatusService;
 
-    @CrossOrigin(origins = "http://localhost:4200")
-    @PostMapping("/user-info/{userId}")
-    public HomePageResponse getHomePage(@PathVariable Integer userId) {
+    @Autowired
+    private AWSS3Service awss3Service;
+
+    @GetMapping("/user-info")
+    public HomePageResponse getPersonalProfile(@RequestBody UserDomain userDomain) {
+        // Creating return value
         HomePageResponse response = new HomePageResponse();
 
-        // Since the user is able to access this method, it means that they are authorized
-
-        PersonDomain person = personService.getPersonByUserId(userId);
-
-        // Get full name
-        String fullName = person.getFirstName() +
-                " " + ((person.getMiddleName() != null)? "" : person.getMiddleName() + " ") +
-                person.getLastName();
-
-        // Getting the date of birth
-        Date dob = person.getDob();
-
-        // Getting user's age
-        int age = CalculateAge.age(dob);
-
-        // Getting user's gender
-        String gender = personService.getGenderByUserId(userId);
-
-        // Getting the last four digit of user's SSN
-        String ssn = personService.getLastFourDigitSSNByUserId(userId);
+        // Getting user ID
+        int userId = userDomain.getUserId();
 
         // Get the Person ID from User ID
         int personId = personService.getPersonIdByUserId(userId);
 
-        // Get the Visa Status
-//        boolean isStatusManagement = visaStatusService.visaStatusManagementAble();
+        PersonDomain personDomain = personService.getPersonByUserId(userId);
+        EmployeeDomain employeeDomain = employeeService.getEmployeeByEmployeeId(personId);
 
-        // Getting an array of user's addresses
+
+        // Getting the user Role
+        // The role can either be "employee" or "hr"
+        String userRole = userDomain.getUserRole();
+
+
+        /////  Name Section /////
+
+        String firstName = personDomain.getFirstName();
+        String middleName = personDomain.getMiddleName();
+        String lastName = personDomain.getLastName();
+
+        // Getting the Full name
+        String fullName = firstName +
+                " " + ((middleName == null)? "" : middleName + " ") +
+                lastName;
+
+        String preferName = personDomain.getPreferName();
+        String avatar = employeeDomain.getAvatar();
+        Date dob = personDomain.getDob();
+        int age = CalculateAge.age(dob);
+        String gender = personService.getGenderByUserId(userId);
+        String ssn = personDomain.getSsn();
+
+
+        ///// Address Section /////
+
         ArrayList<AddressDomain> addresses = addressService.getAddressListByPersonId(personId);
 
-        // Getting an array of user's contacts;
+
+        ///// Contact information Section //////
+
+        String email = personService.getEmailByUserId(userId);
+        String cellPhone = personDomain.getCellPhone();
+        String altPhone = personDomain.getAltPhone();
+
+
+        ///// Employee Section /////
+
+        String title = employeeDomain.getTitle();
+        String car = employeeDomain.getCar();
+        String visaType = employeeDomain.getVisaType();
+        Date visaStartDate = employeeDomain.getVisaStartDate();
+        Date visaEndDate = employeeDomain.getVisaEndDate();
+        Date employeeStartDate = employeeDomain.getStartDate();
+        Date employeeEndDate = employeeDomain.getEndDate();
+        
+
+        ///// Emergency Information Section /////
+
         ArrayList<ContactDomain> contacts = contactService.getContactListByPersonId(personId);
 
-        // Save information into response to return
 
-        // 
+        ///// Document Section /////
+        // TODO
+
+
+        // Save response
         response.setServiceStatus(new ServiceStatus("Success", true, ""));
+
+        // Name Section
         response.setFullName(fullName);
+        response.setPreferName(preferName);
+        response.setAvatar(avatar);
         response.setDob(dob);
         response.setAge(age);
         response.setGender(gender);
         response.setSsn(ssn);
-        response.setAddressDomain(addresses);
-        response.setContactDomain(contacts);
+
+        // Address Section
+        response.setAddress(addresses);
+
+        // Contact information section
+        response.setEmail(email);
+        response.setCellphone(cellPhone);
+        response.setAltPhone(altPhone);
+
+        // Employee Section
+        response.setTitle(title);
+        response.setCar(car);
+        response.setVisaType(visaType);
+        response.setVisaStartDate(visaStartDate);
+        response.setVisaEndDate(visaEndDate);
+        response.setEmployeeStartDate(employeeStartDate);
+        response.setEmployeeEndDate(employeeEndDate);
+
+        // Emergency Contact Section
+        response.setContracts(contacts);
+
+        return response;
+    }
+
+    @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public UploadResponse fileUpload(@RequestParam("file") MultipartFile file, @RequestParam("userId") Integer userId) {
+        String filename = file.getOriginalFilename();
+        UploadResponse response = new UploadResponse();
+
+        if (awss3Service.uploadFile(file, userId)) {
+            response.setServiceStatus(new ServiceStatus("Success", true, ""));
+            response.setUrl(awss3Service.getURL(filename));
+        } else {
+            response.setServiceStatus(new ServiceStatus("Failed", false, "Unable to upload file"));
+        }
 
         return response;
     }

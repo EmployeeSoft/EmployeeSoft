@@ -14,6 +14,8 @@ public class PersonDomain {
     private String firstName;
     private String lastName;
     private String middleName;
+    private String preferName;
+    private String email;
     private String cellPhone;
     private String altPhone;
     private Integer gender;
@@ -21,4 +23,21 @@ public class PersonDomain {
     private Date dob;
     private AddressDomain addressDomain;
     private ContactDomain contactDomain;
+
+    @Override
+    public String toString() {
+        return "PersonDomain{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", middleName='" + middleName + '\'' +
+                ", preferName='" + preferName + '\'' +
+                ", email='" + email + '\'' +
+                ", cellPhone='" + cellPhone + '\'' +
+                ", altPhone='" + altPhone + '\'' +
+                ", gender=" + gender +
+                ", ssn='" + ssn + '\'' +
+                ", dob=" + dob +
+                '}';
+    }
 }
