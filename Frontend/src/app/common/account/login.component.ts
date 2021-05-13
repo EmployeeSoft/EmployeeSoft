@@ -44,10 +44,15 @@ export class LoginComponent implements OnInit {
         this.accountService.login(this.f.username.value, this.f.password.value)
             .pipe(first())
             .subscribe({
-                next: () => {
-                    // get return url from query parameters or default to home page
-                    const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/users';
-                    this.router.navigateByUrl(returnUrl);
+                next: (data) => {
+                  console.log(data);
+                  console.log(data.serviceStatus.success)
+                  if (data.serviceStatus.success) {
+                    const id = data.redirectUrl.split("=")[1];
+                    this.router.navigateByUrl('/home?id=' + id);
+                  } else {
+                    this.router.navigateByUrl('/account/login');
+                  }
                 },
                 error: error => {
                     this.alertService.error(error);

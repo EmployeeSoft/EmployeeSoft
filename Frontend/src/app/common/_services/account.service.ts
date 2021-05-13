@@ -25,6 +25,7 @@ export class AccountService {
         return this.userSubject.value;
     }
 
+    /*
     login(username: string, password: string) {
         return this.http.post<User>(`${environment.apiUrl}/users/authenticate`, { username, password })
             .pipe(map(user => {
@@ -33,6 +34,15 @@ export class AccountService {
                 this.userSubject.next(user);
                 return user;
             }));
+    }
+    */
+
+    login(username: string, password: string) {
+      const headers = {
+        'Content-Type':  'application/json'
+      }
+      console.log("login function called")
+      return this.http.post<any>(`http://localhost:9999/login`, { username, password });
     }
 
     logout() {
