@@ -208,4 +208,13 @@ public class EmployeeDao extends AbstractHibernateDao<Employee> implements Inter
         Employee employee = (Employee) query.uniqueResult();
         return employee;
     }
+
+    // Given the personId, merge the file
+    public void updateEmployeeAvatarByPersonId(Integer personId, String avatar) {
+        Session session = getCurrentSession();
+        Query query = session.createQuery("UPDATE Employee SET avatar =: avatar WHERE personId = :personId");
+        query.setParameter("avatar", avatar);
+        query.setParameter("personId", personId);
+        query.executeUpdate();
+    }
 }

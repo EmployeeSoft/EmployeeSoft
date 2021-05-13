@@ -122,4 +122,9 @@ public class EmployeeService {
 
         return employeeDomain;
     }
+
+    @Transactional
+    public void updateEmployeeAvatarByPersonId(Integer personId, String avatar) {
+        employeeDao.updateEmployeeAvatarByPersonId(personId, avatar);
+    }
 }

@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.domain.*;
 import com.example.demo.domain.common.ServiceStatus;
 import com.example.demo.domain.response.HomePageResponse;
+import com.example.demo.domain.response.UploadResponse;
 import com.example.demo.service.*;
 import com.example.demo.util.CalculateAge;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -141,8 +142,17 @@ public class MainController {
     }
 
     @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public String fileUpload(@RequestParam("file") MultipartFile file) {
+    public UploadResponse fileUpload(@RequestParam("file") MultipartFile file, @RequestParam("userId") Integer userId) {
         String filename = file.getOriginalFilename();
-        return this.awss3Service.uploadFile(file);
+        UploadResponse response = new UploadResponse();
+
+        if (awss3Service.uploadFile(file, userId)) {
+            response.setServiceStatus(new ServiceStatus("Success", true, ""));
+            response.setUrl(awss3Service.getURL(filename));
+        } else {
+            response.setServiceStatus(new ServiceStatus("Failed", false, "Unable to upload file"));
+        }
+
+        return response;
     }
 }
