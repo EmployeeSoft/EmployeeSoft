@@ -20,13 +20,16 @@ public class EmployeeService {
         this.employeeDao = employeeDao;
     }
 
+    private final String pattern = "yyyy-MM-dd";
+
     @Transactional
     public EmployeeDomain getEmployeeByEmployeeId(Integer id) {
         Employee employee = employeeDao.getEmployeeByEmployeeId(id);
 
-        String pattern = "yyyy-MM-dd";
-        DateFormat df = new SimpleDateFormat(pattern);
+        DateFormat df = new SimpleDateFormat(this.pattern);
         String date = df.format(employee.getDriverLicenseExpDate());
+
+        int personId = employee.getPersonId();
 
         EmployeeDomain employeeDomain = EmployeeDomain.builder()
                 .id(employee.getId())
@@ -34,7 +37,9 @@ public class EmployeeService {
                 .managerId(employee.getManagerId())
                 .startDate(employee.getStartDate())
                 .endDate(employee.getEndDate())
+                .avatar(employee.getAvatar())
                 .car(employee.getCar())
+                .visaType(employeeDao.getVisaTypeByPersonId(personId))
                 .visaStartDate(employee.getVisaStartDate())
                 .visaEndDate(employee.getVisaEndDate())
                 .driverLicense(employee.getDriverLicense())
@@ -92,5 +97,27 @@ public class EmployeeService {
     @Transactional
     public boolean isStatusManagementAble(Integer personId) {
         return employeeDao.isStatusManagementAble(personId);
+
+    public EmployeeDomain getEmployeeByPersonId(Integer personId) {
+        Employee employee = employeeDao.getEmployeeByPersonId(personId);
+
+        DateFormat df = new SimpleDateFormat(this.pattern);
+        String date = df.format(employee.getDriverLicenseExpDate());
+
+        EmployeeDomain employeeDomain = EmployeeDomain.builder()
+                .id(employee.getId())
+                .title(employee.getTitle())
+                .managerId(employee.getManagerId())
+                .startDate(employee.getStartDate())
+                .endDate(employee.getEndDate())
+                .car(employee.getCar())
+                .visaType(employeeDao.getVisaTypeByPersonId(personId))
+                .visaStartDate(employee.getVisaStartDate())
+                .visaEndDate(employee.getVisaEndDate())
+                .driverLicense(employee.getDriverLicense())
+                .driverLicenseExpDate(date)
+                .build();
+
+        return employeeDomain;
     }
 }

@@ -1,18 +1,19 @@
 package com.example.demo.controller;
 
-import com.example.demo.domain.AddressDomain;
-import com.example.demo.domain.ContactDomain;
-import com.example.demo.domain.UserDomain;
+import com.example.demo.domain.*;
 import com.example.demo.domain.common.ServiceStatus;
 import com.example.demo.domain.response.HomePageResponse;
 import com.example.demo.service.*;
 import com.example.demo.util.CalculateAge;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.Date;
 import java.util.ArrayList;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class MainController {
     @Autowired
@@ -30,7 +31,9 @@ public class MainController {
     @Autowired
     private VisaStatusService visaStatusService;
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @Autowired
+    private AWSS3Service awss3Service;
+
     @GetMapping("/user-info")
     public HomePageResponse getPersonalProfile(@RequestBody UserDomain userDomain) {
         // Creating return value
@@ -42,6 +45,9 @@ public class MainController {
         // Get the Person ID from User ID
         int personId = personService.getPersonIdByUserId(userId);
 
+        PersonDomain personDomain = personService.getPersonByUserId(userId);
+        EmployeeDomain employeeDomain = employeeService.getEmployeeByEmployeeId(personId);
+
 
         // Getting the user Role
         // The role can either be "employee" or "hr"
@@ -50,21 +56,21 @@ public class MainController {
 
         /////  Name Section /////
 
-        String firstName = personService.getFirstNameByUserId(userId);
-        String middleName = personService.getMiddleNameByUserId(userId);
-        String lastName = personService.getLastNameByUserId(userId);
+        String firstName = personDomain.getFirstName();
+        String middleName = personDomain.getMiddleName();
+        String lastName = personDomain.getLastName();
 
         // Getting the Full name
         String fullName = firstName +
                 " " + ((middleName == null)? "" : middleName + " ") +
                 lastName;
 
-        String preferName = personService.getPreferNameByUserId(userId);
-        String avatar = employeeService.getAvatarLink(personId);
-        Date dob = personService.getDobByUserId(userId);
+        String preferName = personDomain.getPreferName();
+        String avatar = employeeDomain.getAvatar();
+        Date dob = personDomain.getDob();
         int age = CalculateAge.age(dob);
         String gender = personService.getGenderByUserId(userId);
-        String ssn = personService.getLastFourDigitSSNByUserId(userId);
+        String ssn = personDomain.getSsn();
 
 
         ///// Address Section /////
@@ -74,22 +80,21 @@ public class MainController {
 
         ///// Contact information Section //////
 
-        String email = personService.getEmailById(userId);
-        String cellPhone = personService.getCellPhoneByUserId(userId);
-        String altPhone = personService.getAltPhoneByUserId(userId);
+        String email = personService.getEmailByUserId(userId);
+        String cellPhone = personDomain.getCellPhone();
+        String altPhone = personDomain.getAltPhone();
 
 
         ///// Employee Section /////
 
-        String title = employeeService.getTitleByPersonId(personId);
-        String car = employeeService.getCarByPersonId(personId);
-        String visaType = employeeService.getVisaTypeByPersonId(personId);
-        Date visaStartDate = employeeService.getVisaStartDateByPersonId(personId);
-        Date visaEndDate = employeeService.getVisaEndDateByPersonId(personId);
-        Date employeeStartDate = employeeService.getEmployeeStartDateByPersonId(personId);
-        Date employeeEndDate = employeeService.getEmployeeEndDateByPersonId(personId);
-
-
+        String title = employeeDomain.getTitle();
+        String car = employeeDomain.getCar();
+        String visaType = employeeDomain.getVisaType();
+        Date visaStartDate = employeeDomain.getVisaStartDate();
+        Date visaEndDate = employeeDomain.getVisaEndDate();
+        Date employeeStartDate = employeeDomain.getStartDate();
+        Date employeeEndDate = employeeDomain.getEndDate();
+        
 
         ///// Emergency Information Section /////
 
@@ -133,5 +138,11 @@ public class MainController {
         response.setContracts(contacts);
 
         return response;
+    }
+
+    @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public String fileUpload(@RequestParam("file") MultipartFile file) {
+        String filename = file.getOriginalFilename();
+        return this.awss3Service.uploadFile(file);
     }
 }

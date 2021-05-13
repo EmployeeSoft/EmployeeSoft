@@ -18,6 +18,7 @@ public class EmployeeDomain {
     private String avatar;
     private String car;
     private VisaStatusDomain visaStatusDomain;
+    private String visaType;
     private Date visaStartDate;
     private Date visaEndDate;
     private String driverLicense;
