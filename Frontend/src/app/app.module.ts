@@ -18,7 +18,7 @@ import { NavbarComponent } from './employee/navbar/navbar.component';
 import { OnboardComponent } from './employee/onboard/onboard.component';
 import { HrHomeComponent } from './hr/hr-home/hr-home.component';
 import { PersonalInfoComponent } from './employee/personal-info/personal-info.component';
-import { NameSectionComponent } from './employee/_components/name-section/name-section.component';
+import { NameSectionComponent } from './employee/personal-info/name-section/name-section.component';
 
 @NgModule({
   declarations: [
