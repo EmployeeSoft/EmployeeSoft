@@ -1,0 +1,72 @@
+<div class="card">
+  <div class="card-header">
+    Name Section
+  </div>
+  <div class="card-body" style="width: 23rem;" *ngIf="!nameSecEdit">
+    <div>
+      <p class="card-text">Full Name</p>
+      <h5 class="card-title">{{formData.controls['fullName'].value}}</h5>
+    </div>
+    <div>
+      <p class="card-text">Prefer Name</p>
+      <h5 class="card-title">{{formData.controls['preferName'].value}}</h5>
+    </div>
+    <div>
+      <p class="card-text">Avatar</p>
+      <img src="favicon.ico">
+    </div>
+    <div>
+      <p class="card-text">Date of Birth</p>
+      <h5 class="card-title">{{formData.controls['dob'].value}}</h5>
+    </div>
+    <div>
+      <p class="card-text">Age</p>
+      <h5 class="card-title">{{formData.controls['age'].value}}</h5>
+    </div>
+    <div>
+      <p class="card-text">Gender</p>
+      <h5 class="card-title">{{formData.controls['gender'].value}}</h5>
+    </div>
+    <div>
+      <p class="card-text">SSN</p>
+      <h5 class="card-title">{{formData.controls['ssn'].value}}</h5>
+    </div>
+    <button type="button" class="btn btn-primary" (click)="startEdit()">Edit</button>
+  </div>
+  <div class="card-body" style="width: 23rem;" *ngIf="nameSecEdit">
+    <form [formGroup]="formData" (ngSubmit)="endEdit()">
+      <div class="form-group">
+        <p class="card-text">FullName</p>
+        <input type = 'text' formControlName="fullName">
+      </div>
+      <div class="form-group">
+        <p class="card-text">Prefer Name</p>
+        <input type = 'text' formControlName="preferName">
+      </div>
+      <div class="form-group">
+        <p class="card-text">Avatar</p>
+        <input type = 'file' formControlName="avatar" (change)="fileChange($event,getAvatar)">
+      </div>
+      <div class="form-group">
+        <p class="card-text">Date of Birth</p>
+        <input type = 'text' formControlName="dob">
+      </div>
+      <div class="form-group">
+        <p class="card-text">Age</p>
+        <input type = 'text' formControlName="age">
+      </div>
+      <div class="form-group">
+        <p class="card-text">Gender</p>
+        <select formControlName="gender">
+          <option *ngFor="let op of genderOp">{{op}}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <p class="card-text">SSN</p>
+        <input type = 'text' formControlName="ssn">
+      </div>
+      <button type="button" class="btn btn-primary" (click)="endEdit()">Cancel</button>
+      <button type="submit" class="btn btn-primary" (click)="endEdit()">Save</button>
+    </form>
+  </div>
+</div>
