@@ -45,17 +45,18 @@ public class AWSS3Service {
                 .build();
     }
 
-    public String uploadFile(MultipartFile multipartFile) {
+    public boolean uploadFile(MultipartFile multipartFile) {
         String filename = "";
         try {
             File file = convertMultipartFileToFile(multipartFile);
             filename = multipartFile.getOriginalFilename();
             uploadFileToBucket(filename, file);
             file.delete();
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
+            return false;
         }
-        return getURL(filename);
     }
 
     private File convertMultipartFileToFile(MultipartFile file) throws IOException {
