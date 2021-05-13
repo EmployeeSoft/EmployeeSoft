@@ -8,6 +8,7 @@ import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
@@ -35,6 +36,12 @@ public class AWSS3Service {
 
     private AmazonS3 s3client;
 
+    @Autowired
+    private EmployeeService employeeService;
+
+    @Autowired
+    private PersonService personService;
+
     @PostConstruct
     private void initializeAmazon() {
         AWSCredentials credentials = new BasicAWSCredentials(this.accessKey, this.secretKey);
@@ -45,12 +52,17 @@ public class AWSS3Service {
                 .build();
     }
 
-    public boolean uploadFile(MultipartFile multipartFile) {
+    public boolean uploadFile(MultipartFile multipartFile, Integer userId) {
         String filename = "";
         try {
             File file = convertMultipartFileToFile(multipartFile);
             filename = multipartFile.getOriginalFilename();
             uploadFileToBucket(filename, file);
+
+            // Update the avatar of the employee with the user ID of userId
+            int personId = personService.getPersonIdByUserId(userId);
+            String avatarUrl = getURL(filename);
+            employeeService.updateEmployeeAvatarByPersonId(personId, avatarUrl);
             file.delete();
             return true;
         } catch (Exception e) {

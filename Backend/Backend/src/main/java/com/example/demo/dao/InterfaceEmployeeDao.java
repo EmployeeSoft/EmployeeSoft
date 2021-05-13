@@ -85,4 +85,7 @@ public interface InterfaceEmployeeDao {
 
     // Get the employee information from the person ID
     Employee getEmployeeByPersonId(Integer personId);
+
+    // Given the personId, merge the file
+    void updateEmployeeAvatarByPersonId(Integer personId, String avatar);
 }
