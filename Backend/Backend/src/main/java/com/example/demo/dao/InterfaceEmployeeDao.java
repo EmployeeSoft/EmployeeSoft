@@ -82,4 +82,7 @@ public interface InterfaceEmployeeDao {
 
     // Get the employee car
     String getCarByPersonId(Integer personId);
+
+    // Get the employee information from the person ID
+    Employee getEmployeeByPersonId(Integer personId);
 }
