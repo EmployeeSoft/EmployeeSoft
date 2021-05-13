@@ -10,6 +10,7 @@ export class LoginComponent implements OnInit {
     form: FormGroup;
     loading = false;
     submitted = false;
+    data: any;
 
     constructor(
         private formBuilder: FormBuilder,
@@ -45,11 +46,13 @@ export class LoginComponent implements OnInit {
             .pipe(first())
             .subscribe({
                 next: (data) => {
-                  console.log(data);
-                  console.log(data.serviceStatus.success)
                   if (data.serviceStatus.success) {
-                    const id = data.redirectUrl.split("=")[1];
-                    this.router.navigateByUrl('/home?id=' + id);
+                    if (data.role === "hr") {
+                      this.router.navigateByUrl('hr/home');
+                    } else if (data.role === "employee") {
+                      const id = data.redirectUrl.split("=")[1];
+                      this.router.navigateByUrl('employee/home?id=' + id);
+                    }
                   } else {
                     this.router.navigateByUrl('/account/login');
                   }

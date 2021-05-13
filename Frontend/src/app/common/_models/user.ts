@@ -1,4 +1,6 @@
-﻿export class User {
+﻿import { Role } from "./role";
+
+export class User {
     id: string;
     username: string;
     password: string;
@@ -6,6 +8,6 @@
     lastName: string;
     token: string;
     isDeleting: boolean;
-    role: string;
     email: string;
+    role: Role;
 }

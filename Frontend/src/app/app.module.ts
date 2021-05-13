@@ -16,6 +16,7 @@ import { RegisterNewHireComponent } from './hr/hire/register-new-hire/register-n
 import { EmployeeHomeComponent} from './employee/employee-home/employee-home.component';
 import { NavbarComponent } from './employee/navbar/navbar.component';
 import { OnboardComponent } from './employee/onboard/onboard.component';
+import { HrHomeComponent } from './hr/hr-home/hr-home.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { OnboardComponent } from './employee/onboard/onboard.component';
     EmployeeHomeComponent,
     NavbarComponent,
     OnboardComponent,
+    HrHomeComponent,
   ],
   imports: [
     BrowserModule,
