@@ -2,10 +2,14 @@ package com.example.demo.dao.implementation;
 
 import com.example.demo.dao.InterfaceRoleDao;
 import com.example.demo.entity.Role;
+import org.springframework.stereotype.Repository;
 
 import java.sql.Date;
 
-public class RoleDao implements InterfaceRoleDao {
+@Repository
+public class RoleDao extends AbstractHibernateDao<Role> implements InterfaceRoleDao {
+    public RoleDao() {setClazz(Role.class);}
+
     // Given the role name, get the ID
     public int getRoleIdByRoleName(String roleName) {
         // TODO
@@ -56,7 +60,6 @@ public class RoleDao implements InterfaceRoleDao {
 
     // Given the ID, get the role information
     public Role getRoleById(Integer id) {
-        // TODO
-        return new Role();
+        return getCurrentSession().get(Role.class, id);
     }
 }

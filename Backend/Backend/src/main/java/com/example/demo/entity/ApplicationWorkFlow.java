@@ -4,6 +4,7 @@ import lombok.*;
 import org.hibernate.boot.model.naming.ImplicitNameSource;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Date;
 
 @Getter
@@ -13,7 +14,7 @@ import java.sql.Date;
 @Builder
 @Entity
 @Table(name="app_workflow", schema = "backend")
-public class ApplicationWorkFlow {
+public class ApplicationWorkFlow implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

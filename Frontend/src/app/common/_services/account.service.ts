@@ -6,6 +6,7 @@ import { map } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
 import { User } from '../_models';
+import { FormGroup } from '@angular/forms';
 
 @Injectable({ providedIn: 'root' })
 export class AccountService {
@@ -41,8 +42,19 @@ export class AccountService {
         this.router.navigate(['/account/login']);
     }
 
+
     register(user: User) {
         return this.http.post(`${environment.apiUrl}/users/register`, user);
+    }
+
+
+    registerNewHire(email: string, username: string, password: string) {
+
+      const headers = {
+        'Content-Type':  'application/json'
+      }
+
+      return this.http.post<any>(`http://localhost:9999/register`, { email, username, password }, { headers });
     }
 
     getAll() {
@@ -79,4 +91,5 @@ export class AccountService {
                 return x;
             }));
     }
+
 }

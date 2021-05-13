@@ -30,8 +30,6 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return updateUser();
                 case url.match(/\/users\/\d+$/) && method === 'DELETE':
                     return deleteUser();
-                case url.endsWith('/generateToken') && method === 'POST':
-                  return generateToken();
                 default:
                     // pass through any requests not handled above
                     return next.handle(request);

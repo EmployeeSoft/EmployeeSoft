@@ -1,4 +1,4 @@
-package com.example.demo.util;
+package com.example.demo.security.util;
 
 import com.example.demo.constant.JwtConstant;
 import io.jsonwebtoken.*;

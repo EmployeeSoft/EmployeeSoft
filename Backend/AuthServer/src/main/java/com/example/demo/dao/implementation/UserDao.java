@@ -1,26 +1,25 @@
 package com.example.demo.dao.implementation;
 
-<<<<<<< HEAD:Backend/AuthServer/src/main/java/com/example/demo/dao/implementation/UserDao.java
-import com.example.demo.dao.InterfaceUserDao;
-import com.example.demo.entity.User;
-=======
-import com.example.demo.config.HibernateConfig;
 import com.example.demo.dao.InterfaceUserDao;
 import com.example.demo.entity.User;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
->>>>>>> eb9e0aaf826cf8645d51b999e902ffc00040a823:Backend/AuthServer/src/main/java/dao/implementation/UserDao.java
+import org.springframework.stereotype.Repository;
 
 import java.sql.Date;
+import java.util.List;
 
-public class UserDao implements InterfaceUserDao {
+@Repository
+public class UserDao extends AbstractHibernateDao<User> implements InterfaceUserDao {
+    public UserDao() {setClazz(User.class);}
+
     // Given the ID, get the user information
     // Used in Authentication server instead
     public User getUserById(Integer id) {
         Transaction transaction = null;
         try {
-            Session session = HibernateConfig.getCurrentSession();
+            Session session = getCurrentSession();
             transaction = session.beginTransaction();
             Query query = session.createQuery("FROM User WHERE id = :id");
             query.setParameter("id", id);
@@ -33,10 +32,12 @@ public class UserDao implements InterfaceUserDao {
         return null;
     }
 
-    // Given the user's username, get the user's information
+
     public User getUserByUsername(String username) {
-        // TODO
-        return new User();
+        Session session = getCurrentSession();
+        Query query = session.createQuery("FROM User u WHERE u.username = :username");
+        query.setParameter("username", username);
+        return (User) query.uniqueResult();
     }
 
     // Given the user's email, get the user's information
@@ -73,5 +74,10 @@ public class UserDao implements InterfaceUserDao {
     public Date getDateModifiedById(Integer id) {
         // TODO
         return new Date(1234567890);
+    }
+
+    @Override
+    public User createUser(User newUser) {
+        return merge(newUser);
     }
 }

@@ -6,6 +6,6 @@ import lombok.*;
 @Setter
 //@AllArgsConstructor
 @NoArgsConstructor
-@Builder
+//@Builder
 public class UserRoleDomain {
 }

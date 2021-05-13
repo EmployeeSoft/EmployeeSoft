@@ -1,10 +1,8 @@
 package com.example.demo.dao.implementation;
 
-import com.example.demo.config.HibernateConfig;
 import com.example.demo.dao.InterfaceEmployeeDao;
 import com.example.demo.entity.Employee;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
@@ -12,7 +10,9 @@ import java.io.File;
 import java.sql.Date;
 
 @Repository
-public class EmployeeDao implements InterfaceEmployeeDao {
+public class EmployeeDao extends AbstractHibernateDao<Employee> implements InterfaceEmployeeDao {
+    public EmployeeDao() { setClazz(Employee.class); }
+
     // Given the person ID, get their employee ID
     public int getEmployeeIdByPersonId(Integer id) {
         // TODO
@@ -97,35 +97,30 @@ public class EmployeeDao implements InterfaceEmployeeDao {
 
     // Given the employee ID, get the manager ID
     public int getManagerIdByEmployeeId(Integer id) {
-        Transaction transaction = null;
-        try {
-            Session session = HibernateConfig.getCurrentSession();
-            transaction = session.beginTransaction();
-            Query query = session.createQuery("SELECT managerId FROM Employee WHERE id = :id");
-            query.setParameter("id", id);
-            int mId = (int) query.uniqueResult();
-            transaction.commit();
-            return mId;
-        } catch (Exception e) {
-            if (transaction != null) transaction.rollback();
-        }
-        return -1;
+        Session session = getCurrentSession();
+        Query query = session.createQuery("SELECT managerId FROM Employee WHERE id = :id");
+        query.setParameter("id", id);
+        int mId = (int) query.uniqueResult();
+        return mId;
     }
 
     // Given the employeeId, get the employee information
     public Employee getEmployeeByEmployeeId(Integer id) {
-        Transaction transaction = null;
-        try {
-            Session session = HibernateConfig.getCurrentSession();
-            transaction = session.beginTransaction();
-            Query query = session.createQuery("FROM Employee WHERE id = :id");
-            query.setParameter("id", id);
-            Employee employee = (Employee) query.uniqueResult();
-            transaction.commit();
-            return employee;
-        } catch (Exception e) {
-            if (transaction != null) transaction.rollback();
-        }
-        return null;
+        Session session = getCurrentSession();
+        Query query = session.createQuery("FROM Employee WHERE id = :id");
+        query.setParameter("id", id);
+        Employee employee = (Employee) query.uniqueResult();
+        return employee;
+    }
+
+    // Using the employee personId, determine if they hold a green card or a US citizen
+    public boolean isStatusManagementAble(Integer personId) {
+//        Session session1 = openSession();
+//        Session session2 = openSession();
+//
+//        Query query1 = session1.createQuery("");
+//        Query query2 = session2.createQuery("SELECT type FROM VisaStatus WHERE id = :id");
+
+        return false;
     }
 }
