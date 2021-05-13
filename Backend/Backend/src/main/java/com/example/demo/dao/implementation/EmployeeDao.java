@@ -201,4 +201,13 @@ public class EmployeeDao extends AbstractHibernateDao<Employee> implements Inter
         String car = (String) query.uniqueResult();
         return car;
     }
+
+    // Get the employee information from the person ID
+    public Employee getEmployeeByPersonId(Integer personId) {
+        Session session = getCurrentSession();
+        Query query = session.createQuery("FROM Employee WHERE personId = :personId");
+        query.setParameter("personId", personId);
+        Employee employee = (Employee) query.uniqueResult();
+        return employee;
+    }
 }
