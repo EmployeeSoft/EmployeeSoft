@@ -165,4 +165,76 @@ public class PersonDao extends AbstractHibernateDao<Person> implements Interface
         int id = (int) query.uniqueResult();
         return id;
     }
+
+    // Get person's first name by user ID
+    public String getFirstNameByUserId(Integer userId) {
+        Session session = getCurrentSession();
+        Query query = session.createQuery("SELECT firstName FROM Person WHERE userId = :userId");
+        query.setParameter("userId", userId);
+        String firstName = (String) query.uniqueResult();
+        return firstName;
+    }
+
+    // Get person's middle name by user ID
+    public String getMiddleNameByUserId(Integer userId) {
+        Session session = getCurrentSession();
+        Query query = session.createQuery("SELECT middleName FROM Person WHERE userId = :userId");
+        query.setParameter("userId", userId);
+        String middleName = (String) query.uniqueResult();
+        return middleName;
+    }
+
+    // Get person's last name by user ID
+    public String getLastNameByUserId(Integer userId) {
+        Session session = getCurrentSession();
+        Query query = session.createQuery("SELECT lastName FROM Person WHERE userId = :userId");
+        query.setParameter("userId", userId);
+        String lastName = (String) query.uniqueResult();
+        return lastName;
+    }
+
+    // Get person's email by user ID
+    public String getEmailByUserId(Integer userId) {
+        Session session = getCurrentSession();
+        Query query = session.createQuery("SELECT email FROM Person WHERE userId = :userId");
+        query.setParameter("userId", userId);
+        String email = (String) query.uniqueResult();
+        return email;
+    }
+
+    // Get the person's cell phone number by user ID
+    public String getCellPhoneByUserId(Integer userId) {
+        Session session = getCurrentSession();
+        Query query = session.createQuery("SELECT cellPhone FROM Person WHERE userId = :userId");
+        query.setParameter("userId", userId);
+        String cellPhone = (String) query.uniqueResult();
+        return cellPhone;
+    }
+
+    // Get the person's alt phone number by user ID
+    public String getAltPhoneByUserId(Integer userId) {
+        Session session = getCurrentSession();
+        Query query = session.createQuery("SELECT altPhone FROM Person WHERE userId = :userId");
+        query.setParameter("userId", userId);
+        String altPhone = (String) query.uniqueResult();
+        return altPhone;
+    }
+
+    // Get the person's preferred name by user ID
+    public String getPreferNameByUserId(Integer userId) {
+        Session session = getCurrentSession();
+        Query query = session.createQuery("SELECT preferName FROM Person WHERE userId = :userId");
+        query.setParameter("userId", userId);
+        String preferName = (String) query.uniqueResult();
+        return preferName;
+    }
+
+    // Get the person's DoB by user ID
+    public Date getDobByUserId(Integer userId) {
+        Session session = getCurrentSession();
+        Query query = session.createQuery("SELECT dob FROM Person WHERE userId = :userId");
+        query.setParameter("userId", userId);
+        Date dob = (Date) query.uniqueResult();
+        return dob;
+    }
 }

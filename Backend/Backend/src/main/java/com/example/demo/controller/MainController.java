@@ -2,7 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.domain.AddressDomain;
 import com.example.demo.domain.ContactDomain;
-import com.example.demo.domain.PersonDomain;
+import com.example.demo.domain.UserDomain;
 import com.example.demo.domain.common.ServiceStatus;
 import com.example.demo.domain.response.HomePageResponse;
 import com.example.demo.service.*;
@@ -15,8 +15,8 @@ import java.util.ArrayList;
 
 @RestController
 public class MainController {
-//    @Autowired
-//    private EmployeeService employeeService;
+    @Autowired
+    private EmployeeService employeeService;
 
     @Autowired
     private AddressService addressService;
@@ -31,54 +31,106 @@ public class MainController {
     private VisaStatusService visaStatusService;
 
     @CrossOrigin(origins = "http://localhost:4200")
-    @PostMapping("/user-info/{userId}")
-    public HomePageResponse getHomePage(@PathVariable Integer userId) {
+    @GetMapping("/user-info")
+    public HomePageResponse getPersonalProfile(@RequestBody UserDomain userDomain) {
+        // Creating return value
         HomePageResponse response = new HomePageResponse();
 
-        // Since the user is able to access this method, it means that they are authorized
-
-        PersonDomain person = personService.getPersonByUserId(userId);
-
-        // Get full name
-        String fullName = person.getFirstName() +
-                " " + ((person.getMiddleName() != null)? "" : person.getMiddleName() + " ") +
-                person.getLastName();
-
-        // Getting the date of birth
-        Date dob = person.getDob();
-
-        // Getting user's age
-        int age = CalculateAge.age(dob);
-
-        // Getting user's gender
-        String gender = personService.getGenderByUserId(userId);
-
-        // Getting the last four digit of user's SSN
-        String ssn = personService.getLastFourDigitSSNByUserId(userId);
+        // Getting user ID
+        int userId = userDomain.getUserId();
 
         // Get the Person ID from User ID
         int personId = personService.getPersonIdByUserId(userId);
 
-        // Get the Visa Status
-//        boolean isStatusManagement = visaStatusService.visaStatusManagementAble();
 
-        // Getting an array of user's addresses
+        // Getting the user Role
+        // The role can either be "employee" or "hr"
+        String userRole = userDomain.getUserRole();
+
+
+        /////  Name Section /////
+
+        String firstName = personService.getFirstNameByUserId(userId);
+        String middleName = personService.getMiddleNameByUserId(userId);
+        String lastName = personService.getLastNameByUserId(userId);
+
+        // Getting the Full name
+        String fullName = firstName +
+                " " + ((middleName == null)? "" : middleName + " ") +
+                lastName;
+
+        String preferName = personService.getPreferNameByUserId(userId);
+        String avatar = employeeService.getAvatarLink(personId);
+        Date dob = personService.getDobByUserId(userId);
+        int age = CalculateAge.age(dob);
+        String gender = personService.getGenderByUserId(userId);
+        String ssn = personService.getLastFourDigitSSNByUserId(userId);
+
+
+        ///// Address Section /////
+
         ArrayList<AddressDomain> addresses = addressService.getAddressListByPersonId(personId);
 
-        // Getting an array of user's contacts;
+
+        ///// Contact information Section //////
+
+        String email = personService.getEmailById(userId);
+        String cellPhone = personService.getCellPhoneByUserId(userId);
+        String altPhone = personService.getAltPhoneByUserId(userId);
+
+
+        ///// Employee Section /////
+
+        String title = employeeService.getTitleByPersonId(personId);
+        String car = employeeService.getCarByPersonId(personId);
+        String visaType = employeeService.getVisaTypeByPersonId(personId);
+        Date visaStartDate = employeeService.getVisaStartDateByPersonId(personId);
+        Date visaEndDate = employeeService.getVisaEndDateByPersonId(personId);
+        Date employeeStartDate = employeeService.getEmployeeStartDateByPersonId(personId);
+        Date employeeEndDate = employeeService.getEmployeeEndDateByPersonId(personId);
+
+
+
+        ///// Emergency Information Section /////
+
         ArrayList<ContactDomain> contacts = contactService.getContactListByPersonId(personId);
 
-        // Save information into response to return
 
-        // 
+        ///// Document Section /////
+        // TODO
+
+
+        // Save response
         response.setServiceStatus(new ServiceStatus("Success", true, ""));
+
+        // Name Section
         response.setFullName(fullName);
+        response.setPreferName(preferName);
+        response.setAvatar(avatar);
         response.setDob(dob);
         response.setAge(age);
         response.setGender(gender);
         response.setSsn(ssn);
-        response.setAddressDomain(addresses);
-        response.setContactDomain(contacts);
+
+        // Address Section
+        response.setAddress(addresses);
+
+        // Contact information section
+        response.setEmail(email);
+        response.setCellphone(cellPhone);
+        response.setAltPhone(altPhone);
+
+        // Employee Section
+        response.setTitle(title);
+        response.setCar(car);
+        response.setVisaType(visaType);
+        response.setVisaStartDate(visaStartDate);
+        response.setVisaEndDate(visaEndDate);
+        response.setEmployeeStartDate(employeeStartDate);
+        response.setEmployeeEndDate(employeeEndDate);
+
+        // Emergency Contact Section
+        response.setContracts(contacts);
 
         return response;
     }

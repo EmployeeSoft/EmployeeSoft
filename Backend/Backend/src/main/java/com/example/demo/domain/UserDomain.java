@@ -4,8 +4,10 @@ import lombok.*;
 
 @Getter
 @Setter
-//@AllArgsConstructor
+@AllArgsConstructor
 @NoArgsConstructor
 @Builder
 public class UserDomain {
+    private Integer userId;
+    private String userRole;
 }

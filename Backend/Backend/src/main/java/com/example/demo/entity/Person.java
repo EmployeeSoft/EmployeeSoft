@@ -29,6 +29,9 @@ public class Person implements Serializable {
     @Column(name = "middle_name")
     private String middleName;
 
+    @Column(name = "prefer_name")
+    private String preferName;
+
     @Column(name = "email")
     private String email;
 
@@ -50,9 +53,6 @@ public class Person implements Serializable {
     @Column(name = "user_id")
     private Integer userId;
 
-//    @OneToOne(fetch = FetchType.LAZY, mappedBy = "person")
-//    private User user;
-
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "person")
     private List<Contact> contacts;
 
@@ -69,6 +69,7 @@ public class Person implements Serializable {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", middleName='" + middleName + '\'' +
+                ", preferName='" + preferName + '\'' +
                 ", email='" + email + '\'' +
                 ", cellPhone='" + cellPhone + '\'' +
                 ", altPhone='" + altPhone + '\'' +
@@ -76,7 +77,6 @@ public class Person implements Serializable {
                 ", ssn='" + ssn + '\'' +
                 ", dob=" + dob +
                 ", userId=" + userId +
-//                ", address=" + address +
                 '}';
     }
 }

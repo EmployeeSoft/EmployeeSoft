@@ -15,7 +15,7 @@ public class EmployeeDomain {
     private Integer managerId;
     private Date startDate;
     private Date endDate;
-    //private File avatar;
+    private String avatar;
     private String car;
     private VisaStatusDomain visaStatusDomain;
     private Date visaStartDate;

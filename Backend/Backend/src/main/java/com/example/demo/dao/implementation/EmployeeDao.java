@@ -123,4 +123,82 @@ public class EmployeeDao extends AbstractHibernateDao<Employee> implements Inter
 
         return false;
     }
+
+    // Given the person ID, get the employee avatar url link
+    public String getAvatarLink(Integer personId) {
+        Session session = getCurrentSession();
+        Query query = session.createQuery("SELECT avatar FROM Employee WHERE personId = :personId");
+        query.setParameter("personId", personId);
+        String url = (String) query.uniqueResult();
+        return url;
+    }
+
+    // Given the person ID, get the Visa Type as a string
+    public String getVisaTypeByPersonId(Integer personId) {
+        Session session1 = openSession();
+        Session session2 = openSession();
+
+        Query query1 = session1.createQuery("SELECT visaStatus FROM Employee WHERE personId = :personId");
+        query1.setParameter("personId", personId);
+        int visaId = (int) query1.uniqueResult();
+
+        Query query2 = session2.createQuery("SELECT visaType FROM VisaStatus WHERE id = :visaId");
+        query2.setParameter("visaId", visaId);
+        String visaType = (String) query2.uniqueResult();
+        return visaType;
+    }
+
+    // Given the person ID, get the visa start date
+    public Date getVisaStartDateByPersonId(Integer personId) {
+        Session session = getCurrentSession();
+        Query query = session.createQuery("SELECT visaStartDate FROM Employee WHERE personId = :personId");
+        query.setParameter("personId", personId);
+        Date date = (Date) query.uniqueResult();
+        return date;
+    }
+
+    // Given the person ID, get the visa end date
+    public Date getVisaEndDateByPersonId(Integer personId) {
+        Session session = getCurrentSession();
+        Query query = session.createQuery("SELECT visaEndDate FROM Employee WHERE personId = :personId");
+        query.setParameter("personId", personId);
+        Date date = (Date) query.uniqueResult();
+        return date;
+    }
+
+    // Given the person ID, get the employee start date
+    public Date getEmployeeStartDateByPersonId(Integer personId) {
+        Session session = getCurrentSession();
+        Query query = session.createQuery("SELECT startDate FROM Employee WHERE personId = :personId");
+        query.setParameter("personId", personId);
+        Date date = (Date) query.uniqueResult();
+        return date;
+    }
+
+    // Given the person ID, get the employee end date
+    public Date getEmployeeEndDateByPersonId(Integer personId) {
+        Session session = getCurrentSession();
+        Query query = session.createQuery("SELECT endDate FROM Employee WHERE personId = :personId");
+        query.setParameter("personId", personId);
+        Date date = (Date) query.uniqueResult();
+        return date;
+    }
+
+    // Get the employee title by person ID
+    public String getTitleByPersonId(Integer personId) {
+        Session session = getCurrentSession();
+        Query query = session.createQuery("SELECT title FROM Employee WHERE personId = :personId");
+        query.setParameter("personId", personId);
+        String title = (String) query.uniqueResult();
+        return title;
+    }
+
+    // Get the employee car
+    public String getCarByPersonId(Integer personId) {
+        Session session = getCurrentSession();
+        Query query = session.createQuery("SELECT car FROM Employee WHERE personId = :personId");
+        query.setParameter("personId", personId);
+        String car = (String) query.uniqueResult();
+        return car;
+    }
 }

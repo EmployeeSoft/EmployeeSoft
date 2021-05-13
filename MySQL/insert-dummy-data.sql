@@ -1,43 +1,43 @@
 USE authentication;
 
-INSERT INTO user(username, email, pwd, date_created, date_modified) VALUES(
-	"alice",
-    "alicebob@gmail.com",
-    "123",
-    "2021-05-10",
-    "2021-05-10"
-);
+-- INSERT INTO user(username, email, pwd, date_created, date_modified) VALUES(
+-- 	"alice",
+--     "alicebob@gmail.com",
+--     "123",
+--     "2021-05-10",
+--     "2021-05-10"
+-- );
 
-INSERT INTO user(username, email, pwd, date_created, date_modified) VALUES(
-	"henryl",
-    "henrylu@yahoo.com",
-    "321",
-    "2017-01-17",
-    "2021-04-01"
-);
+-- INSERT INTO user(username, email, pwd, date_created, date_modified) VALUES(
+-- 	"henryl",
+--     "henrylu@yahoo.com",
+--     "321",
+--     "2017-01-17",
+--     "2021-04-01"
+-- );
 
-INSERT INTO user(username, email, pwd, date_created, date_modified) VALUES(
-	"teddy",
-    "teddyle@aoe.com",
-    "12345",
-    "2019-12-29",
-    "2021-07-11"
-);
+-- INSERT INTO user(username, email, pwd, date_created, date_modified) VALUES(
+-- 	"teddy",
+--     "teddyle@aoe.com",
+--     "12345",
+--     "2019-12-29",
+--     "2021-07-11"
+-- );
 
 USE backend;
+
+INSERT INTO digital_doc(type, required, template_location, description) VALUES(
+	"OPT Receipt",
+    true,
+    "Path to OPT Receipt",
+    "This an OPT Receipt"
+);
 
 INSERT INTO digital_doc(type, required, template_location, description) VALUES(
 	"OPT EAD",
     true,
     "Path to OPT EAD",
-    "This an OPT EAD Form"
-);
-
-INSERT INTO digital_doc(type, required, template_location, description) VALUES(
-	"OPT EAD STEM",
-    true,
-    "Path to OPT EAD STEM",
-    "This an OPT EAD STEM Form"
+    "This an OPT EAD Card"
 );
 
 INSERT INTO digital_doc(type, required, template_location, description) VALUES(
@@ -47,7 +47,6 @@ INSERT INTO digital_doc(type, required, template_location, description) VALUES(
     "This an I-983 Form"
 );
 
-
 INSERT INTO digital_doc(type, required, template_location, description) VALUES(
 	"I-20",
     true,
@@ -55,10 +54,25 @@ INSERT INTO digital_doc(type, required, template_location, description) VALUES(
     "This an I-20 Form"
 );
 
-INSERT INTO person(first_name, last_name, middle_name, email, cell_phone, alt_phone, gender, ssn, dob, user_id) VALUES(
+INSERT INTO digital_doc(type, required, template_location, description) VALUES(
+	"OPT EAD STEM Receipt",
+    true,
+    "Path to OPT EAD STEM Receipt",
+    "This an OPT EAD STEM Receipt"
+);
+
+INSERT INTO digital_doc(type, required, template_location, description) VALUES(
+	"OPT EAD STEM",
+    true,
+    "Path to OPT EAD STEM",
+    "This an OPT EAD STEM Card"
+);
+
+INSERT INTO person(first_name, last_name, middle_name, prefer_name, email, cell_phone, alt_phone, gender, ssn, dob, user_id) VALUES(
 	"Alice",
     "Bob",
     "",
+    "Alice Bob",
     "alicebob@gmail.com",
     "7141234567",
     "7140987654",
@@ -68,10 +82,11 @@ INSERT INTO person(first_name, last_name, middle_name, email, cell_phone, alt_ph
     1
 );
 
-INSERT INTO person(first_name, last_name, middle_name, email, cell_phone, alt_phone, gender, ssn, dob, user_id) VALUES(
+INSERT INTO person(first_name, last_name, middle_name, prefer_name, email, cell_phone, alt_phone, gender, ssn, dob, user_id) VALUES(
 	"Henry",
     "Lu",
     "",
+    "Hairy Lu",
     "henrylu@yahoo.com",
     "1234567890",
     "1230987654",
@@ -81,10 +96,11 @@ INSERT INTO person(first_name, last_name, middle_name, email, cell_phone, alt_ph
     2
 );
 
-INSERT INTO person(first_name, last_name, middle_name, email, cell_phone, alt_phone, gender, ssn, dob, user_id) VALUES(
+INSERT INTO person(first_name, last_name, middle_name, prefer_name, email, cell_phone, alt_phone, gender, ssn, dob, user_id) VALUES(
 	"Teddy",
     "Le",
     "",
+    "Bear Le",
     "teddyle@aoe.com",
     "3211092345",
     "3210981234",
@@ -134,79 +150,107 @@ INSERT INTO address(address_line_1, address_line_2, city, zipcode, state_name, s
     3
 );
 
-INSERT INTO contact(person_id, relationship, title, is_reference, is_emergency, is_landlord) VALUES(
+INSERT INTO contact(person_id, first_name, middle_name, last_name, phone, relationship, is_reference, is_emergency, is_landlord) VALUES(
 	1,
+    "Bob"
+    "",
+    "Davis",
+    "7145436789",
     "friend",
-    "Relationship Title",
     false,
     true,
     false
 );
 
-INSERT INTO contact(person_id, relationship, title, is_reference, is_emergency, is_landlord) VALUES(
+INSERT INTO contact(person_id, first_name, middle_name, last_name, phone, relationship, is_reference, is_emergency, is_landlord) VALUES(
 	1,
-    "Co-Worker",
-    "Cco-worker title",
+    "Tina",
+    "Thanh",
+    "Nguyen",
+    "7142139708",
+    "co-worker",
     true,
-    false,
+    true,
     false
 );
 
-INSERT INTO contact(person_id, relationship, title, is_reference, is_emergency, is_landlord) VALUES(
+INSERT INTO contact(person_id, first_name, middle_name, last_name, phone, relationship, is_reference, is_emergency, is_landlord) VALUES(
 	1,
-    "Friend",
-    "Friend Relationship Title",
-    false,
+    "Katie",
+    "",
+    "Clark",
+    "6183246578",
+    "friend",
+    true,
     true,
     false
 );
 
-INSERT INTO contact(person_id, relationship, title, is_reference, is_emergency, is_landlord) VALUES(
+INSERT INTO contact(person_id, first_name, middle_name, last_name, phone, relationship, is_reference, is_emergency, is_landlord) VALUES(
 	2,
-    "Landlord",
-    "Landlord Relationship Title",
-    true,
+    "Kevin",
+    "",
+    "Garcia",
+    "8185478172",
+    "friend",
+    false,
+    false,
+    false
+);
+
+INSERT INTO contact(person_id, first_name, middle_name, last_name, phone, relationship, is_reference, is_emergency, is_landlord) VALUES(
+	2,
+    "Jackson",
+    "Vars",
+    "Vars",
+    "9260981874",
+    "friend",
+    false,
     false,
     true
 );
 
-INSERT INTO contact(person_id, relationship, title, is_reference, is_emergency, is_landlord) VALUES(
+INSERT INTO contact(person_id, first_name, middle_name, last_name, phone, relationship, is_reference, is_emergency, is_landlord) VALUES(
 	3,
-    "Unknown",
-    "Unknown Relationship Title",
-    false,
-    false,
+    "Johnnie",
+    "Cash",
+    "Cow",
+    "7148969811"
+    "brother-in-law",
+	false,
+    true,
     false
 );
 
+
 INSERT INTO visa_status(visa_type, is_active, date_modified, create_user) VALUES(
-	"H1-B",
+	"Green Card",
     true,
     "2021-05-09",
     "Alice"
 );
 
 INSERT INTO visa_status(visa_type, is_active, date_modified, create_user) VALUES(
-	"L2",
-    false,
+	"Citizen",
+    true,
     "2021-04-10",
     "Henry"
 );
 
 INSERT INTO visa_status(visa_type, is_active, date_modified, create_user) VALUES(
-	"H1-B",
-    true,
+	"F1-OPT",
+    false,
     "2021-05-09",
     "Teddy"
 );
 
 INSERT INTO employee(person_id, title, manager_id, start_date, end_date, avatar, car, visa_status_id, visa_start_date, visa_end_date, driver_license, driver_license_exp_date) VALUES(
 	1,
-    "Title 1",
+    "SQL Engineer",
     10,
     "2021-05-05",
     "2021-05-10",
-    null,
+    "ULR/LINK/TO/ALICE/AVATAR",
     "Honda_Civic_White",
     1,
     "2020-05-10",
@@ -217,11 +261,11 @@ INSERT INTO employee(person_id, title, manager_id, start_date, end_date, avatar,
 
 INSERT INTO employee(person_id, title, manager_id, start_date, end_date, avatar, car, visa_status_id, visa_start_date, visa_end_date, driver_license, driver_license_exp_date) VALUES(
 	2,
-    "Title 2",
+    "Software Engineer",
     11,
     "2017-01-10",
     "2021-05-11",
-    null,
+    "URL/LINK/TO/HENRY/AVATAR",
     "Toyota_Camry_Black",
     2,
     "2016-12-29",
@@ -232,11 +276,11 @@ INSERT INTO employee(person_id, title, manager_id, start_date, end_date, avatar,
 
 INSERT INTO employee(person_id, title, manager_id, start_date, end_date, avatar, car, visa_status_id, visa_start_date, visa_end_date, driver_license, driver_license_exp_date) VALUES(
 	3,
-    "Title 3",
+    "Security Administrator",
     10,
     "2019-05-01",
     "2021-05-11",
-    null,
+    "URL/LINK/TO/TEDDY/AVATAR",
     "Honda_Accord_Blue",
     3,
     "2019-04-15",
@@ -251,8 +295,8 @@ INSERT INTO app_workflow(employee_id, date_created, date_modified, status, comme
     "2021-05-09",
     "2021-05-10",
     1,
-    "Please submit your documents",
-    "I-20"
+    "Please wait for your OPT EAD Card",
+    "OPT Receipt"
 );
 
 INSERT INTO app_workflow(employee_id, date_created, date_modified, status, comment, type) VALUES(
@@ -260,8 +304,8 @@ INSERT INTO app_workflow(employee_id, date_created, date_modified, status, comme
     "2019-03-11",
     "2021-05-10",
     0,
-    "Please complete your document. And start your OPT EAD STEM form.",
-    "OPT EAD"
+    "Please complete your document. Once you complete, you will receive the I-20 form",
+    "I-983"
 );
 
 INSERT INTO app_workflow(employee_id, date_created, date_modified, status, comment, type) VALUES(
@@ -269,6 +313,6 @@ INSERT INTO app_workflow(employee_id, date_created, date_modified, status, comme
     "2017-01-10",
     "2021-05-11",
     0,
-    "Please upload your documents.",
+    "Please submit your form to the university to verify and get your OPT EAD Receipt.",
     "I-20"
 );
