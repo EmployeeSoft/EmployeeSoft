@@ -21,11 +21,20 @@ public class Contact implements Serializable {
     @Column(name = "person_id")
     private Integer personId;
 
+    @Column(name = "full_name")
+    private String fullName;
+
+    @Column(name = "phone")
+    private String phone;
+
     @Column(name = "relationship")
     private String relationship;
 
     @Column(name = "title")
     private String title;
+
+    @Column(name = "address")
+    private String address;
 
     @Column(name = "is_reference")
     private Boolean isReference;
@@ -45,12 +54,14 @@ public class Contact implements Serializable {
         return "Contact{" +
                 "id=" + id +
                 ", personId=" + personId +
+                ", fullName='" + fullName + '\'' +
+                ", phone='" + phone + '\'' +
                 ", relationship='" + relationship + '\'' +
                 ", title='" + title + '\'' +
+                ", address='" + address + '\'' +
                 ", isReference=" + isReference +
                 ", isEmergency=" + isEmergency +
                 ", isLandlord=" + isLandlord +
-                ", person=" + person +
                 '}';
     }
 }

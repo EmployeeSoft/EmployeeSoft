@@ -26,6 +26,7 @@ public class PersonService {
                 .firstName(person.getFirstName())
                 .lastName(person.getLastName())
                 .middleName(person.getMiddleName())
+                .preferName(person.getPreferName())
                 .cellPhone(person.getCellPhone())
                 .altPhone(person.getAltPhone())
                 .gender(person.getGender())
@@ -85,11 +86,13 @@ public class PersonService {
     @Transactional
     public PersonDomain getPersonByUserId(Integer userId) {
         Person person = personDao.getPersonByUserId(userId);
+
         PersonDomain personDomain = PersonDomain.builder()
                 .id(person.getId())
                 .firstName(person.getFirstName())
                 .lastName(person.getLastName())
                 .middleName(person.getMiddleName())
+                .preferName(person.getPreferName())
                 .cellPhone(person.getCellPhone())
                 .altPhone(person.getAltPhone())
                 .gender(person.getGender())
@@ -113,5 +116,45 @@ public class PersonService {
     @Transactional
     public int getPersonIdByUserId(Integer userId) {
         return personDao.getPersonIdByUserId(userId);
+    }
+
+    @Transactional
+    public String getFirstNameByUserId(Integer userId) {
+        return personDao.getFirstNameByUserId(userId);
+    }
+
+    @Transactional
+    public String getMiddleNameByUserId(Integer userId) {
+        return personDao.getMiddleNameByUserId(userId);
+    }
+
+    @Transactional
+    public String getLastNameByUserId(Integer userId) {
+        return personDao.getLastNameByUserId(userId);
+    }
+
+    @Transactional
+    public String getEmailByUserId(Integer userId) {
+        return personDao.getEmailByUserId(userId);
+    }
+
+    @Transactional
+    public String getCellPhoneByUserId(Integer userId) {
+        return personDao.getCellPhoneByUserId(userId);
+    }
+
+    @Transactional
+    public String getAltPhoneByUserId(Integer userId) {
+        return personDao.getAltPhoneByUserId(userId);
+    }
+
+    @Transactional
+    public String getPreferNameByUserId(Integer userId) {
+        return personDao.getPreferNameByUserId(userId);
+    }
+
+    @Transactional
+    public Date getDobByUserId(Integer userId) {
+        return personDao.getDobByUserId(userId);
     }
 }

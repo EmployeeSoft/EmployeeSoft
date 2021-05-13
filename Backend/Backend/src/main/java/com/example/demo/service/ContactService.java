@@ -26,12 +26,10 @@ public class ContactService {
 
         for (Contact contact : contacts) {
             ContactDomain domain = ContactDomain.builder()
-                    .id(contact.getId())
+                    .fullName(contact.getFullName())
+                    .phone(contact.getPhone())
                     .relationship(contact.getRelationship())
-                    .title(contact.getTitle())
-                    .isReference(contact.getIsReference())
-                    .isEmergency(contact.getIsEmergency())
-                    .isLandlord(contact.getIsLandlord())
+                    .address(contact.getAddress())
                     .build();
             contactDomains.add(domain);
         }
@@ -46,12 +44,10 @@ public class ContactService {
 
         for (Contact contact : contacts) {
             ContactDomain domain = ContactDomain.builder()
-                    .id(contact.getId())
+                    .fullName(contact.getFullName())
+                    .phone(contact.getPhone())
                     .relationship(contact.getRelationship())
-                    .title(contact.getTitle())
-                    .isReference(contact.getIsReference())
-                    .isEmergency(contact.getIsEmergency())
-                    .isLandlord(contact.getIsLandlord())
+                    .address(contact.getAddress())
                     .build();
             contactDomains.add(domain);
         }

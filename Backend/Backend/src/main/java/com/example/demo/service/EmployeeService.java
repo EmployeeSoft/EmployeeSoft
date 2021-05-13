@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
@@ -46,5 +47,45 @@ public class EmployeeService {
     @Transactional
     public int getManagerIdByEmployeeId(Integer id) {
         return employeeDao.getManagerIdByEmployeeId(id);
+    }
+
+    @Transactional
+    public String getAvatarLink(Integer personId) {
+        return employeeDao.getAvatarLink(personId);
+    }
+
+    @Transactional
+    public String getVisaTypeByPersonId(Integer personId) {
+        return employeeDao.getVisaTypeByPersonId(personId);
+    }
+
+    @Transactional
+    public Date getVisaStartDateByPersonId(Integer personId) {
+        return employeeDao.getVisaStartDateByPersonId(personId);
+    }
+
+    @Transactional
+    public Date getVisaEndDateByPersonId(Integer personId) {
+        return employeeDao.getVisaEndDateByPersonId(personId);
+    }
+
+    @Transactional
+    public Date getEmployeeStartDateByPersonId(Integer personId) {
+        return employeeDao.getEmployeeStartDateByPersonId(personId);
+    }
+
+    @Transactional
+    public Date getEmployeeEndDateByPersonId(Integer personId) {
+        return employeeDao.getEmployeeEndDateByPersonId(personId);
+    }
+
+    @Transactional
+    public String getTitleByPersonId(Integer personId) {
+        return employeeDao.getTitleByPersonId(personId);
+    }
+
+    @Transactional
+    public String getCarByPersonId(Integer personId){
+        return employeeDao.getCarByPersonId(personId);
     }
 }

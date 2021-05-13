@@ -63,4 +63,28 @@ public interface InterfacePersonDao {
 
     // Given the user ID get the person ID
     int getPersonIdByUserId(Integer userId);
+
+    // Get person's first name by user ID
+    String getFirstNameByUserId(Integer userId);
+
+    // Get person's middle name by user ID
+    String getMiddleNameByUserId(Integer userId);
+
+    // Get person's last name by user ID
+    String getLastNameByUserId(Integer userId);
+
+    // Get person's email by user ID
+    String getEmailByUserId(Integer userId);
+
+    // Get the person's cell phone number by user ID
+    String getCellPhoneByUserId(Integer userId);
+
+    // Get the person's alt phone number by user ID
+    String getAltPhoneByUserId(Integer userId);
+
+    // Get the person's preferred name by user ID
+    String getPreferNameByUserId(Integer userId);
+
+    // Get the person's DoB by user ID
+    Date getDobByUserId(Integer userId);
 }
