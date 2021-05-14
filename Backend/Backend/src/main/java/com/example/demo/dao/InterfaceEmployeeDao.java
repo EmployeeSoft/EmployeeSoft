@@ -6,9 +6,6 @@ import java.io.File;
 import java.sql.Date;
 
 public interface InterfaceEmployeeDao {
-    // Given the person ID, get their employee ID
-    int getEmployeeIdByPersonId(Integer id);
-
     // Given the employee ID, get that employee's person ID
     int getPersonIdByEmployeeId(Integer id);
 
@@ -88,4 +85,10 @@ public interface InterfaceEmployeeDao {
 
     // Given the personId, merge the file
     void updateEmployeeAvatarByPersonId(Integer personId, String avatar);
+
+    // Given the person ID, get their employee ID
+    int getEmployeeIdByPersonId(Integer personId);
+
+    // Get the employee's name
+    String getFirstNameByEmployeeId(Integer id);
 }

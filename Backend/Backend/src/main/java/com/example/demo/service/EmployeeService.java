@@ -127,4 +127,9 @@ public class EmployeeService {
     public void updateEmployeeAvatarByPersonId(Integer personId, String avatar) {
         employeeDao.updateEmployeeAvatarByPersonId(personId, avatar);
     }
+
+    @Transactional
+    public int getEmployeeIdByPersonId(Integer personId) {
+        return employeeDao.getEmployeeIdByPersonId(personId);
+    }
 }

@@ -42,6 +42,9 @@ public class AWSS3Service {
     @Autowired
     private PersonService personService;
 
+    @Autowired
+    private PersonalDocService personalDocService;
+
     @PostConstruct
     private void initializeAmazon() {
         AWSCredentials credentials = new BasicAWSCredentials(this.accessKey, this.secretKey);
@@ -52,17 +55,26 @@ public class AWSS3Service {
                 .build();
     }
 
-    public boolean uploadFile(MultipartFile multipartFile, Integer userId) {
+    public boolean uploadFile(MultipartFile multipartFile, String uploadTo, Integer userId, String fileTitle) {
         String filename = "";
         try {
             File file = convertMultipartFileToFile(multipartFile);
-            filename = multipartFile.getOriginalFilename();
+            filename = userId + "_" + multipartFile.getOriginalFilename();
+            String fileUrl = getURL(filename);
             uploadFileToBucket(filename, file);
 
             // Update the avatar of the employee with the user ID of userId
             int personId = personService.getPersonIdByUserId(userId);
-            String avatarUrl = getURL(filename);
-            employeeService.updateEmployeeAvatarByPersonId(personId, avatarUrl);
+
+            if (uploadTo.equals("avatar")) {
+                employeeService.updateEmployeeAvatarByPersonId(personId, fileUrl);
+                System.out.println("User ID " + userId + " successfully updated profile avatar");
+            } else {
+                int employeeId = employeeService.getEmployeeIdByPersonId(personId);
+                personalDocService.createPersonalDocumentByEmployeeId(employeeId, fileUrl, filename, fileTitle);
+                System.out.println("Employee ID " + employeeId + " successfully uploaded document " + fileTitle);
+            }
+
             file.delete();
             return true;
         } catch (Exception e) {

@@ -6,6 +6,7 @@ SELECT * FROM app_workflow;
 SELECT * FROM contact;
 SELECT * FROM person;
 SELECT * FROM digital_doc;
+SELECT * FROM personal_doc;
 
 USE authentication;
 
