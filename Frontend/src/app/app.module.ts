@@ -17,6 +17,7 @@ import { EmployeeHomeComponent} from './employee/employee-home/employee-home.com
 import { NavbarComponent } from './employee/navbar/navbar.component';
 import { OnboardComponent } from './employee/onboard/onboard.component';
 import { HrHomeComponent } from './hr/hr-home/hr-home.component';
+import { EmployeeVisaStatusManagementComponent } from './employee/employee-visa-status-management/employee-visa-status-management.component';
 import { PersonalInfoComponent } from './employee/personal-info/personal-info.component';
 import { NameSectionComponent } from './employee/personal-info/name-section/name-section.component';
 import { AddressSectionComponent } from './employee/personal-info/address-section/address-section.component';
@@ -35,6 +36,7 @@ import { EmploymentSectionComponent } from './employee/personal-info/employment-
     NavbarComponent,
     OnboardComponent,
     HrHomeComponent,
+    EmployeeVisaStatusManagementComponent,
     PersonalInfoComponent,
     NameSectionComponent,
     AddressSectionComponent,
