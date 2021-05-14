@@ -150,73 +150,73 @@ INSERT INTO address(address_line_1, address_line_2, city, zipcode, state_name, s
     3
 );
 
-INSERT INTO contact(person_id, first_name, middle_name, last_name, phone, relationship, is_reference, is_emergency, is_landlord) VALUES(
+INSERT INTO contact(person_id, full_name, phone, relationship, title, address, is_reference, is_emergency, is_landlord) VALUES(
 	1,
-    "Bob"
-    "",
-    "Davis",
+    "Bob Davis",
     "7145436789",
     "friend",
+    "Doctor",
+    "12345 Street St SomeCity, CS",
     false,
     true,
     false
 );
 
-INSERT INTO contact(person_id, first_name, middle_name, last_name, phone, relationship, is_reference, is_emergency, is_landlord) VALUES(
+INSERT INTO contact(person_id, full_name, phone, relationship, title, address, is_reference, is_emergency, is_landlord) VALUES(
 	1,
-    "Tina",
-    "Thanh",
-    "Nguyen",
+    "Tina Thanh Nguyen",
     "7142139708",
     "co-worker",
+    "SQL Engineer",
+    "54321 City St. StreetCity, SC",
     true,
     true,
     false
 );
 
-INSERT INTO contact(person_id, first_name, middle_name, last_name, phone, relationship, is_reference, is_emergency, is_landlord) VALUES(
+INSERT INTO contact(person_id, full_name, phone, relationship, title, address, is_reference, is_emergency, is_landlord) VALUES(
 	1,
-    "Katie",
-    "",
-    "Clark",
+    "Katie Clark",
     "6183246578",
     "friend",
+    "Sales Associate",
+    "123 ABC St. ABC City, HG",
     true,
     true,
     false
 );
 
-INSERT INTO contact(person_id, first_name, middle_name, last_name, phone, relationship, is_reference, is_emergency, is_landlord) VALUES(
+INSERT INTO contact(person_id, full_name, phone, relationship, title, address, is_reference, is_emergency, is_landlord) VALUES(
 	2,
-    "Kevin",
-    "",
-    "Garcia",
+    "Kevin Garcia",
     "8185478172",
     "friend",
+    "Engineer",
+    "100 Main St. Apt # 10 Random City, RM",
     false,
     false,
     false
 );
 
-INSERT INTO contact(person_id, first_name, middle_name, last_name, phone, relationship, is_reference, is_emergency, is_landlord) VALUES(
+INSERT INTO contact(person_id, full_name, phone, relationship, title, address, is_reference, is_emergency, is_landlord) VALUES(
 	2,
-    "Jackson",
-    "Vars",
-    "Vars",
+    "Jackson Vars Vars",
     "9260981874",
     "friend",
+    "Land Owner",
+    "10923 Dark St. Dark City, DV",
     false,
     false,
     true
 );
 
-INSERT INTO contact(person_id, first_name, middle_name, last_name, phone, relationship, is_reference, is_emergency, is_landlord) VALUES(
+INSERT INTO contact(person_id, full_name, phone, relationship, title, address, is_reference, is_emergency, is_landlord) VALUES(
 	3,
-    "Johnnie",
-    "Cash",
-    "Cow",
-    "7148969811"
+    "Johnnie Cash Cow",
+    "7148969811",
     "brother-in-law",
+    "Thief",
+    "19876 Criminal St. Criminal City, CM",
 	false,
     true,
     false

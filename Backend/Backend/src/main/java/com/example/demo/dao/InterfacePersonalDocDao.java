@@ -37,4 +37,13 @@ public interface InterfacePersonalDocDao {
     // Get the path to the file by using the personal document ID
     // Path to file will be the link to the SS3 buckets
     String getPathById(Integer id);
+
+    // Create a new personal document to be stored in the database
+    PersonalDocument createPersonalDocumentByEmployeeId(Integer employeeId, String path, String filename, String fileTitle);
+
+    // Get the last ID in the personal table
+    int getLastPersonalDocId();
+
+    // Add form to database
+    boolean addPersonalDoc(PersonalDocument document);
 }

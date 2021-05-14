@@ -13,12 +13,6 @@ import java.sql.Date;
 public class EmployeeDao extends AbstractHibernateDao<Employee> implements InterfaceEmployeeDao {
     public EmployeeDao() { setClazz(Employee.class); }
 
-    // Given the person ID, get their employee ID
-    public int getEmployeeIdByPersonId(Integer id) {
-        // TODO
-        return 0;
-    }
-
     // Given the employee ID, get that employee's person ID
     public int getPersonIdByEmployeeId(Integer id) {
         // TODO
@@ -216,5 +210,21 @@ public class EmployeeDao extends AbstractHibernateDao<Employee> implements Inter
         query.setParameter("avatar", avatar);
         query.setParameter("personId", personId);
         query.executeUpdate();
+    }
+
+    // Given the person ID, get their employee ID
+    public int getEmployeeIdByPersonId(Integer personId) {
+        Session session = getCurrentSession();
+        Query query = session.createQuery("SELECT id FROM Employee WHERE personId = :personId");
+        query.setParameter("personId", personId);
+        return (int) query.uniqueResult();
+    }
+
+    // Get the employee's name
+    public String getFirstNameByEmployeeId(Integer id) {
+        Session session = getCurrentSession();
+        Query query = session.createQuery("SELECT e.person.firstName FROM Employee e WHERE e.person.id = :id");
+        query.setParameter("id", id);
+        return (String) query.uniqueResult();
     }
 }
