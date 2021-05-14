@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, FormArray } from '@angular/forms';
 import { AlertService } from '../../../common/_services';
+import {UserInfoEmergencyService} from '../../_services/user-info/user-info-emergency.service';
+import {Address} from '../../_models/address';
+import {first} from 'rxjs/operators';
 
 @Component({
   selector: 'app-emergency-section',
@@ -13,9 +16,12 @@ export class EmergencySectionComponent implements OnInit {
   SecEdit: boolean;
   emergency: any;
   controls: any;
-  private alertService: AlertService;
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private alertService: AlertService,
+    private emergencyService: UserInfoEmergencyService,
+  ) {
   }
 
   ngOnInit(): void {
@@ -58,12 +64,21 @@ export class EmergencySectionComponent implements OnInit {
     this.SecEdit = true;
   }
 
-  endEdit() {
-    this.SecEdit = false;
-  }
-
   cancelEdit() {
     this.alertService.warn('Are you sure to cancel all updates?');
     this.SecEdit = false;
+  }
+
+  onSubmit() {
+    this.SecEdit = false;
+    this.emergencyService.update(this.formData.value)
+      .pipe(first())
+      .subscribe({
+        next: (data) => {
+        },
+        error: error => {
+          this.alertService.error(error);
+        }
+      });
   }
 }

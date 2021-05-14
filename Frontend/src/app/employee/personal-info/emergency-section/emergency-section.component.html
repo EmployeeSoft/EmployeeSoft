@@ -21,7 +21,7 @@
   </div>
   <div class="card-body" style="width: 23rem;" *ngIf="SecEdit">
     <div *ngFor="let eg of getContact" [formGroup]="eg">
-      <form [formGroup]="eg" (ngSubmit)="endEdit()">
+      <form [formGroup]="eg" (ngSubmit)="onSubmit()">
         <div class="form-group">
           <p class="card-text">Full Name</p>
           <input type = 'text' formControlName="name">
@@ -36,7 +36,7 @@
         </div>
       </form>
     </div>
-    <button type="button" class="btn btn-primary" (click)="endEdit()">Cancel</button>
-    <button type="submit" class="btn btn-primary" (click)="endEdit()">Save</button>
+    <button type="button" class="btn btn-primary" (click)="cancelEdit()">Cancel</button>
+    <button type="submit" class="btn btn-primary">Save</button>
   </div>
 </div>

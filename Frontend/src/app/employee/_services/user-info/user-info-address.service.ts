@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import {User} from '../../common/_models';
-import {environment} from '../../../environments/environment';
-import {Address} from '../_models/address';
+import {User} from '../../../common/_models';
+import {environment} from '../../../../environments/environment';
+import {Address} from '../../_models/address';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {Router} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
@@ -16,6 +16,6 @@ export class UserInfoAddressService {
               private http: HttpClient) { }
 
   update(address: Address) {
-    return this.http.post(`${environment.apiUrl}/users/register`, address);
+    return this.http.post(`${environment.backendUrl}/user-info/address`, address);
   }
 }
