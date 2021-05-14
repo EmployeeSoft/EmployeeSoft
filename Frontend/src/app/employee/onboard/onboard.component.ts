@@ -59,7 +59,7 @@ export class OnboardComponent implements OnInit {
   }
 
   get getVisa(){
-    return this.formData.get('visa') as FormArray;
+    return this.formData.get('visa').controls;
   }
 
   get getWorkAuthDoc() {
@@ -67,7 +67,7 @@ export class OnboardComponent implements OnInit {
   }
 
   get getEC() {
-    return this.formData.get('emergencyContact') as FormArray;
+    return this.formData.get('emergencyContact').controls;
   }
 
   addVisa() {
