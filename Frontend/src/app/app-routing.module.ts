@@ -9,6 +9,7 @@ import {OnboardComponent} from './employee/onboard/onboard.component';
 import { RegisterComponent } from './common/account/register.component';
 import { HrHomeComponent } from './hr/hr-home/hr-home.component';
 import { EmployeeVisaStatusManagementComponent } from './employee/employee-visa-status-management/employee-visa-status-management.component';
+import { PersonalInfoComponent } from './employee/personal-info/personal-info.component';
 
 const accountModule = () => import('./common/account/account.module').then(x => x.AccountModule);
 const usersModule = () => import('./common/users/users.module').then(x => x.UsersModule);
@@ -23,7 +24,7 @@ const routes: Routes = [
     { path: 'register', component: RegisterComponent },
     { path: 'onboard', component: OnboardComponent},
     { path: 'employee/visa', component: EmployeeVisaStatusManagementComponent},
-
+    { path: 'test', component: PersonalInfoComponent},
 
     // otherwise redirect to home
     // { path: '**', redirectTo: '' }

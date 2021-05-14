@@ -1,0 +1,62 @@
+<div class="card">
+  <div class="card-header">
+    Contact Information Section
+  </div>
+  <div class="card-body" style="width: 23rem;" *ngIf="!SecEdit">
+    <div>
+      <p class="card-text">Work Authentication</p>
+      <h5 class="card-title">{{formData.controls['workAuth'].value}}</h5>
+    </div>
+    <div>
+      <p class="card-text">Work Auth Start Date</p>
+      <h5 class="card-title">{{formData.controls['waStart'].value}}</h5>
+    </div>
+    <div>
+      <p class="card-text">Work Auth End Date</p>
+      <h5 class="card-title">{{formData.controls['waEnd'].value}}</h5>
+    </div>
+    <div>
+      <p class="card-text">Employment Start Date</p>
+      <h5 class="card-title">{{formData.controls['employStart'].value}}</h5>
+    </div>
+    <div>
+      <p class="card-text">Employment End Date</p>
+      <h5 class="card-title">{{formData.controls['employEnd'].value}}</h5>
+    </div>
+    <div>
+      <p class="card-text">Title</p>
+      <h5 class="card-title">{{formData.controls['title'].value}}</h5>
+    </div>
+    <button type="button" class="btn btn-primary" (click)="startEdit()">Edit</button>
+  </div>
+  <div class="card-body" style="width: 23rem;" *ngIf="SecEdit">
+    <form [formGroup]="formData" (ngSubmit)="endEdit()">
+      <div class="form-group">
+        <p class="card-text">Work Authentication</p>
+        <input type = 'text' formControlName="workAuth">
+      </div>
+      <div class="form-group">
+        <p class="card-text">Work Auth Start Date</p>
+        <input type = 'text' formControlName="waStart">
+      </div>
+      <div class="form-group">
+        <p class="card-text">Work Auth End Date</p>
+        <input type = 'text' formControlName="waEnd">
+      </div>
+      <div class="form-group">
+        <p class="card-text">Employment Start Date</p>
+        <input type = 'text' formControlName="employStart">
+      </div>
+      <div class="form-group">
+        <p class="card-text">Employment End Date</p>
+        <input type = 'text' formControlName="employStart">
+      </div>
+      <div class="form-group">
+        <p class="card-text">Title</p>
+        <input type = 'text' formControlName="title">
+      </div>
+      <button type="button" class="btn btn-primary" (click)="endEdit()">Cancel</button>
+      <button type="submit" class="btn btn-primary" (click)="endEdit()">Save</button>
+    </form>
+  </div>
+</div>
