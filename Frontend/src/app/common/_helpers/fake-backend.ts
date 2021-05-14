@@ -3,11 +3,28 @@ import { HttpRequest, HttpResponse, HttpHandler, HttpEvent, HttpInterceptor, HTT
 import { Observable, of, throwError } from 'rxjs';
 import { delay, materialize, dematerialize } from 'rxjs/operators';
 import { stringify } from '@angular/compiler/src/util';
-import { User } from '../_models';
+import { EmployeeVisa, User } from '../_models';
 
 // array in local storage for registered users
 const usersKey = 'angular-10-registration-login-example-users';
 let users = JSON.parse(localStorage.getItem(usersKey)!) || [];
+
+// - start: employee visa fake data
+const employeeVisaKey = 'empVisaKey'
+let optEadDaysLeft = 10;
+let employeeVisaObject = {
+  "hasOptReceipt": true,
+  "hasUploadedOptEad": false,
+  "optEadDaysLeft": optEadDaysLeft,
+  "isOptEadLessThan100Days": optEadDaysLeft < 100,
+  "hasUploadedFormI983": false,
+  "hasFormI983HrSignedAndApproved": false,
+  "hasUploadedFormI20": false,
+  "hasUploadedOptStemReceipt": false,
+  "hasUploadedOptStemEad": false
+}
+localStorage.setItem('empVisaKey', JSON.stringify(employeeVisaObject));
+// - end: employee visa fake data
 
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
@@ -30,6 +47,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return updateUser();
                 case url.match(/\/users\/\d+$/) && method === 'DELETE':
                     return deleteUser();
+                case url.match(/\/employee\/visa\//) && method === 'GET':
+                  return getEmployeeVisaById();
                 default:
                     // pass through any requests not handled above
                     return next.handle(request);
@@ -129,6 +148,39 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             const urlParts = url.split('/');
             return parseInt(urlParts[urlParts.length - 1]);
         }
+
+        // custom
+
+        function getEmployeeVisaById() {
+            const employeeVisa = JSON.parse(localStorage.getItem('empVisaKey')!);
+            return ok(basicDetailsEmpVisa(employeeVisa));
+        }
+
+        function basicDetailsEmpVisa(employeeVisa: EmployeeVisa) {
+          const {
+            hasOptReceipt,
+            hasUploadedOptEad,
+            optEadDaysLeft,
+            isOptEadLessThan100Days,
+            hasUploadedFormI983,
+            hasFormI983HrSignedAndApproved,
+            hasUploadedFormI20,
+            hasUploadedOptStemReceipt,
+            hasUploadedOptStemEad
+           } = employeeVisa;
+          return  {
+            hasOptReceipt,
+            hasUploadedOptEad,
+            optEadDaysLeft,
+            isOptEadLessThan100Days,
+            hasUploadedFormI983,
+            hasFormI983HrSignedAndApproved,
+            hasUploadedFormI20,
+            hasUploadedOptStemReceipt,
+            hasUploadedOptStemEad
+           };
+      }
+
     }
 }
 

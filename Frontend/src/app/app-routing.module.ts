@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './common/home';
 import { AuthGuard } from './common/_helpers';
-import { Role } from './common/_models';
+import { Role } from './common/_models/role';
 import { HireComponent } from './hr/hire/hire.component';
 import { EmployeeHomeComponent } from './employee/employee-home/employee-home.component';
 import {OnboardComponent} from './employee/onboard/onboard.component';
