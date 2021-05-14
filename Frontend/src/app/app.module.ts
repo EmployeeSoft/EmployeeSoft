@@ -1,10 +1,14 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 // used to create fake backend
 import { ErrorInterceptor, fakeBackendProvider, JwtInterceptor } from './common/_helpers';
+
+// search module
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -23,6 +27,7 @@ import { NameSectionComponent } from './employee/personal-info/name-section/name
 import { AddressSectionComponent } from './employee/personal-info/address-section/address-section.component';
 import { ContactSectionComponent } from './employee/personal-info/contact-section/contact-section.component';
 import { EmploymentSectionComponent } from './employee/personal-info/employment-section/employment-section.component';
+import { EmployeeProfileComponent } from './hr/employee-profile/employee-profile.component';
 
 @NgModule({
   declarations: [
@@ -42,11 +47,14 @@ import { EmploymentSectionComponent } from './employee/personal-info/employment-
     AddressSectionComponent,
     ContactSectionComponent,
     EmploymentSectionComponent,
+    EmployeeProfileComponent
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    Ng2SearchPipeModule,
     AppRoutingModule
   ],
   providers: [

@@ -14,17 +14,28 @@ const employeeVisaKey = 'empVisaKey'
 let optEadDaysLeft = 10;
 let employeeVisaObject = {
   "hasOptReceipt": true,
-  "hasUploadedOptEad": false,
+  "hasUploadedOptEad": true,
   "optEadDaysLeft": optEadDaysLeft,
   "isOptEadLessThan100Days": optEadDaysLeft < 100,
-  "hasUploadedFormI983": false,
-  "hasFormI983HrSignedAndApproved": false,
-  "hasUploadedFormI20": false,
+  "hasUploadedFormI983": true,
+  "hasFormI983HrSignedAndApproved": true,
+  "hasUploadedFormI20": true,
   "hasUploadedOptStemReceipt": false,
   "hasUploadedOptStemEad": false
 }
 localStorage.setItem('empVisaKey', JSON.stringify(employeeVisaObject));
 // - end: employee visa fake data
+
+// - start: employee profile fake data
+const employeeProfile = 'empProfile'
+let employees = [
+  { name: 'Clark', ssn: '123-876532', startDate: '3/15/2020', visaStatus: "F-1 Visa" },
+  { name: 'Johnny' , ssn: '123-97641', startDate: '3/15/2020', visaStatus: "F-1 Visa"},
+  { name: 'Elliot' , ssn: '123-23112', startDate: '3/15/2020', visaStatus: "F-1 Visa"},
+  { name: 'Ding' , ssn: '123-231232', startDate: '3/15/2020', visaStatus: "F-1 Visa"}
+];
+localStorage.setItem('empProfile', JSON.stringify(employees));
+// - end: employee profile fake data
 
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
@@ -49,6 +60,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return deleteUser();
                 case url.match(/\/employee\/visa\//) && method === 'GET':
                   return getEmployeeVisaById();
+                case url.match(/\/hr\/employee-profile\//) && method === 'GET':
+                  return getAllEmployee();
                 default:
                     // pass through any requests not handled above
                     return next.handle(request);
@@ -179,6 +192,11 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             hasUploadedOptStemReceipt,
             hasUploadedOptStemEad
            };
+      }
+
+      function getAllEmployee() {
+        const employeeProfile = JSON.parse(localStorage.getItem('empProfile')!);
+        return ok(employeeProfile);
       }
 
     }
