@@ -1,1 +1,42 @@
-<p>emergency-section works!</p>
+<div class="card">
+  <div class="card-header">
+    Emergency Contact Section
+  </div>
+  <div class="card-body" style="width: 23rem;" *ngIf="!SecEdit">
+    <div *ngFor="let eg of getContact" [formGroup]="eg">
+      <div>
+        <p class="card-text">Full Name</p>
+        <h5 class="card-title">{{eg.controls.name.value}}</h5>
+      </div>
+      <div>
+        <p class="card-text">Phone</p>
+        <h5 class="card-title">{{eg.controls.phone.value}}</h5>
+      </div>
+      <div>
+        <p class="card-text">Address</p>
+        <h5 class="card-title">{{eg.controls.address.value}}</h5>
+      </div>
+    </div>
+    <button type="button" class="btn btn-primary" (click)="startEdit()">Edit</button>
+  </div>
+  <div class="card-body" style="width: 23rem;" *ngIf="SecEdit">
+    <div *ngFor="let eg of getContact" [formGroup]="eg">
+      <form [formGroup]="eg" (ngSubmit)="endEdit()">
+        <div class="form-group">
+          <p class="card-text">Full Name</p>
+          <input type = 'text' formControlName="name">
+        </div>
+        <div class="form-group">
+          <p class="card-text">Phone</p>
+          <input type = 'text' formControlName="phone">
+        </div>
+        <div class="form-group">
+          <p class="card-text">Address</p>
+          <input type = 'text' formControlName="address">
+        </div>
+      </form>
+    </div>
+    <button type="button" class="btn btn-primary" (click)="endEdit()">Cancel</button>
+    <button type="submit" class="btn btn-primary" (click)="endEdit()">Save</button>
+  </div>
+</div>
