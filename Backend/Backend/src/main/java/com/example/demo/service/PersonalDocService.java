@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+
 @Service
 public class PersonalDocService {
     private InterfacePersonalDocDao personalDocDao;
@@ -26,16 +28,40 @@ public class PersonalDocService {
         // Personal Document
         PersonalDocument document = personalDocDao.createPersonalDocumentByEmployeeId(employeeId, path, filename, fileTitle);
 
-        PersonalDocumentDomain domain = PersonalDocumentDomain.builder()
-                .id(document.getId())
-                .employeeDomain(employeeService.getEmployeeByEmployeeId(employeeId))
-                .path(document.getPath())
-                .title(document.getTitle())
-                .comment(document.getComment())
-                .dateCreated(document.getDateCreated())
-                .createdBy(document.getCreatedBy())
-                .build();
+        if (document != null) {
+            PersonalDocumentDomain domain = PersonalDocumentDomain.builder()
+                    .id(document.getId())
+                    .employeeDomain(employeeService.getEmployeeByEmployeeId(employeeId))
+                    .path(document.getPath())
+                    .title(document.getTitle())
+                    .comment(document.getComment())
+                    .dateCreated(document.getDateCreated())
+                    .createdBy(document.getCreatedBy())
+                    .build();
 
-        return domain;
+            return domain;
+        } else {
+            return null;
+        }
+    }
+
+    @Transactional
+    public ArrayList<PersonalDocumentDomain> getPersonalDocsByEmployeeId(Integer employeeId) {
+        ArrayList<PersonalDocumentDomain> domains = new ArrayList<>();
+
+        // Loop through documents
+        for (PersonalDocument document : personalDocDao.getPersonalDocsByEmployeeId(employeeId)) {
+            PersonalDocumentDomain domain = PersonalDocumentDomain.builder()
+                    .id(document.getId())
+                    .path(document.getPath())
+                    .title(document.getTitle())
+                    .comment(document.getComment())
+                    .dateCreated(document.getDateCreated())
+                    .createdBy(document.getCreatedBy())
+                    .build();
+            domains.add(domain);
+        }
+
+        return domains;
     }
 }

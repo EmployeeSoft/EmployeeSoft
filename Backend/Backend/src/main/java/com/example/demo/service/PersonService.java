@@ -14,6 +14,12 @@ public class PersonService {
     private InterfacePersonDao personDao;
 
     @Autowired
+    private AddressService addressService;
+
+    @Autowired
+    private ContactService contactService;
+
+    @Autowired
     public void setInterfacePersonDao(InterfacePersonDao personDao) {
         this.personDao = personDao;
     }
@@ -95,10 +101,12 @@ public class PersonService {
                 .preferName(person.getPreferName())
                 .cellPhone(person.getCellPhone())
                 .altPhone(person.getAltPhone())
+                .email(person.getEmail())
                 .gender(person.getGender())
                 .ssn(person.getSsn())
                 .dob(person.getDob())
-//                .addressDomains(person.)
+                .addressDomain(addressService.getAddressListByPersonId(person.getId()))
+                .contactDomain(contactService.getContactListByPersonId(person.getId()))
                 .build();
 
         return personDomain;
@@ -157,5 +165,10 @@ public class PersonService {
     @Transactional
     public Date getDobByUserId(Integer userId) {
         return personDao.getDobByUserId(userId);
+    }
+
+    @Transactional
+    public int getUserIdByPersonId(Integer personId) {
+        return personDao.getUserIdByPersonId(personId);
     }
 }

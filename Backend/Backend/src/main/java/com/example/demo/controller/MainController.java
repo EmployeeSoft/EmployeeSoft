@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.domain.*;
 import com.example.demo.domain.common.ServiceStatus;
+import com.example.demo.domain.response.AllEmployeeResponse;
 import com.example.demo.domain.response.HomePageResponse;
 import com.example.demo.domain.response.UploadResponse;
 import com.example.demo.service.*;
@@ -152,6 +153,26 @@ public class MainController {
             response.setUrl(userId + "_" + awss3Service.getURL(filename));
         } else {
             response.setServiceStatus(new ServiceStatus("Failed", false, "Unable to upload file"));
+        }
+
+        return response;
+    }
+
+
+    @GetMapping("/all-employees")
+    public AllEmployeeResponse getAllEmployees(@RequestBody UserDomain userDomain) {
+        // Return type
+        AllEmployeeResponse response = new AllEmployeeResponse();
+
+        // Used to check user's role
+        String userRole = userDomain.getUserRole();
+
+        if (userRole.equals("hr")) {
+            response.setEmployees(employeeService.getAllEmployees());
+            response.setServiceStatus(new ServiceStatus("Success", true, ""));
+        } else {
+            String errorMsg = "You are not authorized";
+            response.setServiceStatus(new ServiceStatus("Fail", false, errorMsg));
         }
 
         return response;

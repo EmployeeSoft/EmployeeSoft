@@ -8,13 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+
 
 @Service
 public class AppWorkFlowService {
     private InterfaceAppWorkFlowDao appWorkFlowDao;
 
     @Autowired
-    public void setAppWorkFlow(InterfaceAppWorkFlowDao appWorkFlow) {
+    public void setAppWorkFlow(InterfaceAppWorkFlowDao appWorkFlowDao) {
         this.appWorkFlowDao = appWorkFlowDao;
     }
 
@@ -38,4 +40,22 @@ public class AppWorkFlowService {
         }
     }
 
+    @Transactional
+    public ArrayList<ApplicationWorkFlowDomain> getAppWorkFlowsByEmployeeId(Integer employeeId) {
+        ArrayList<ApplicationWorkFlowDomain> domains = new ArrayList<>();
+
+        for (ApplicationWorkFlow app : appWorkFlowDao.getAppWorkFlowsByEmployeeId(employeeId)) {
+            ApplicationWorkFlowDomain domain = ApplicationWorkFlowDomain.builder()
+                    .id(app.getId())
+                    .dateCreated(app.getDateCreated())
+                    .dateModified(app.getDateModified())
+                    .status(app.getStatus())
+                    .comment(app.getComment())
+                    .type(app.getType())
+                    .build();
+
+            domains.add(domain);
+        }
+        return domains;
+    }
 }

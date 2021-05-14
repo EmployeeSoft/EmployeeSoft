@@ -3,6 +3,7 @@ package com.example.demo.domain;
 import lombok.*;
 
 import java.sql.Date;
+import java.util.ArrayList;
 
 @Getter
 @Setter
@@ -22,8 +23,8 @@ public class EmployeeDomain {
     private Date visaStartDate;
     private Date visaEndDate;
     private String driverLicense;
-    private String driverLicenseExpDate;
+    private Date driverLicenseExpDate;
     private PersonDomain personDomain;
-    private PersonalDocumentDomain personalDocumentDomain;
-    private ApplicationWorkFlowDomain applicationWorkFlowDomain;
+    private ArrayList<PersonalDocumentDomain> personalDocumentDomain;
+    private ArrayList<ApplicationWorkFlowDomain> applicationWorkFlowDomain;
 }
