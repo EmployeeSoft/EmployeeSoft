@@ -22,6 +22,8 @@ import { NameSectionComponent } from './employee/personal-info/name-section/name
 import { AddressSectionComponent } from './employee/personal-info/address-section/address-section.component';
 import { ContactSectionComponent } from './employee/personal-info/contact-section/contact-section.component';
 import { EmploymentSectionComponent } from './employee/personal-info/employment-section/employment-section.component';
+import { EmergencySectionComponent } from './employee/personal-info/emergency-section/emergency-section.component';
+import { DocumentSectionComponent } from './employee/personal-info/document-section/document-section.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +42,8 @@ import { EmploymentSectionComponent } from './employee/personal-info/employment-
     AddressSectionComponent,
     ContactSectionComponent,
     EmploymentSectionComponent,
+    EmergencySectionComponent,
+    DocumentSectionComponent,
   ],
   imports: [
     BrowserModule,
