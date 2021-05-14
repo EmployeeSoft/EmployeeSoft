@@ -98,6 +98,7 @@ public class PersonService {
                 .gender(person.getGender())
                 .ssn(person.getSsn())
                 .dob(person.getDob())
+//                .addressDomains(person.)
                 .build();
 
         return personDomain;

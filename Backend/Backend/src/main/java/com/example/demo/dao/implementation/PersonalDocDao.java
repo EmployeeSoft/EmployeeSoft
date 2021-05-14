@@ -22,73 +22,6 @@ public class PersonalDocDao extends AbstractHibernateDao<PersonalDocument> imple
     @Autowired
     private EmployeeDao employeeDao;
 
-    // Given the personal document ID, get the title of the document
-    public String getTitleById(Integer id) {
-        // TODO
-        return "";
-    }
-
-    // Given the personal document ID, get the comment on that document
-    public String getCommentById(Integer id) {
-        // TODO
-        return "";
-    }
-
-    // Given the personal document ID, get the date the document was created
-    public Date getDateCreatedById(Integer id) {
-        // TODO
-        return new Date(1234567890);
-    }
-
-    // Given the personal document ID, get the person who created the file
-    public String getCreatedByById(Integer id) {
-        // TODO
-        return "";
-    }
-
-
-    ///// REQUIRED METHODS BELOW /////
-
-
-    // Given the employee ID, get the Personal documents information
-    public List<PersonalDocument> getPersonalDocumentListById(Integer employeeId) {
-        // TODO
-        // Will implement once we get SS3 buckets running
-
-        return new LinkedList<PersonalDocument>();
-    }
-
-    // Given the ID, get the personal document that is associated with that ID
-    public PersonalDocument getPersonalDocumentById(Integer id) {
-        // TODO
-        // Will implement once we get SS3 buckets running
-
-        return new PersonalDocument();
-    }
-
-    // Given the employee ID, get the personal document ID
-    public int getPersonalDocIdByEmployeeId(Integer employeeId) {
-        // TODO
-        // Will implement once we get SS3 buckets running
-
-        return 0;
-    }
-
-    // Given the personal document ID, get the employee ID
-    public int getEmployeeIdByPersonalDocId(Integer id) {
-        // TODO
-        // Will implement once we get SS3 buckets running
-        return 0;
-    }
-
-    // Get the path to the file by using the personal document ID
-    // Path to file will be the link to the SS3 buckets
-    public String getPathById(Integer id) {
-        // TODO
-        // Will implement once we get SS3 buckets running
-        return "";
-    }
-
     // Create a new personal document to be stored in the database
     public PersonalDocument createPersonalDocumentByEmployeeId(Integer employeeId, String path, String filename,
                                                                String fileTitle) {
@@ -102,7 +35,6 @@ public class PersonalDocDao extends AbstractHibernateDao<PersonalDocument> imple
 
         // Create a document to return
         PersonalDocument document = new PersonalDocument();
-        document.setId(getLastPersonalDocId() + 1);
         document.setEmployeeId(employeeId);
         document.setEmployee(employee);
         document.setPath(path);
@@ -112,29 +44,15 @@ public class PersonalDocDao extends AbstractHibernateDao<PersonalDocument> imple
         document.setCreatedBy(employeeDao.getFirstNameByEmployeeId(employeeId));
 
         // Add to database
-        addPersonalDoc(document);
-
-        return document;
-    }
-
-    // Get the last ID in the personal table
-    public int getLastPersonalDocId() {
-        Session session = getCurrentSession();
-        Query query = session.createQuery("FROM PersonalDocument");
-        return query.list().size();
-    }
-
-    // Add form to database
-    public boolean addPersonalDoc(PersonalDocument document) {
         Session session = getCurrentSession();
 
         try {
-            session.merge(document);
+            session.save(document);
             System.out.println("Successfully added " + document.getTitle() + " to database");
         } catch (Exception e) {
             System.out.println("An error had occurred: " + e);
-            return false;
         }
-        return true;
+
+        return document;
     }
 }

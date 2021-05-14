@@ -149,7 +149,7 @@ public class MainController {
 
         if (awss3Service.uploadFile(file, uploadTo, userId, fileTitle)) {
             response.setServiceStatus(new ServiceStatus("Success", true, ""));
-            response.setUrl(awss3Service.getURL(filename));
+            response.setUrl(userId + "_" + awss3Service.getURL(filename));
         } else {
             response.setServiceStatus(new ServiceStatus("Failed", false, "Unable to upload file"));
         }
