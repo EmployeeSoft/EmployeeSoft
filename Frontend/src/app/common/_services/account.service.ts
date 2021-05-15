@@ -1,8 +1,9 @@
 ﻿import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 import { environment } from '../../../environments/environment';
 import { User } from '../_models';
@@ -33,7 +34,9 @@ export class AccountService {
       const headers = {
         'Content-Type':  'application/json'
       };
-      return this.http.post<any>(`http://localhost:9999/login`, { username, password })
+      return this.http.post<any>(`http://localhost:9999/login`, { username, password }, {
+        withCredentials: true
+      })
         .pipe(map(user => {
           console.log(user);
           // login successful if there's a jwt token in the response
@@ -41,6 +44,7 @@ export class AccountService {
           if (user) {
               // store user details and jwt token in local storage to keep user logged in between page refreshes
               localStorage.setItem('user', JSON.stringify(user));
+              localStorage.setItem('jwt', user.jwt);
               this.userSubject.next(user);
           }
 
@@ -51,6 +55,12 @@ export class AccountService {
     logout() {
         // remove user from local storage and set current user to null
         localStorage.removeItem('user');
+        localStorage.removeItem('jwt');
+
+        // CALL LOGOUT API FROM LOCALHOST:9999
+        // TO DO
+
+
         this.userSubject.next(null!);
         this.router.navigate(['/account/login']);
     }
@@ -119,5 +129,14 @@ export class AccountService {
         reportProgress: true,
         observe: 'events'
       });
+    }
+
+    download(filename: string) {
+      const jwt = localStorage.getItem('jwt');
+      const helper = new JwtHelperService();
+      const decodedJwt = helper.decodeToken(jwt!);
+      const userId = decodedJwt.sub.toString();
+      const params = new HttpParams().set('userId', userId).set('filename', filename);
+      return this.http.get(`http://localhost:8080/download`, { params });
     }
 }

@@ -185,7 +185,7 @@ public class MainController {
         Person person = onBoardService.addNewPerson(personDomain);
         int employeeId = onBoardService.addNewEmployee(employeeDomain, person);
         onBoardService.addNewAddress(addressDomain, person);
-        for (ContactDomain contactDomain: contactDomains) {
+        for (ContactDomain contactDomain : contactDomains) {
             onBoardService.addNewContact(contactDomain, person);
         }
 

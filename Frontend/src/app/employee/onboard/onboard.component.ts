@@ -242,4 +242,8 @@ export class OnboardComponent implements OnInit {
     console.log(event.target.files[0]);
     this.avatarFile = event.target.files[0];
   }
+
+  onDownload() {
+    this.accountService.download('test');
+  }
 }
