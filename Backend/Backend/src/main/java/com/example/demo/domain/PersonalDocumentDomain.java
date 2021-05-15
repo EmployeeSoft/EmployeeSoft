@@ -15,6 +15,6 @@ public class PersonalDocumentDomain {
     private String path;
     private String title;
     private String comment;
-    private Date dateCreated;
+    private String dateCreated;
     private String createdBy;
 }

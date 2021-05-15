@@ -14,34 +14,6 @@ import java.sql.Date;
 public class PersonDao extends AbstractHibernateDao<Person> implements InterfacePersonDao {
     public PersonDao() { setClazz(Person.class); }
 
-    // Given the person's SSN, get the person's information
-    public Person getPersonBySSN(String ssn) {
-        // TODO
-        return new Person();
-    }
-
-    // Given the person's first name, last name, and date of birth, get the person information
-    public Person getPersonByInfo(String firstName, String lastName, Date dob) {
-        // TODO
-        return new Person();
-    }
-
-    // Get the person's SSN, by the person ID
-    public String getSSNById(Integer id) {
-        // TODO
-        return "";
-    }
-
-    // Given the person ID, get the user ID
-    public int getUserIdById(Integer id) {
-        // TODO
-        return 0;
-    }
-
-
-    ///// REQUIRED METHODS BELOW /////
-
-
     // Given the ID, get the person's information
     public Person getPersonById(Integer id) {
         Session session = getCurrentSession();
@@ -289,8 +261,8 @@ public class PersonDao extends AbstractHibernateDao<Person> implements Interface
         }
     }
 
-    public boolean updatePersonInfo(PersonDomain personDomain){
-        try{
+    public boolean updatePersonInfo(PersonDomain personDomain) {
+        try {
             Session session = getCurrentSession();
             Query query = session.createQuery("UPDATE Person SET preferName =: preferName, dob =: dob, gender =: gender, " +
                     "ssn =: ssn WHERE id = :id");
@@ -301,9 +273,21 @@ public class PersonDao extends AbstractHibernateDao<Person> implements Interface
             query.setParameter("id", personDomain.getId());
             query.executeUpdate();
             return true;
-        } catch (Exception err){
+        } catch (Exception err) {
             err.printStackTrace();
             return false;
         }
+    }
+    @Override
+    public Person addNewPerson(Person person) {
+        return merge(person);
+    }
+  
+    // Get the user ID from the person ID
+    public int getUserIdByPersonId(Integer personId) {
+        Session session = getCurrentSession();
+        Query query = session.createQuery("SELECT userId FROM Person WHERE id = :personId");
+        query.setParameter("personId", personId);
+        return (int) query.uniqueResult();
     }
 }

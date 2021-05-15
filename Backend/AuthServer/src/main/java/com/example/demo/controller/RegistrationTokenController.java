@@ -68,10 +68,12 @@ public class RegistrationTokenController {
         String username = userDomain.getUsername();
         String pwd = userDomain.getPassword();
         String email = userDomain.getEmail();
-        if (username == null || pwd == null || !registrationTokenService.createUser(username, pwd, email)) {
+        int userId = 0;
+        if (username == null || pwd == null || (userId = registrationTokenService.createUser(username, pwd, email)) == 0 ) {
             response.setServiceStatus(new ServiceStatus("FAIL", false, "Duplicate username"));
             return response;
         }
+        response.setUserId(userId);
         response.setServiceStatus(new ServiceStatus("SUCCESS", true, ""));
         return response;
     }

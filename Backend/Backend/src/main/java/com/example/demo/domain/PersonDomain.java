@@ -3,6 +3,7 @@ package com.example.demo.domain;
 import lombok.*;
 
 import java.sql.Date;
+import java.util.ArrayList;
 
 @Getter
 @Setter
@@ -20,9 +21,12 @@ public class PersonDomain {
     private String altPhone;
     private Integer gender;
     private String ssn;
-    private Date dob;
+    private String dob;
+    private Integer userId;
     private AddressDomain addressDomain;
     private ContactDomain contactDomain;
+    private ArrayList<AddressDomain> addressDomains;
+    private ArrayList<ContactDomain> contactDomains;
 
     @Override
     public String toString() {

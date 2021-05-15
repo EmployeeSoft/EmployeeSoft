@@ -31,11 +31,12 @@ public class LoginController {
             return loginResponse;
         }
         Role role = loginService.getRoleByUser(user);
-        String jwt = JwtUtil.generateToken(username, JwtConstant.JWT_VALID_DURATION);
+        String jwt = JwtUtil.generateToken(user.getId().toString(), JwtConstant.JWT_VALID_DURATION);
         CookieUtil.create(response, JwtConstant.JWT_COOKIE_NAME, jwt, false, -1, "localhost");
         loginResponse.setServiceStatus(new ServiceStatus("SUCCESS", true, ""));
         loginResponse.setRedirectUrl("http://localhost:4200/home?id=" + user.getId());
         loginResponse.setRole(role.getRoleName());
+        loginResponse.setJwt(jwt);
         return loginResponse;
     }
 

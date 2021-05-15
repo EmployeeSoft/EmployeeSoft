@@ -17,7 +17,7 @@ import java.util.List;
 
 @Service
 public class RegistrationTokenService {
-    private static final int VALID_TIME_IN_MILLIS = 5 * 60 * 1000;
+    private static final int VALID_TIME_IN_MILLIS = 24 * 60 * 60 * 1000;
     private static final int EMPLOYEE_ROLE_ID = 2;
 
     private InterfaceRegistrationTDao interfaceRegistrationTDao;
@@ -74,11 +74,10 @@ public class RegistrationTokenService {
     }
 
     @Transactional
-    public boolean createUser(String username, String pwd, String email) {
-
+    public int createUser(String username, String pwd, String email) {
         User user = interfaceUserDao.getUserByUsername(username);
-        if (user != null) {
-            return false;
+        if (user != null) { //duplicated username
+            return 0;
         }
         user = new User();
         user.setUsername(username);
@@ -99,6 +98,6 @@ public class RegistrationTokenService {
         userRole.setLastModifiedUser("Elliot");
 
         interfaceUserRoleDao.createUserRole(userRole);
-        return true;
+        return user.getId();
     }
 }

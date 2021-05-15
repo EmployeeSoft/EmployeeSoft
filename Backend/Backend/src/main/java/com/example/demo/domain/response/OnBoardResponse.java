@@ -1,16 +1,13 @@
 package com.example.demo.domain.response;
 
 import com.example.demo.domain.common.ServiceStatus;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Setter
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
-@Builder
-public class LoginResponse {
+public class OnBoardResponse {
     private ServiceStatus serviceStatus;
-    private String redirectUrl;
-    private String role;
-    private String jwt;
 }

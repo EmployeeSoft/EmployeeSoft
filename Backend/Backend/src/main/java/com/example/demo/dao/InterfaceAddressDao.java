@@ -7,19 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface InterfaceAddressDao {
-    // Given the Address information, get the Person who live at that address
-    Person getPersonByAddress(Address address);
-
-    // Given the person ID, get the address ID that belongs to that person
-    int getAddressIdByPersonId(Integer personId);
-
-    // Given the Address ID, get the address information
-    Address getAddressById(Integer id);
-
-
-    ///// REQUIRED METHODS BELOW /////
-
-
     // Get a list of address that is associated with the given person ID
     List<Address> getAddressListById(Integer id);
 
@@ -44,4 +31,5 @@ public interface InterfaceAddressDao {
     // Given the person ID, get the person's address information
     List<Address> getAddressListByPersonId(Integer personId);
 
+    void addNewAddress(Address address);
 }
