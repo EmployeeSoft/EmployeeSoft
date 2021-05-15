@@ -27,6 +27,7 @@ export class AddressSectionComponent implements OnInit {
     this.secondAddress = 'Apt 4';
     this.addressSecEdit = false;
     this.formData = this.fb.group({
+      id: [2],
       primaryAddress: [this.primaryAddress],
       secondAddress: [this.secondAddress],
     });

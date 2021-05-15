@@ -25,6 +25,7 @@ export class NameSectionComponent implements OnInit {
     this.genderOp = ['Male', 'Female', 'Do not want to answer'];
     this.nameSecEdit = false;
     this.formData = this.fb.group({
+      id: [2],
       fullName: [this.nameSection[0]],
       preferName: [this.nameSection[1]],
       avatar: [''],

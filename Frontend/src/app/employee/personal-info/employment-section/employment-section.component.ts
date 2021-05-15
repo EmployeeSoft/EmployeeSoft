@@ -23,6 +23,7 @@ export class EmploymentSectionComponent implements OnInit {
     this.employmentSection = ['F1', '2020/08/20', '2023/09/21', '2021/03/09', '2022/09/31', 'Software Developer'];
     this.SecEdit = false;
     this.formData = this.fb.group({
+      id: [2],
       workAuth: [this.employmentSection[0]],
       waStart: [this.employmentSection[1]],
       waEnd: [this.employmentSection[2]],
