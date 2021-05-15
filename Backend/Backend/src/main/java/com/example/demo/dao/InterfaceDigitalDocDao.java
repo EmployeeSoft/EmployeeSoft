@@ -10,4 +10,7 @@ public interface InterfaceDigitalDocDao {
 
     // All required documents should be validated before user can submit the application
     List<DigitalDocument> getRequiredDocuments();
+
+    // Get the digital Document, return the path
+    String getDigitalDocument(String filename);
 }
