@@ -11,6 +11,7 @@ export class EmployeeHomeComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+
   }
 
 }
