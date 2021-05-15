@@ -21,7 +21,7 @@ public class PersonDomain {
     private String altPhone;
     private Integer gender;
     private String ssn;
-    private Date dob;
+    private String dob;
     private ArrayList<AddressDomain> addressDomain;
     private ArrayList<ContactDomain> contactDomain;
 

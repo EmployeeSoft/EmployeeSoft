@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 @Service
 public class PersonService {
@@ -24,9 +26,12 @@ public class PersonService {
         this.personDao = personDao;
     }
 
+    private final DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+
     @Transactional
     public PersonDomain getPersonById(Integer id) {
         Person person = personDao.getPersonById(id);
+
         PersonDomain personDomain = PersonDomain.builder()
                 .id(person.getId())
                 .firstName(person.getFirstName())
@@ -37,7 +42,7 @@ public class PersonService {
                 .altPhone(person.getAltPhone())
                 .gender(person.getGender())
                 .ssn(person.getSsn())
-                .dob(person.getDob())
+                .dob(df.format(person.getDob()))
                 .build();
 
         return personDomain;
@@ -85,8 +90,8 @@ public class PersonService {
     }
 
     @Transactional
-    public Date getDobById(Integer id) {
-        return personDao.getDobById(id);
+    public String getDobById(Integer id) {
+        return df.format(personDao.getDobById(id));
     }
 
     @Transactional
@@ -104,7 +109,7 @@ public class PersonService {
                 .email(person.getEmail())
                 .gender(person.getGender())
                 .ssn(person.getSsn())
-                .dob(person.getDob())
+                .dob(df.format(person.getDob()))
                 .addressDomain(addressService.getAddressListByPersonId(person.getId()))
                 .contactDomain(contactService.getContactListByPersonId(person.getId()))
                 .build();
@@ -163,8 +168,8 @@ public class PersonService {
     }
 
     @Transactional
-    public Date getDobByUserId(Integer userId) {
-        return personDao.getDobByUserId(userId);
+    public String getDobByUserId(Integer userId) {
+        return df.format(personDao.getDobByUserId(userId));
     }
 
     @Transactional

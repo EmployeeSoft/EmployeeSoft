@@ -1,6 +1,5 @@
 package com.example.demo.service;
 
-import com.example.demo.dao.InterfaceEmployeeDao;
 import com.example.demo.dao.InterfacePersonalDocDao;
 import com.example.demo.domain.PersonalDocumentDomain;
 import com.example.demo.entity.PersonalDocument;
@@ -8,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 @Service
@@ -22,6 +23,8 @@ public class PersonalDocService {
         this.personalDocDao = personalDocDao;
     }
 
+    private final DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+
     @Transactional
     public PersonalDocumentDomain createPersonalDocumentByEmployeeId(Integer employeeId, String path, String filename,
                                                                      String fileTitle) {
@@ -35,7 +38,7 @@ public class PersonalDocService {
                     .path(document.getPath())
                     .title(document.getTitle())
                     .comment(document.getComment())
-                    .dateCreated(document.getDateCreated())
+                    .dateCreated(df.format(document.getDateCreated()))
                     .createdBy(document.getCreatedBy())
                     .build();
 
@@ -56,7 +59,7 @@ public class PersonalDocService {
                     .path(document.getPath())
                     .title(document.getTitle())
                     .comment(document.getComment())
-                    .dateCreated(document.getDateCreated())
+                    .dateCreated(df.format(document.getDateCreated()))
                     .createdBy(document.getCreatedBy())
                     .build();
             domains.add(domain);

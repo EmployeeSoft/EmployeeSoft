@@ -69,8 +69,8 @@ public class MainController {
 
         String preferName = personDomain.getPreferName();
         String avatar = employeeDomain.getAvatar();
-        Date dob = personDomain.getDob();
-        int age = CalculateAge.age(dob);
+        String dob = personDomain.getDob();
+        int age = CalculateAge.age(personDomain.getDob());
         String gender = personService.getGenderByUserId(userId);
         String ssn = personDomain.getSsn();
 
@@ -92,10 +92,10 @@ public class MainController {
         String title = employeeDomain.getTitle();
         String car = employeeDomain.getCar();
         String visaType = employeeDomain.getVisaType();
-        Date visaStartDate = employeeDomain.getVisaStartDate();
-        Date visaEndDate = employeeDomain.getVisaEndDate();
-        Date employeeStartDate = employeeDomain.getStartDate();
-        Date employeeEndDate = employeeDomain.getEndDate();
+        String visaStartDate = employeeDomain.getVisaStartDate();
+        String visaEndDate = employeeDomain.getVisaEndDate();
+        String employeeStartDate = employeeDomain.getStartDate();
+        String employeeEndDate = employeeDomain.getEndDate();
         
 
         ///// Emergency Information Section /////

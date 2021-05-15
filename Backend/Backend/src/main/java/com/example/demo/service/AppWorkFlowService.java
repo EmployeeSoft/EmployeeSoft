@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 
@@ -20,6 +22,8 @@ public class AppWorkFlowService {
         this.appWorkFlowDao = appWorkFlowDao;
     }
 
+    private final DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+
     @Transactional
     public ApplicationWorkFlowDomain getApplicationWorkFlowById(Integer id) {
         try {
@@ -27,8 +31,8 @@ public class AppWorkFlowService {
 
             ApplicationWorkFlowDomain domain = ApplicationWorkFlowDomain.builder()
                     .id(applicationWorkFlow.getId())
-                    .dateCreated(applicationWorkFlow.getDateCreated())
-                    .dateModified(applicationWorkFlow.getDateModified())
+                    .dateCreated(df.format(applicationWorkFlow.getDateCreated()))
+                    .dateModified(df.format(applicationWorkFlow.getDateModified()))
                     .status(applicationWorkFlow.getStatus())
                     .comment(applicationWorkFlow.getComment())
                     .type(applicationWorkFlow.getType())
@@ -47,8 +51,8 @@ public class AppWorkFlowService {
         for (ApplicationWorkFlow app : appWorkFlowDao.getAppWorkFlowsByEmployeeId(employeeId)) {
             ApplicationWorkFlowDomain domain = ApplicationWorkFlowDomain.builder()
                     .id(app.getId())
-                    .dateCreated(app.getDateCreated())
-                    .dateModified(app.getDateModified())
+                    .dateCreated(df.format(app.getDateCreated()))
+                    .dateModified(df.format(app.getDateModified()))
                     .status(app.getStatus())
                     .comment(app.getComment())
                     .type(app.getType())
