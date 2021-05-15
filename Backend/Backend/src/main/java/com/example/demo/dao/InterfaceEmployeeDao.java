@@ -46,6 +46,8 @@ public interface InterfaceEmployeeDao {
     // Given the personId, merge the file
     void updateEmployeeAvatarByPersonId(Integer personId, String avatar);
 
+    int addNewEmployee(Employee employee);
+
     // Given the person ID, get their employee ID
     int getEmployeeIdByPersonId(Integer personId);
 

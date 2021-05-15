@@ -14,7 +14,7 @@
     <button type="button" class="btn btn-primary" (click)="startEdit()">Edit</button>
   </div>
   <div class="card-body" style="width: 23rem;" *ngIf="addressSecEdit">
-    <form [formGroup]="formData" (ngSubmit)="endEdit()">
+    <form [formGroup]="formData" (ngSubmit)="onSubmit()">
       <div class="form-group">
         <p class="card-text">Primary Address</p>
         <input type = 'text' formControlName="primaryAddress">
@@ -24,7 +24,7 @@
         <input type = 'text' formControlName="secondAddress">
       </div>
       <button type="button" class="btn btn-primary" (click)="endEdit()">Cancel</button>
-      <button type="submit" class="btn btn-primary" (click)="endEdit()">Save</button>
+      <button type="submit" class="btn btn-primary">Save</button>
     </form>
   </div>
 </div>

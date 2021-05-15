@@ -7,6 +7,10 @@ import { map } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { User } from '../_models';
 import { FormGroup } from '@angular/forms';
+import { Contact } from '../_models/contact';
+import { Address} from '../_models/address';
+import {Person} from '../../common/_models/person';
+import {Employee} from '../../common/_models/employee';
 
 @Injectable({ providedIn: 'root' })
 export class AccountService {
@@ -28,10 +32,10 @@ export class AccountService {
     login(username: string, password: string) {
       const headers = {
         'Content-Type':  'application/json'
-      }
+      };
       return this.http.post<any>(`http://localhost:9999/login`, { username, password })
         .pipe(map(user => {
-          console.log(user)
+          console.log(user);
           // login successful if there's a jwt token in the response
           //  if (user && user.token) {
           if (user) {
@@ -61,7 +65,7 @@ export class AccountService {
 
       const headers = {
         'Content-Type':  'application/json'
-      }
+      };
 
       return this.http.post<any>(`http://localhost:9999/register`, { email, username, password }, { headers });
     }
@@ -101,4 +105,19 @@ export class AccountService {
             }));
     }
 
+    onboard(personDomain: Person, employeeDomain: Employee, addressDomain: Address, contactDomains: Contact[]) {
+      console.log('from account service sending');
+      return this.http.post<any>(`http://localhost:8080/onboard`, { personDomain, employeeDomain, addressDomain, contactDomains },
+        { headers: {
+          'Allow-Cross-Origin-Origin0' : '*'
+        }
+      });
+    }
+
+    upload(formData: FormData) {
+      return this.http.post<any>(`http://localhost:8080/upload`, formData, {
+        reportProgress: true,
+        observe: 'events'
+      });
+    }
 }

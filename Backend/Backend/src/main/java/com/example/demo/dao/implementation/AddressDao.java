@@ -124,6 +124,11 @@ public class AddressDao extends AbstractHibernateDao<Address> implements Interfa
         return addressList;
     }
 
+    @Override
+    public void addNewAddress(Address address) {
+        merge(address);
+    }
+
     // Get a list of address that is associated with the given person ID
     public List<Address> getAddressListById(Integer id) {
         Session session = getCurrentSession();

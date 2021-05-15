@@ -14,4 +14,5 @@ import lombok.Setter;
 public class RegistrationTokenResponse {
     private ServiceStatus serviceStatus;
     private RegistrationTokenDomain registrationTokenDomain;
+    private Integer userId;
 }

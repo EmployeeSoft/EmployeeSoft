@@ -210,6 +210,11 @@ public class PersonDao extends AbstractHibernateDao<Person> implements Interface
         return dob;
     }
 
+    @Override
+    public Person addNewPerson(Person person) {
+        return merge(person);
+    }
+  
     // Get the user ID from the person ID
     public int getUserIdByPersonId(Integer personId) {
         Session session = getCurrentSession();

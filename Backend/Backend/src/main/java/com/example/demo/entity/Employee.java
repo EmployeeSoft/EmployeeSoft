@@ -45,10 +45,10 @@ public class Employee implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "visa_status_id", insertable = false, updatable = false)
-    private VisaStatus visaStatusId;
+    private VisaStatus visaStatus;
 
-    @Column(name = "visa_status_id")
-    private Integer visaStatus;
+//    @Column(name = "visa_status_id")
+//    private Integer visaStatusId;
 
     @Column(name = "visa_start_date")
     private Date visaStartDate;

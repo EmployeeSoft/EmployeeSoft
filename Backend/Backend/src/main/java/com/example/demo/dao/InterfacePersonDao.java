@@ -71,6 +71,8 @@ public interface InterfacePersonDao {
     // Get the person's DoB by user ID
     Date getDobByUserId(Integer userId);
 
+    Person addNewPerson(Person person);
+
     // Get the user ID from the person ID
     int getUserIdByPersonId(Integer personId);
 }
