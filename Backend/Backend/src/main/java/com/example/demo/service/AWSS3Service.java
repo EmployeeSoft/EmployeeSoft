@@ -98,7 +98,7 @@ public class AWSS3Service {
         }
     }
 
-    public ByteArrayResource downloadFile(Integer userId, String filename) {
+    public byte[] downloadFile(Integer userId, String filename) {
         byte[] data = null;
 
         /*
@@ -112,7 +112,9 @@ public class AWSS3Service {
 
         // If userId is 0 then download from digital_doc
         if (userId == 0) {
-            key = digitalDocumentService.getDigitalDocument(filename);
+            key = digitalDocumentService.getDigitalDocument(filename)
+                    .replace("https://employeefilebucket.s3-us-west-1.amazonaws.com/", "")
+                    .replace("+", " ");
         } else {
             key = personalDocService.getPath(userId, filename)
                     .replace("https://employeefilebucket.s3-us-west-1.amazonaws.com/", "");
@@ -134,6 +136,6 @@ public class AWSS3Service {
             }
         }
 
-        return new ByteArrayResource(data);
+        return data;
     }
 }
