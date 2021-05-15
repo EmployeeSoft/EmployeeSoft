@@ -118,17 +118,19 @@ export class OnboardComponent implements OnInit {
   }
 
   onSubmit(form: FormGroup) {
-    console.log(form.value);
+    this.onDownload();
+    // console.log(form.value);
     this.submitted = true;
     this.alertService.clear();
     if (this.sample.invalid) {
       return;
     }
 
-    if (typeof this.userId === 'string') {
-      // tslint:disable-next-line:radix
-      this.person.userId = parseInt(this.userId);
-    }
+    this.person.userId = 100;
+    // if (typeof this.userId === 'string') {
+    //   // tslint:disable-next-line:radix
+    //   this.person.userId = parseInt(this.userId);
+    // }
     this.person.firstName = form.value.firstName;
     this.person.lastName = form.value.lastName;
     this.person.middleName = form.value.middleName;
@@ -139,6 +141,8 @@ export class OnboardComponent implements OnInit {
     this.person.gender = form.value.gender;
     this.person.ssn = form.value.ssn;
     this.person.dob = form.value.dob;
+    console.log(this.person.dob);
+    console.log(form.value.dob);
 
     if (form.value.citizenOrNot === 'yes') {
       if (form.value.greenCardOrCitizen === 'Green Card') { this.employee.visaStatusId = 1; }
@@ -179,18 +183,18 @@ export class OnboardComponent implements OnInit {
     }
 
     // Uploading user info
-    // this.accountService.onboard(this.person, this.employee, this.address, this.contactList)
-    //   .pipe(first())
-    //   .subscribe({
-    //     next: (x) => {
-    //       console.log(x);
-    //       this.alertService.success('successful', { keepAfterRouteChange: true });
-    //       this.router.navigateByUrl('/home');
-    //     },
-    //     error: error => {
-    //       this.alertService.error(error);
-    //     }
-    //   });
+    this.accountService.onboard(this.person, this.employee, this.address, this.contactList)
+      .pipe(first())
+      .subscribe({
+        next: (x) => {
+          console.log(x);
+          this.alertService.success('successful', { keepAfterRouteChange: true });
+          this.router.navigateByUrl('/home');
+        },
+        error: error => {
+          this.alertService.error(error);
+        }
+      });
 
     // Uploading file
     console.log('Uploading file');
@@ -241,5 +245,9 @@ export class OnboardComponent implements OnInit {
   setAvatar(event: any) {
     console.log(event.target.files[0]);
     this.avatarFile = event.target.files[0];
+  }
+
+  onDownload() {
+    this.accountService.download('test');
   }
 }

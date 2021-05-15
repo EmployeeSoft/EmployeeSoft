@@ -146,20 +146,20 @@ public class MainController {
         return response;
     }
 
-    @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public UploadResponse fileUpload(@RequestParam("file") MultipartFile file, @RequestParam("userId") Integer userId) {
-        String filename = file.getOriginalFilename();
-        UploadResponse response = new UploadResponse();
-
-        if (awss3Service.uploadFile(file, userId)) {
-            response.setServiceStatus(new ServiceStatus("Success", true, ""));
-            response.setUrl(awss3Service.getURL(filename));
-        } else {
-            response.setServiceStatus(new ServiceStatus("Failed", false, "Unable to upload file"));
-        }
-
-        return response;
-    }
+//    @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+//    public UploadResponse fileUpload(@RequestParam("file") MultipartFile file, @RequestParam("userId") Integer userId) {
+//        String filename = file.getOriginalFilename();
+//        UploadResponse response = new UploadResponse();
+//
+//        if (awss3Service.uploadFile(file, userId)) {
+//            response.setServiceStatus(new ServiceStatus("Success", true, ""));
+//            response.setUrl(awss3Service.getURL(filename));
+//        } else {
+//            response.setServiceStatus(new ServiceStatus("Failed", false, "Unable to upload file"));
+//        }
+//
+//        return response;
+//    }
 
     @PostMapping("/onboard")
     public OnBoardResponse onboard(@RequestBody BodyDomain bodyDomain) {
@@ -177,6 +177,16 @@ public class MainController {
             onBoardService.addNewContact(contactDomain, person);
         }
 
+        response.setServiceStatus(new ServiceStatus("SUCCESS", true, ""));
+        return response;
+    }
+
+    @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public UploadResponse fileUpload(@RequestParam("file") MultipartFile file, @RequestParam("userId") Integer userId,
+                                     @RequestParam("uploadTo") String upoadTo, @RequestParam("fileTitle") String fileTitle) {
+        String fileName = file.getOriginalFilename();
+        System.out.println(fileName);
+        UploadResponse response = new UploadResponse();
         response.setServiceStatus(new ServiceStatus("SUCCESS", true, ""));
         return response;
     }

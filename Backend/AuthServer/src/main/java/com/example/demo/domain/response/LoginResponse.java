@@ -12,4 +12,5 @@ public class LoginResponse {
     private ServiceStatus serviceStatus;
     private String redirectUrl;
     private String role;
+    private String jwt;
 }

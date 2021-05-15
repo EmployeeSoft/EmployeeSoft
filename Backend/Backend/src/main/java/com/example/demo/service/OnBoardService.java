@@ -47,6 +47,7 @@ public class OnBoardService {
 
     @Transactional
     public Person addNewPerson(PersonDomain personDomain) {
+        System.out.println(personDomain.getDob());
         Person person = new Person().builder()
                 .firstName(personDomain.getFirstName())
                 .lastName(personDomain.getLastName())
