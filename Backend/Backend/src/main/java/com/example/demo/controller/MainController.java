@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.domain.*;
 import com.example.demo.domain.common.ServiceStatus;
+import com.example.demo.domain.response.AllEmployeeResponse;
 import com.example.demo.domain.response.HomePageResponse;
 import com.example.demo.domain.response.UploadResponse;
 import com.example.demo.service.*;
@@ -68,8 +69,8 @@ public class MainController {
 
         String preferName = personDomain.getPreferName();
         String avatar = employeeDomain.getAvatar();
-        Date dob = personDomain.getDob();
-        int age = CalculateAge.age(dob);
+        String dob = personDomain.getDob();
+        int age = CalculateAge.age(personDomain.getDob());
         String gender = personService.getGenderByUserId(userId);
         String ssn = personDomain.getSsn();
 
@@ -91,10 +92,10 @@ public class MainController {
         String title = employeeDomain.getTitle();
         String car = employeeDomain.getCar();
         String visaType = employeeDomain.getVisaType();
-        Date visaStartDate = employeeDomain.getVisaStartDate();
-        Date visaEndDate = employeeDomain.getVisaEndDate();
-        Date employeeStartDate = employeeDomain.getStartDate();
-        Date employeeEndDate = employeeDomain.getEndDate();
+        String visaStartDate = employeeDomain.getVisaStartDate();
+        String visaEndDate = employeeDomain.getVisaEndDate();
+        String employeeStartDate = employeeDomain.getStartDate();
+        String employeeEndDate = employeeDomain.getEndDate();
         
 
         ///// Emergency Information Section /////
@@ -149,9 +150,29 @@ public class MainController {
 
         if (awss3Service.uploadFile(file, uploadTo, userId, fileTitle)) {
             response.setServiceStatus(new ServiceStatus("Success", true, ""));
-            response.setUrl(userId + "_" + awss3Service.getURL(filename));
+            response.setUrl(awss3Service.getURL(userId + "_" + filename));
         } else {
             response.setServiceStatus(new ServiceStatus("Failed", false, "Unable to upload file"));
+        }
+
+        return response;
+    }
+
+
+    @GetMapping("/all-employees")
+    public AllEmployeeResponse getAllEmployees(@RequestBody UserDomain userDomain) {
+        // Return type
+        AllEmployeeResponse response = new AllEmployeeResponse();
+
+        // Used to check user's role
+        String userRole = userDomain.getUserRole();
+
+        if (userRole.equals("hr")) {
+            response.setEmployees(employeeService.getAllEmployees());
+            response.setServiceStatus(new ServiceStatus("Success", true, ""));
+        } else {
+            String errorMsg = "You are not authorized";
+            response.setServiceStatus(new ServiceStatus("Fail", false, errorMsg));
         }
 
         return response;

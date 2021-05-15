@@ -23,7 +23,7 @@ public class HomePageResponse {
     private String fullName;
     private String preferName;
     private String avatar;
-    private Date dob;
+    private String dob;
     private int age;
     private String gender;
     private String ssn; // Only last four digits
@@ -40,10 +40,10 @@ public class HomePageResponse {
     private String title;
     private String car;
     private String visaType;
-    private Date visaStartDate;
-    private Date visaEndDate;
-    private Date employeeStartDate;
-    private Date employeeEndDate;
+    private String visaStartDate;
+    private String visaEndDate;
+    private String employeeStartDate;
+    private String employeeEndDate;
 
     // Emergency Contact Section
     private ArrayList<ContactDomain> contracts;
