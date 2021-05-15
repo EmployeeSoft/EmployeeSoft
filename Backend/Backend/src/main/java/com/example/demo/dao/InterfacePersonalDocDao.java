@@ -3,38 +3,20 @@ package com.example.demo.dao;
 import com.example.demo.entity.PersonalDocument;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 public interface InterfacePersonalDocDao {
-    // Given the personal document ID, get the title of the document
-    String getTitleById(Integer id);
+    // Create a new personal document to be stored in the database
+    Object createPersonalDocumentByEmployeeId(Integer employeeId, String path, String filename, String fileTitle);
 
-    // Given the personal document ID, get the comment on that document
-    String getCommentById(Integer id);
+    // Get list of personal documents of an employee by using their employee ID
+    ArrayList<PersonalDocument> getPersonalDocsByEmployeeId(Integer employeeId);
 
-    // Given the personal document ID, get the date the document was created
-    Date getDateCreatedById(Integer id);
+    // Check to see if the document is already in the database
+    boolean checkIfExist(Integer employeeId, String path);
 
-    // Given the personal document ID, get the person who created the file
-    String getCreatedByById(Integer id);
-
-
-    ///// REQUIRED METHODS BELOW
-
-
-    // Given the employee ID, get the Personal document information
-    List<PersonalDocument> getPersonalDocumentListById(Integer employeeId);
-
-    // Given the ID, get the personal document that is associated with that ID
-    PersonalDocument getPersonalDocumentById(Integer id);
-
-    // Given the employee ID, get the personal document ID
-    int getPersonalDocIdByEmployeeId(Integer employeeId);
-
-    // Given the personal document ID, get the employee ID
-    int getEmployeeIdByPersonalDocId(Integer id);
-
-    // Get the path to the file by using the personal document ID
-    // Path to file will be the link to the SS3 buckets
-    String getPathById(Integer id);
+    // Method to get the path from S3 bucket
+    // We will use this method to get the path (which is the key in the S3 bucket) to download that file
+    String getPath(Integer userId, String fileTitle);
 }

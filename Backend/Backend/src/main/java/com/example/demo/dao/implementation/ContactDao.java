@@ -15,58 +15,6 @@ import java.util.List;
 public class ContactDao extends AbstractHibernateDao<Contact> implements InterfaceContactDao {
     public ContactDao() { setClazz(Contact.class); }
 
-    // Given the contact ID, get the person ID who that contact belongs to
-    public int getPersonIdByContactId(Integer id) {
-        // TODO
-        return 0;
-    }
-
-    // Given the person ID, get the contact ID for that person
-    public int getContactIdByPersonId(Integer personId) {
-        // TODO
-        return 0;
-    }
-
-    // Given the person ID, get the relationship of that contact for that person ID
-    public String getRelationshipByPersonId(Integer personId) {
-        // TODO
-        return "";
-    }
-
-    // Given the person ID, get the title of that contact for that person ID
-    public String getTitleByPersonId(Integer personId) {
-        // TODO
-        return "";
-    }
-
-    // Given the contact ID, get if the contact is reference
-    public boolean getIsReferenceById(Integer contactId) {
-        // TODO
-        return false;
-    }
-
-    // Given the contact ID, get if the contact is an emergency contact
-    public boolean getIsEmergencyById(Integer contactId) {
-        // TODO
-        return false;
-    }
-
-    // Given the contact ID, get if the contact is landlord
-    public boolean getIsLandlordById(Integer contactId) {
-        // TODO
-        return false;
-    }
-
-    // Get the person's contact information from the contact ID
-    public Contact getContactByContactId(Integer contactId) {
-        // TODO
-        return new Contact();
-    }
-
-
-    ///// REQUIRED METHODS BELOW /////
-
-
     // There can be many contacts for one person. Given the person ID, get all of their contacts
     public List<Contact> getContactListByPersonId(Integer personId) {
         Session session = getCurrentSession();

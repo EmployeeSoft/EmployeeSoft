@@ -5,23 +5,6 @@ import com.example.demo.entity.Person;
 import java.sql.Date;
 
 public interface InterfacePersonDao {
-    // Given the person's SSN, get the person's information
-    Person getPersonBySSN(String ssn);
-
-    // Given the person's first name, last name, and date of birth, get the person information
-    Person getPersonByInfo(String firstName, String lastName, Date dob);
-
-    // Get the person's SSN, by the person ID
-    String getSSNById(Integer id);
-
-    // Given the person ID, get the user ID
-    int getUserIdById(Integer id);
-
-
-
-    ///// REQUIRED METHODS BELOW /////
-
-
     // Given the ID, get the person's information
     Person getPersonById(Integer id);
 
@@ -89,4 +72,7 @@ public interface InterfacePersonDao {
     Date getDobByUserId(Integer userId);
 
     Person addNewPerson(Person person);
+
+    // Get the user ID from the person ID
+    int getUserIdByPersonId(Integer personId);
 }

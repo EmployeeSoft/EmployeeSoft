@@ -8,15 +8,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+
 
 @Service
 public class AppWorkFlowService {
     private InterfaceAppWorkFlowDao appWorkFlowDao;
 
     @Autowired
-    public void setAppWorkFlow(InterfaceAppWorkFlowDao appWorkFlow) {
+    public void setAppWorkFlow(InterfaceAppWorkFlowDao appWorkFlowDao) {
         this.appWorkFlowDao = appWorkFlowDao;
     }
+
+    private final DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
     @Transactional
     public ApplicationWorkFlowDomain getApplicationWorkFlowById(Integer id) {
@@ -25,8 +31,8 @@ public class AppWorkFlowService {
 
             ApplicationWorkFlowDomain domain = ApplicationWorkFlowDomain.builder()
                     .id(applicationWorkFlow.getId())
-                    .dateCreated(applicationWorkFlow.getDateCreated())
-                    .dateModified(applicationWorkFlow.getDateModified())
+                    .dateCreated(df.format(applicationWorkFlow.getDateCreated()))
+                    .dateModified(df.format(applicationWorkFlow.getDateModified()))
                     .status(applicationWorkFlow.getStatus())
                     .comment(applicationWorkFlow.getComment())
                     .type(applicationWorkFlow.getType())
@@ -38,4 +44,22 @@ public class AppWorkFlowService {
         }
     }
 
+    @Transactional
+    public ArrayList<ApplicationWorkFlowDomain> getAppWorkFlowsByEmployeeId(Integer employeeId) {
+        ArrayList<ApplicationWorkFlowDomain> domains = new ArrayList<>();
+
+        for (ApplicationWorkFlow app : appWorkFlowDao.getAppWorkFlowsByEmployeeId(employeeId)) {
+            ApplicationWorkFlowDomain domain = ApplicationWorkFlowDomain.builder()
+                    .id(app.getId())
+                    .dateCreated(df.format(app.getDateCreated()))
+                    .dateModified(df.format(app.getDateModified()))
+                    .status(app.getStatus())
+                    .comment(app.getComment())
+                    .type(app.getType())
+                    .build();
+
+            domains.add(domain);
+        }
+        return domains;
+    }
 }
