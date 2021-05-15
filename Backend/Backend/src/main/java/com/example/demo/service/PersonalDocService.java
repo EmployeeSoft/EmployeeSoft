@@ -29,7 +29,7 @@ public class PersonalDocService {
     public PersonalDocumentDomain createPersonalDocumentByEmployeeId(Integer employeeId, String path, String filename,
                                                                      String fileTitle) {
         // Personal Document
-        PersonalDocument document = personalDocDao.createPersonalDocumentByEmployeeId(employeeId, path, filename, fileTitle);
+        PersonalDocument document = (PersonalDocument) personalDocDao.createPersonalDocumentByEmployeeId(employeeId, path, filename, fileTitle);
 
         if (document != null) {
             PersonalDocumentDomain domain = PersonalDocumentDomain.builder()

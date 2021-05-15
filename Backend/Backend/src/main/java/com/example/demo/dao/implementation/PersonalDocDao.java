@@ -19,7 +19,7 @@ public class PersonalDocDao extends AbstractHibernateDao<PersonalDocument> imple
     private EmployeeDao employeeDao;
 
     // Create a new personal document to be stored in the database
-    public PersonalDocument createPersonalDocumentByEmployeeId(Integer employeeId, String path, String filename,
+    public Object createPersonalDocumentByEmployeeId(Integer employeeId, String path, String filename,
                                                                String fileTitle) {
         if (!checkIfExist(employeeId, path)) {
             // Create an employee
@@ -44,23 +44,22 @@ public class PersonalDocDao extends AbstractHibernateDao<PersonalDocument> imple
             Session session = getCurrentSession();
 
             try {
-                session.save(document);
-                System.out.println("Successfully added " + document.getTitle() + " to database");
+                return session.merge(document);
             } catch (Exception e) {
-                System.out.println("An error had occurred: " + e);
+                System.out.println("An exception as been thrown: " + e);
+                e.printStackTrace();
             }
-
-            return document;
-        } else {
-            return null;
         }
+
+        return null;
     }
 
     // Get list of personal documents of an employee by using their employee ID
     public ArrayList<PersonalDocument> getPersonalDocsByEmployeeId(Integer employeeId) {
         ArrayList<PersonalDocument> documents = new ArrayList<>();
         Session session = getCurrentSession();
-        Query query = session.createQuery("FROM PersonalDocument");
+        Query query = session.createQuery("FROM PersonalDocument WHERE employeeId = :employeeId");
+        query.setParameter("employeeId", employeeId);
         return (ArrayList<PersonalDocument>) query.list();
     }
 
