@@ -88,4 +88,6 @@ public interface InterfaceEmployeeDao {
 
     // Given the personId, merge the file
     void updateEmployeeAvatarByPersonId(Integer personId, String avatar);
+
+    int addNewEmployee(Employee employee);
 }

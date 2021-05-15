@@ -33,6 +33,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 //    @Override
 //    protected boolean shouldNotFilter(HttpServletRequest req) throws ServletException{
 //        String path = req.getRequestURI();
-//        return path.contains("/public/");
+//        return path.contains("/onboard/");
 //    }
 }

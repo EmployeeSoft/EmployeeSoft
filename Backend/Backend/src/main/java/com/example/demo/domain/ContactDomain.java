@@ -12,4 +12,8 @@ public class ContactDomain {
     private String phone;
     private String relationship;
     private String address;
+    private String title;
+    private Boolean isReference;
+    private Boolean isEmergency;
+    private Boolean isLandlord;
 }

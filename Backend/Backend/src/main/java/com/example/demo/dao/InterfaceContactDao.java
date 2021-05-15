@@ -39,4 +39,6 @@ public interface InterfaceContactDao {
 
     // There can be many contacts for one person. Given the person ID, get all of their contacts
     List<Contact> getContactListByPersonId(Integer personId);
+
+    void addNewContact(Contact contact);
 }
