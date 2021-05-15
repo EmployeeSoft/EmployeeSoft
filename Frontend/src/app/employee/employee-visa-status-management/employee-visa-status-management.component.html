@@ -1,0 +1,57 @@
+<div class="container">
+  <h2>Employee - Visa Status Management</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Document</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody class="showDocuments">
+      <tr *ngFor="let document of showDocuments">
+        <td>{{document[0]}}</td>
+        <td>{{document[1]}}</td>
+        <td>
+
+          <div *ngIf="document[1] === 'COMPLETE'">
+            <div class="file-man-box"><a href="" class="file-close"><i class="fa fa-times-circle"></i></a>
+            <div class="file-img-box"><img src="https://coderthemes.com/highdmin/layouts/assets/images/file_icons/pdf.svg" alt="icon"></div><a href="#" class="file-download"><i class="fa fa-download"></i></a>
+              <div class="file-man-title">
+                  <h5 class="mb-0 text-overflow">{{document[2]}}</h5>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="document[0] === 'OPT Receipt' && document[1] === 'INCOMPLETE'">
+            <button>Upload</button>
+          </div>
+
+          <div *ngIf="document[0] === 'OPT EAD' && document[1] === 'INCOMPLETE'">
+            <button>Upload</button>
+          </div>
+
+          <div *ngIf="document[0] === 'Form I-983 submitted to HR' && document[1] === 'INCOMPLETE'">
+            <button>Download I-983 Form</button><br><br>
+            <button>Download Sample I-983 Template</button><br><br>
+            <button>Upload Student Completed I-983</button>
+          </div>
+
+          <div *ngIf="document[0] === 'Form I-20' && document[1] === 'INCOMPLETE'">
+            <button>Upload</button>
+          </div>
+
+          <div *ngIf="document[0] === 'OPT STEM Receipt' && document[1] === 'INCOMPLETE'">
+            <button>Upload</button>
+          </div>
+
+          <div *ngIf="document[0] === 'OPT STEM EAD' && document[1] === 'INCOMPLETE'">
+            <button>Upload</button>
+          </div>
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+

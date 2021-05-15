@@ -1,0 +1,34 @@
+
+<div class="container text-center">
+  <h1>Employee Profile</h1>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="search-hero">
+      <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="off" placeholder="Start searching for employee/s">
+    </div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th style="width: 30%">Name (Legal Full Name)</th>
+                <th style="width: 30%">SSN</th>
+                <th style="width: 30%">Starting Date</th>
+                <th style="width: 10%">Visa Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let employee of employees | filter:searchText">
+                <td>{{employee.name}}</td>
+                <td>{{employee.ssn}}</td>
+                <td>{{employee.startDate}}</td>
+                <td style="white-space: nowrap">
+                  {{employee.visaStatus}}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+  </div>
+  <h4>Total Number of Employees: {{employees.length}}</h4>
+</div>
+
