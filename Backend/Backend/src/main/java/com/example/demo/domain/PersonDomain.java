@@ -20,7 +20,8 @@ public class PersonDomain {
     private String altPhone;
     private Integer gender;
     private String ssn;
-    private Date dob;
+    private String dob;
+    private Integer userId;
     private AddressDomain addressDomain;
     private ContactDomain contactDomain;
 

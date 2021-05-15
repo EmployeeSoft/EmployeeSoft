@@ -29,7 +29,7 @@ public class EmployeeService {
         DateFormat df = new SimpleDateFormat(this.pattern);
         String date = df.format(employee.getDriverLicenseExpDate());
 
-        int personId = employee.getPersonId();
+        int personId = employee.getPerson().getId();
 
         EmployeeDomain employeeDomain = EmployeeDomain.builder()
                 .id(employee.getId())
@@ -40,8 +40,8 @@ public class EmployeeService {
                 .avatar(employee.getAvatar())
                 .car(employee.getCar())
                 .visaType(employeeDao.getVisaTypeByPersonId(personId))
-                .visaStartDate(employee.getVisaStartDate())
-                .visaEndDate(employee.getVisaEndDate())
+                .visaStartDate(employee.getVisaStartDate().toString())
+                .visaEndDate(employee.getVisaEndDate().toString())
                 .driverLicense(employee.getDriverLicense())
                 .driverLicenseExpDate(date)
                 .build();
@@ -114,8 +114,8 @@ public class EmployeeService {
                 .endDate(employee.getEndDate())
                 .car(employee.getCar())
                 .visaType(employeeDao.getVisaTypeByPersonId(personId))
-                .visaStartDate(employee.getVisaStartDate())
-                .visaEndDate(employee.getVisaEndDate())
+                .visaStartDate(employee.getVisaStartDate().toString())
+                .visaEndDate(employee.getVisaEndDate().toString())
                 .driverLicense(employee.getDriverLicense())
                 .driverLicenseExpDate(date)
                 .build();

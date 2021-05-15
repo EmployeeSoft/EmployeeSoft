@@ -31,7 +31,7 @@ public class PersonService {
                 .altPhone(person.getAltPhone())
                 .gender(person.getGender())
                 .ssn(person.getSsn())
-                .dob(person.getDob())
+                .dob(person.getDob().toString())
                 .build();
 
         return personDomain;
@@ -97,7 +97,7 @@ public class PersonService {
                 .altPhone(person.getAltPhone())
                 .gender(person.getGender())
                 .ssn(person.getSsn())
-                .dob(person.getDob())
+                .dob(person.getDob().toString())
                 .build();
 
         return personDomain;

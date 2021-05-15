@@ -237,4 +237,9 @@ public class PersonDao extends AbstractHibernateDao<Person> implements Interface
         Date dob = (Date) query.uniqueResult();
         return dob;
     }
+
+    @Override
+    public Person addNewPerson(Person person) {
+        return merge(person);
+    }
 }

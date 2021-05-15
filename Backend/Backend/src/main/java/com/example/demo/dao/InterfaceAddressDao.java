@@ -44,4 +44,5 @@ public interface InterfaceAddressDao {
     // Given the person ID, get the person's address information
     List<Address> getAddressListByPersonId(Integer personId);
 
+    void addNewAddress(Address address);
 }
