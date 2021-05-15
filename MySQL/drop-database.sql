@@ -1,2 +1,2 @@
 DROP DATABASE backend;
-DROP DATABASE authentication;
+-- DROP DATABASE authentication;
