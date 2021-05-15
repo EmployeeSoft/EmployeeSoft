@@ -71,4 +71,17 @@ public class PersonalDocDao extends AbstractHibernateDao<PersonalDocument> imple
         query.setParameter("path", path);
         return query.list().size() >= 1;
     }
+
+    // Method to get the path from S3 bucket
+    // We will use this method to get the path (which is the key in the S3 bucket) to download that file
+    public String getPath(Integer userId, String fileTitle) {
+        Session session = getCurrentSession();
+        String hql = "SELECT doc.path " +
+                     "FROM PersonalDocument doc, Employee e, Person p " +
+                     "WHERE p.userId = :userId AND e.personId = p.id AND e.id = doc.employeeId AND doc.title = :fileTitle";
+        Query query = session.createQuery(hql);
+        query.setParameter("userId", userId);
+        query.setParameter("fileTitle", fileTitle);
+        return (String) query.uniqueResult();
+    }
 }

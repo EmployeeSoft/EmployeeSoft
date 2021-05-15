@@ -67,4 +67,9 @@ public class PersonalDocService {
 
         return domains;
     }
+
+    @Transactional
+    public String getPath(Integer userId, String fileTitle) {
+        return personalDocDao.getPath(userId, fileTitle);
+    }
 }
