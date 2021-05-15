@@ -1,7 +1,8 @@
 package com.example.demo.service;
 
 import com.example.demo.dao.InterfacePersonDao;
-import com.example.demo.domain.PersonDomain;
+import com.example.demo.dao.implementation.PersonDao;
+import com.example.demo.domain.*;
 import com.example.demo.entity.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -156,5 +157,30 @@ public class PersonService {
     @Transactional
     public Date getDobByUserId(Integer userId) {
         return personDao.getDobByUserId(userId);
+    }
+
+    @Transactional
+    public boolean updateAddressByUserId(Integer userId, String primaryAddress, String secondAddress){
+        return personDao.updateAddressByUserId(userId, primaryAddress, secondAddress);
+    }
+
+    @Transactional
+    public boolean updateContact(PersonalContactDomain contactDomain){
+        return personDao.updateContact(contactDomain);
+    }
+
+    @Transactional
+    public boolean updateEmergency(PersonalEmergencyDomain emergencyDomain){
+        return personDao.updateEmergency(emergencyDomain);
+    }
+
+    @Transactional
+    public boolean updateEmployment(PersonalEmploymentDomain employmentDomain){
+        return personDao.updateEmployment(employmentDomain);
+    }
+
+    @Transactional
+    public boolean updatePersonInfo(PersonDomain personDomain){
+        return personDao.updatePersonInfo(personDomain);
     }
 }

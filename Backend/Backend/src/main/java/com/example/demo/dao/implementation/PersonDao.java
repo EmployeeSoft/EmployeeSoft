@@ -1,6 +1,8 @@
 package com.example.demo.dao.implementation;
 
 import com.example.demo.dao.InterfacePersonDao;
+import com.example.demo.domain.*;
+import com.example.demo.entity.Contact;
 import com.example.demo.entity.Person;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -236,5 +238,72 @@ public class PersonDao extends AbstractHibernateDao<Person> implements Interface
         query.setParameter("userId", userId);
         Date dob = (Date) query.uniqueResult();
         return dob;
+    }
+
+    // Update person's address by user ID
+    public boolean updateAddressByUserId(Integer userId, String primaryAddress, String secondAddress){
+        try{
+//            Session session = getCurrentSession();
+//            Query query = session.createQuery("UPDATE Person SET addressList =: avatar WHERE id = :personId");
+//            query.setParameter("primaryAdd", primaryAddress);
+//            query.setParameter("secondAdd", secondAddress);
+//            query.executeUpdate();
+            return true;
+        } catch (Exception err){
+            err.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean updateContact(PersonalContactDomain contactDomain){
+        try{
+            Session session = getCurrentSession();
+            Query query = session.createQuery("UPDATE Person SET email =: email, cellPhone =: phone, altPhone =: altPhone WHERE id = :personId");
+            query.setParameter("email", contactDomain.getEmail());
+            query.setParameter("phone", contactDomain.getPhone());
+            query.setParameter("altPhone", contactDomain.getWorkPhone());
+            query.setParameter("personId", contactDomain.getId());
+            query.executeUpdate();
+            return true;
+        } catch (Exception err){
+            err.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean updateEmergency(PersonalEmergencyDomain emergencyDomain){
+        try{
+            return true;
+        } catch (Exception err){
+            err.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean updateEmployment(PersonalEmploymentDomain employmentDomain){
+        try{
+            return true;
+        } catch (Exception err){
+            err.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean updatePersonInfo(PersonDomain personDomain){
+        try{
+            Session session = getCurrentSession();
+            Query query = session.createQuery("UPDATE Person SET preferName =: preferName, dob =: dob, gender =: gender, " +
+                    "ssn =: ssn WHERE id = :id");
+            query.setParameter("preferName", personDomain.getPreferName());
+            query.setParameter("dob", personDomain.getDob());
+            query.setParameter("gender", personDomain.getGender());
+            query.setParameter("ssn", personDomain.getSsn());
+            query.setParameter("id", personDomain.getId());
+            query.executeUpdate();
+            return true;
+        } catch (Exception err){
+            err.printStackTrace();
+            return false;
+        }
     }
 }
