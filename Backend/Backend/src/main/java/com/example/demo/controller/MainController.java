@@ -3,16 +3,17 @@ package com.example.demo.controller;
 import com.example.demo.domain.*;
 import com.example.demo.domain.common.ServiceStatus;
 import com.example.demo.domain.response.AllEmployeeResponse;
+import com.example.demo.domain.response.DownloadFileResponse;
 import com.example.demo.domain.response.HomePageResponse;
 import com.example.demo.domain.response.UploadResponse;
 import com.example.demo.service.*;
 import com.example.demo.util.CalculateAge;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.sql.Date;
 import java.util.ArrayList;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -145,6 +146,15 @@ public class MainController {
     @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public UploadResponse fileUpload(@RequestParam("file") MultipartFile file, @RequestParam("userId") Integer userId,
                                      @RequestParam("uploadTo") String uploadTo, @RequestParam("fileTitle") String fileTitle) {
+
+        /*
+            uploadTo is used to distinguish if the file will be upload to the employee table for avatar pic
+                or
+            upload to the personal_doc table for personal documents
+
+            uploadTo can either be "avatar" or "personal document"
+        */
+
         String filename = file.getOriginalFilename();
         UploadResponse response = new UploadResponse();
 
@@ -172,6 +182,27 @@ public class MainController {
             response.setServiceStatus(new ServiceStatus("Success", true, ""));
         } else {
             String errorMsg = "You are not authorized";
+            response.setServiceStatus(new ServiceStatus("Fail", false, errorMsg));
+        }
+
+        return response;
+    }
+
+    @GetMapping("/download")
+    public DownloadFileResponse downloadFromS3(@RequestBody DownloadDomain downloadDomain) {
+        DownloadFileResponse response = new DownloadFileResponse();
+
+        // Getting information from frontend
+        int userId = downloadDomain.getUserId();
+        String filename = downloadDomain.getFilename(); // In the personal_doc table, this will the the tile column
+        ByteArrayResource data = awss3Service.downloadFile(userId, filename);
+
+        // Check if there are data to be returned
+        if (data != null) {
+            response.setServiceStatus(new ServiceStatus("Success", true, ""));
+            response.setFile(data);
+        } else {
+            String errorMsg = "Unable to retrieve file";
             response.setServiceStatus(new ServiceStatus("Fail", false, errorMsg));
         }
 
