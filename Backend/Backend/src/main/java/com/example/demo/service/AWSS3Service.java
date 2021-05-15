@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -43,6 +45,9 @@ public class AWSS3Service {
 
     @Autowired
     private PersonalDocService personalDocService;
+
+    @Autowired
+    private DigitalDocumentService digitalDocumentService;
 
     @PostConstruct
     private void init() {
@@ -94,9 +99,25 @@ public class AWSS3Service {
     }
 
     public ByteArrayResource downloadFile(Integer userId, String filename) {
-        String key = personalDocService.getPath(userId, filename).replace("https://employeefilebucket.s3-us-west-1.amazonaws.com/", "");
-
         byte[] data = null;
+
+        /*
+            if userId is 0 then
+                filename can either be "I-983 Form" or "I-983 Sample"
+            else
+                filename is the file title that is in the personal_doc table in backend database
+        */
+
+        String key;
+
+        // If userId is 0 then download from digital_doc
+        if (userId == 0) {
+            key = digitalDocumentService.getDigitalDocument(filename);
+        } else {
+            key = personalDocService.getPath(userId, filename)
+                    .replace("https://employeefilebucket.s3-us-west-1.amazonaws.com/", "");
+        }
+
         S3Object s3Object = s3client.getObject(bucketName, key);
         S3ObjectInputStream in = s3Object.getObjectContent();
 

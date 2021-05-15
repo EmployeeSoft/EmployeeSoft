@@ -27,4 +27,16 @@ public class DigitalDocDao extends AbstractHibernateDao<DigitalDocument> impleme
         List<DigitalDocument> digitalDocuments = query.list();
         return digitalDocuments;
     }
+
+    // Get the digital Document return the path
+    public String getDigitalDocument(String filename) {
+        /*
+            filename can either be "I-983 Form" or "I-983 Sample"
+        */
+
+        Session session = getCurrentSession();
+        Query query = session.createQuery("SELECT templateLocation FROM DigitalDocument WHERE type = :filename");
+        query.setParameter("filename", filename);
+        return (String) query.uniqueResult();
+    }
 }
