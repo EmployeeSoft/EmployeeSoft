@@ -113,4 +113,11 @@ export class AccountService {
         }
       });
     }
+
+    upload(formData: FormData) {
+      return this.http.post<any>(`http://localhost:8080/upload`, formData, {
+        reportProgress: true,
+        observe: 'events'
+      });
+    }
 }
