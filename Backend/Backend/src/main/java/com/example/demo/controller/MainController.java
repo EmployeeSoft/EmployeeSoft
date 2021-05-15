@@ -191,6 +191,7 @@ public class MainController {
 
         response.setServiceStatus(new ServiceStatus("SUCCESS", true, ""));
         return response;
+    }
 
     @GetMapping("/all-employees")
     public AllEmployeeResponse getAllEmployees(@RequestBody UserDomain userDomain) {
