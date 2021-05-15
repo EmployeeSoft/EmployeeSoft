@@ -3,7 +3,9 @@ package com.example.demo.controller;
 import com.example.demo.domain.*;
 import com.example.demo.domain.common.ServiceStatus;
 import com.example.demo.domain.response.HomePageResponse;
+import com.example.demo.domain.response.OnBoardResponse;
 import com.example.demo.domain.response.UploadResponse;
+import com.example.demo.entity.Person;
 import com.example.demo.service.*;
 import com.example.demo.util.CalculateAge;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.sql.Date;
 import java.util.ArrayList;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:9999"}, allowCredentials = "true")
 @RestController
 public class MainController {
     @Autowired
@@ -34,6 +36,9 @@ public class MainController {
 
     @Autowired
     private AWSS3Service awss3Service;
+
+    @Autowired
+    private OnBoardService onBoardService;
 
     @GetMapping("/user-info")
     public HomePageResponse getPersonalProfile(@RequestBody UserDomain userDomain) {
@@ -68,7 +73,7 @@ public class MainController {
 
         String preferName = personDomain.getPreferName();
         String avatar = employeeDomain.getAvatar();
-        Date dob = personDomain.getDob();
+        Date dob = Date.valueOf(personDomain.getDob());
         int age = CalculateAge.age(dob);
         String gender = personService.getGenderByUserId(userId);
         String ssn = personDomain.getSsn();
@@ -91,8 +96,8 @@ public class MainController {
         String title = employeeDomain.getTitle();
         String car = employeeDomain.getCar();
         String visaType = employeeDomain.getVisaType();
-        Date visaStartDate = employeeDomain.getVisaStartDate();
-        Date visaEndDate = employeeDomain.getVisaEndDate();
+        Date visaStartDate = Date.valueOf(employeeDomain.getVisaStartDate());
+        Date visaEndDate = Date.valueOf(employeeDomain.getVisaEndDate());
         Date employeeStartDate = employeeDomain.getStartDate();
         Date employeeEndDate = employeeDomain.getEndDate();
         
@@ -154,6 +159,26 @@ public class MainController {
             response.setServiceStatus(new ServiceStatus("Failed", false, "Unable to upload file"));
         }
 
+        return response;
+    }
+
+    @PostMapping("/onboard")
+    public OnBoardResponse onboard(@RequestBody BodyDomain bodyDomain) {
+        OnBoardResponse response = new OnBoardResponse();
+
+        PersonDomain personDomain = bodyDomain.getPersonDomain();
+        EmployeeDomain employeeDomain = bodyDomain.getEmployeeDomain();
+        AddressDomain addressDomain = bodyDomain.getAddressDomain();
+        ContactDomain[] contactDomains = bodyDomain.getContactDomains();
+
+        Person person = onBoardService.addNewPerson(personDomain);
+        int employeeId = onBoardService.addNewEmployee(employeeDomain, person);
+        onBoardService.addNewAddress(addressDomain, person);
+        for (ContactDomain contactDomain: contactDomains) {
+            onBoardService.addNewContact(contactDomain, person);
+        }
+
+        response.setServiceStatus(new ServiceStatus("SUCCESS", true, ""));
         return response;
     }
 }

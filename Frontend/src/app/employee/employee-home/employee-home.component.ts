@@ -11,7 +11,8 @@ export class EmployeeHomeComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-
+    // call the GET request here
+    // Get all the information of an employee
   }
 
 }

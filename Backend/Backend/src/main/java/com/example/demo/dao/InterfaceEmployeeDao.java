@@ -91,4 +91,6 @@ public interface InterfaceEmployeeDao {
 
     // Get the employee's name
     String getFirstNameByEmployeeId(Integer id);
+
+    int addNewEmployee(Employee employee);
 }

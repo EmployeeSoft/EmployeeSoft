@@ -76,6 +76,11 @@ public class ContactDao extends AbstractHibernateDao<Contact> implements Interfa
         return contacts;
     }
 
+    @Override
+    public void addNewContact(Contact contact) {
+        merge(contact);
+    }
+
     // Find the contact who recommended the employee and return the requirements
     public List<Contact> getContactByReference(Integer personId) {
         Session session = getCurrentSession();

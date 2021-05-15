@@ -1,0 +1,221 @@
+<h1>Application Form</h1>
+<div class="card">
+  <h4 class="card-header">Basic Information</h4>
+  <div class="card-body">
+    <form [formGroup]="sample" (ngSubmit)="onSubmit(sample)">
+      <div class="form-group">
+        <label for="avatar">Upload your profile picture</label>
+        <input id="avatar" type="file" formControlName="avatar" class="form-control" />
+      </div>
+      <div class="form-group">
+        <label for="firstName">First Name</label>
+        <input id="firstName" type="text" formControlName="firstName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }" />
+        <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
+          <div *ngIf="f.firstName.errors.required">First Name is required</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="lastName">Last Name</label>
+        <input id="lastName" type="text" formControlName="lastName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }" />
+        <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
+          <div *ngIf="f.lastName.errors.required">Last Name is required</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="middleName">Middle Name</label>
+        <input id="middleName" type="text" formControlName="middleName" class="form-control" />
+      </div>
+      <div class="form-group">
+        <label for="preferredName">Preferred Name</label>
+        <input id="preferredName" type="text" formControlName="preferredName" class="form-control" />
+      </div>
+      <div class="form-group">
+        <label for="addressLine1">Address Line 1</label>
+        <input id="addressLine1" type="text" formControlName="addressLine1" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.addressLine1.errors }" />
+        <div *ngIf="submitted && f.addressLine1.errors" class="invalid-feedback">
+          <div *ngIf="f.addressLine1.errors.required">Address Line 1 is required</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="addressLine2">Address Line 2</label>
+        <input id="addressLine2" type="text" formControlName="addressLine2" class="form-control" />
+      </div>
+      <div class="form-group">
+        <label for="city">City</label>
+        <input id="city" type="text" formControlName="city" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.city.errors }" />
+        <div *ngIf="submitted && f.city.errors" class="invalid-feedback">
+          <div *ngIf="f.city.errors.required">City is required</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="zipcode">Zipcode</label>
+        <input id="zipcode" type="text" formControlName="zipcode" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.zipcode.errors }" />
+        <div *ngIf="submitted && f.zipcode.errors" class="invalid-feedback">
+          <div *ngIf="f.zipcode.errors.required">Zipcode is required</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="stateName">State Name</label>
+        <input id="stateName" type="text" formControlName="stateName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.stateName.errors }" />
+        <div *ngIf="submitted && f.stateName.errors" class="invalid-feedback">
+          <div *ngIf="f.stateName.errors.required">State Name is required</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="stateAbbr">State Abbreviation</label>
+        <input id="stateAbbr" type="text" formControlName="stateAbbr" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.stateAbbr.errors }" />
+        <div *ngIf="submitted && f.stateAbbr.errors" class="invalid-feedback">
+          <div *ngIf="f.stateAbbr.errors.required">Sate Abbreviation is required</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="cellPhone">Cell Phone</label>
+        <input id="cellPhone" type="text" formControlName="cellPhone" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.cellPhone.errors }" />
+        <div *ngIf="submitted && f.cellPhone.errors" class="invalid-feedback">
+          <div *ngIf="f.cellPhone.errors.required">Cell Phone is required</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="workPhone">Work Phone</label>
+        <input id="workPhone" type="text" formControlName="workPhone" class="form-control" />
+      </div>
+      <div class="form-group">
+        <label for="carMaker">Car Maker</label>
+        <input id="carMaker" type="text" formControlName="carMaker" class="form-control" />
+      </div>
+      <div class="form-group">
+        <label for="carModel">Car Model</label>
+        <input id="carModel" type="text" formControlName="carModel" class="form-control" />
+      </div>
+      <div class="form-group">
+        <label for="carColor">Car Color</label>
+        <input id="carColor" type="text" formControlName="carColor" class="form-control" />
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input id="email" type="text" formControlName="email" class="form-control" placeholder="{{email}}" [(ngModel)]="email" [readOnly]=true />
+      </div>
+      <div class="form-group">
+        <label for="ssn">SSN</label>
+        <input id="ssn" type="password" formControlName="ssn" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.ssn.errors }" />
+        <div *ngIf="submitted && f.ssn.errors" class="invalid-feedback">
+          <div *ngIf="f.ssn.errors.required">SSN is required</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="dob">Date Of Birth</label>
+        <input id="dob" type="text" formControlName="dob" class="form-control" placeholder="yyyy/mm/dd" [ngClass]="{ 'is-invalid': submitted && f.dob.errors }" />
+        <div *ngIf="submitted && f.dob.errors" class="invalid-feedback">
+          <div *ngIf="f.dob.errors.required">Date Of Birth is required</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Gender</label>
+        <select class="custom-select" (change)="changeGender($event)" formControlName="gender">
+          <option value="" disabled>Choose your gender</option>
+          <option *ngFor="let gender of Gender, let i = index" value="{{i}}">{{gender}}</option>
+        </select>
+      </div>
+      <hr>
+      <div class="form-group">
+        <label>Are you a citizen or permanent resident of the U.S?</label>
+        <div>
+          <input id="yes" type="radio" class="custom-control-input" value="yes" name="citizenOrNot" formControlName="citizenOrNot" (change)="isCitizen = 1">
+          <label class="custom-control-label" for="yes">Yes</label>
+        </div>
+        <div>
+          <input id="no" type="radio" class="custom-control-input" value="no" name="citizenOrNot" formControlName="citizenOrNot" (change)="isCitizen = 2">
+          <label class="custom-control-label" for="no">No</label>
+        </div>
+      </div>
+      <div class="form-group" *ngIf="isCitizen === 1">
+        <label>Choose your type</label>
+        <div>
+          <input id="greenCard" type="radio" class="custom-control-input" value="Green Card" name="greenCardOrCitizen" formControlName="greenCardOrCitizen">
+          <label class="custom-control-label" for="greenCard">Green Card</label>
+        </div>
+        <div>
+          <input id="citizen" type="radio" class="custom-control-input" value="Citizen" name="greenCardOrCitizen" formControlName="greenCardOrCitizen">
+          <label class="custom-control-label" for="citizen">Citizen</label>
+        </div>
+      </div>
+      <div class="form-group" *ngIf="isCitizen === 2">
+        <label>What is your work authorization?</label>
+        <select class="custom-select" (change)="changeWorkAuthorization($event)" formControlName="workAuthorization">
+          <option value="" disabled>Choose your work authorization</option>
+          <option *ngFor="let workAuthorization of WorkAuthorization, let i = index" [ngValue]="i">{{workAuthorization}}</option>
+        </select>
+      </div>
+      <div class="form-group" *ngIf="isCitizen === 2 && isOtherWorkAuthorization">
+        <label for="otherWorkAuthorization">Please specify other work authorization</label>
+        <input id="otherWorkAuthorization" type="text" formControlName="otherWorkAuthorization" class="form-control" />
+      </div>
+      <div class="form-group" *ngIf="isCitizen === 2">
+        <label for="visaStartDate">Visa Start Date</label>
+        <input id="visaStartDate" type="text" formControlName="visaStartDate" class="form-control" placeholder="yyyy/mm/dd"/>
+      </div>
+      <div class="form-group" *ngIf="isCitizen === 2">
+        <label for="visaEndDate">Visa Start Date</label>
+        <input id="visaEndDate" type="text" formControlName="visaEndDate" class="form-control" placeholder="yyyy/mm/dd"/>
+      </div>
+      <hr>
+      <div class="form-group">
+        <label>Do you have a driver license?</label>
+        <div>
+          <input id="yes-driver" type="radio" class="custom-control-input" value="yes" name="haveDriverLicense" formControlName="haveDriverLicense" (change)="isDriverLicense = true">
+          <label class="custom-control-label" for="yes-driver">Yes</label>
+        </div>
+        <div>
+          <input id="no-driver" type="radio" class="custom-control-input" value="no" name="haveDriverLicense" formControlName="haveDriverLicense" (change)="isDriverLicense = false">
+          <label class="custom-control-label" for="no-driver">No</label>
+        </div>
+      </div>
+      <div class="form-group" *ngIf="isDriverLicense">
+        <label for="driverLicenseNumber">License Number</label>
+        <input id="driverLicenseNumber" type="text" formControlName="driverLicenseNumber" class="form-control" />
+      </div>
+      <div class="form-group" *ngIf="isDriverLicense">
+        <label for="driverLicenseExpDate">License Expiration Date</label>
+        <input id="driverLicenseExpDate" type="text" formControlName="driverLicenseExpDate" class="form-control" placeholder="yyyy/mm/dd" />
+      </div>
+      <div class="form-group" *ngIf="isDriverLicense">
+        <label for="driverLicenseCopy">Upload Copy of your Driver License</label>
+        <input id="driverLicenseCopy" type="file" formControlName="driverLicenseCopy" class="form-control" />
+      </div>
+      <hr>
+      <div class="form-group">
+        <label>Emergency Contact</label>
+        <input type = 'button' value="Add Contact" (click)="addEmergency()">
+        <input type = 'button' value="Delete Contact" (click)="deleteEmergency()">
+        <div *ngFor="let item of sample.get('emergency').controls, let i = index">
+          <hr>
+          <div [formGroup]="item">
+            Emergency Contact Number {{i + 1}}
+            <div class="form-group">
+              <label for="emergencyFullName">Full Name</label>
+              <input id="emergencyFullName" type="text" formControlName="emergencyFullName" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label for="emergencyPhone">Phone Number</label>
+              <input id="emergencyPhone" type="text" formControlName="emergencyPhone" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label for="emergencyRelationship">Relationship</label>
+              <input id="emergencyRelationship" type="text" formControlName="emergencyRelationship" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label for="emergencyTitle">Title</label>
+              <input id="emergencyTitle" type="text" formControlName="emergencyTitle" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label for="emergencyAddress">Address</label>
+              <input id="emergencyAddress" type="text" formControlName="emergencyAddress" class="form-control" />
+            </div>
+          </div>
+          <hr>
+        </div>
+      </div>
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+</div>

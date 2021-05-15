@@ -14,6 +14,8 @@ export class RegisterComponent implements OnInit {
     token: string | null;
     data: any;
     email: string;
+    id: number;
+    userId: string;
 
     constructor(
         private formBuilder: FormBuilder,
@@ -59,8 +61,11 @@ export class RegisterComponent implements OnInit {
           .subscribe({
               next: (x) => {
                   console.log(x);
+                  this.id = x.userId;
+                  console.log(this.id);
+                  this.userId = this.id.toString();
                   this.alertService.success('Registration successful', { keepAfterRouteChange: true });
-                  this.router.navigateByUrl('/onboard');
+                  this.router.navigateByUrl('/onboard?email=' + this.email + '&userId=' + this.userId);
               },
               error: error => {
                   this.alertService.error(error);

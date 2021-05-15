@@ -18,7 +18,7 @@ public class FilterConfig {
         final FilterRegistrationBean<JwtRequestFilter> filterFilterRegistrationBean = new FilterRegistrationBean<>();
         filterFilterRegistrationBean.setFilter(new JwtRequestFilter());
         filterFilterRegistrationBean.setInitParameters(Collections.singletonMap("authLoginUrl", authLoginUrl));
-        filterFilterRegistrationBean.addUrlPatterns("/*");
+        filterFilterRegistrationBean.addUrlPatterns("/mmmmm");
 
         return filterFilterRegistrationBean;
     }

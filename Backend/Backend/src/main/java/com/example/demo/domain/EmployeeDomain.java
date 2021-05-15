@@ -19,11 +19,12 @@ public class EmployeeDomain {
     private String car;
     private VisaStatusDomain visaStatusDomain;
     private String visaType;
-    private Date visaStartDate;
-    private Date visaEndDate;
+    private String visaStartDate;
+    private String visaEndDate;
     private String driverLicense;
     private String driverLicenseExpDate;
     private PersonDomain personDomain;
     private PersonalDocumentDomain personalDocumentDomain;
     private ApplicationWorkFlowDomain applicationWorkFlowDomain;
+    private Integer visaStatusId;
 }
