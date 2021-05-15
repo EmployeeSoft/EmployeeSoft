@@ -10,6 +10,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {VisaStatus} from '../../common/_models/visaStatus';
 import {Employee} from '../../common/_models/employee';
 import {Person} from '../../common/_models/person';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
   selector: 'app-onboard',
@@ -33,6 +34,9 @@ export class OnboardComponent implements OnInit {
   contactList: Contact[] = [];
   email: string | null;
   userId: string | null;
+  avatarFile: File = {} as File;
+  userInfoSuccess: false;
+  avatarSuccess: false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -174,18 +178,40 @@ export class OnboardComponent implements OnInit {
       this.contactList.push(this.contact);
     }
 
-    this.accountService.onboard(this.person, this.employee, this.address, this.contactList)
-      .pipe(first())
-      .subscribe({
-        next: (x) => {
-          console.log(x);
-          this.alertService.success('successful', { keepAfterRouteChange: true });
-          this.router.navigateByUrl('/home');
-        },
-        error: error => {
-          this.alertService.error(error);
-        }
-      });
+    // Uploading user info
+    // this.accountService.onboard(this.person, this.employee, this.address, this.contactList)
+    //   .pipe(first())
+    //   .subscribe({
+    //     next: (x) => {
+    //       console.log(x);
+    //       this.alertService.success('successful', { keepAfterRouteChange: true });
+    //       this.router.navigateByUrl('/home');
+    //     },
+    //     error: error => {
+    //       this.alertService.error(error);
+    //     }
+    //   });
+
+    // Uploading file
+    console.log('Uploading file');
+    const formData = new FormData();
+    formData.append('file', this.avatarFile, this.avatarFile.name);
+    // formData.append('userId', this.userId!);
+    formData.append('userId', '1');
+    formData.append('uploadTo', 'avatar');
+    formData.append('fileTitle', this.avatarFile.name);
+    this.accountService.upload(formData).subscribe(
+      event => {
+        console.log(event);
+        console.log(typeof event);
+        // console.log();
+      },
+      (error: HttpErrorResponse) => {
+        console.log(error);
+      }
+    );
+
+    // Redirect to a different page
   }
 
   get genderValue() {
@@ -210,5 +236,10 @@ export class OnboardComponent implements OnInit {
     if (chosenValue === '5:') {
       this.isOtherWorkAuthorization = true;
     } else { this.isOtherWorkAuthorization = false; }
+  }
+
+  setAvatar(event: any) {
+    console.log(event.target.files[0]);
+    this.avatarFile = event.target.files[0];
   }
 }
