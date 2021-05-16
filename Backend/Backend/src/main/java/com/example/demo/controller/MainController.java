@@ -13,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.sql.Date;
 import java.util.ArrayList;
 
 @CrossOrigin(origins = {"http://localhost:4200", "http://localhost:9999"}, allowCredentials = "true")
@@ -233,7 +234,10 @@ public class MainController {
 
         if (userRole.equals("employee")) {
             if (appWorkFlowService.checkEmployeeAppWorkFlowExist(Integer.parseInt(userId))) {
-                response.setLessThan100Days(CalculateDate.hundredDays(appWorkFlowService.getDateModified(Integer.parseInt(userId))));
+                Date dateCreated = appWorkFlowService.getDateCreatedByUserId(Integer.parseInt(userId));
+                Date dateModified= appWorkFlowService.getDateModified(Integer.parseInt(userId));
+
+                response.setLessThan100Days(CalculateDate.hundredDays(dateCreated, dateModified));
                 response.setType(appWorkFlowService.getType(Integer.parseInt(userId)));
                 response.setComment(appWorkFlowService.getComment(Integer.parseInt(userId)));
                 response.setStatus(true);   // Always set to true
@@ -358,7 +362,7 @@ public class MainController {
 
     // will replace /all-employees
     @GetMapping("/employees")
-    public AllEmployeeResponse getAllEmployees(@RequestParam(value="userRole") String role) {
+    public AllEmployeeResponse getAllEmployees2nd(@RequestParam(value="userRole") String role) {
         // Return type
         AllEmployeeResponse response = new AllEmployeeResponse();
         String userRole = role.toString();
@@ -372,4 +376,11 @@ public class MainController {
 
         return response;
     }
+
+//    @GetMapping("/imcomplete-visa-status")
+//    public IncompleteVisaStatusResponse getAllEmployeesWithIncompleteStatus() {
+//        IncompleteVisaStatusResponse response = new IncompleteVisaStatusResponse();
+//
+//        return response;
+//    }
 }
