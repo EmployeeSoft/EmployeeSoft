@@ -166,16 +166,11 @@ public class EmployeeDao extends AbstractHibernateDao<Employee> implements Inter
     // Get the Employee ID by User ID
     public int getEmployeeIdByUserId(Integer userId) {
         Session session = getCurrentSession();
-
-        try {
-            String hql = "SELECT e.id FROM Employee e, Person p WHERE p.id = :userId AND p.id = e.personId";
-            Query query = session.createQuery(hql);
-            query.setParameter("userId", userId);
-            return (int) query.uniqueResult();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return -1;
-        }
-
+        String hql = "SELECT e.id FROM Employee e, Person p WHERE p.id = :userId AND p.id = e.personId";
+        Query query = session.createQuery(hql);
+        query.setParameter("userId", userId);
+        return (int) query.uniqueResult();
     }
+
+
 }

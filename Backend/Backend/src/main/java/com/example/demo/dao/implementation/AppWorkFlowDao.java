@@ -180,6 +180,16 @@ public class AppWorkFlowDao extends AbstractHibernateDao<ApplicationWorkFlow> im
     }
 
     // Get the date created
+    public Date getDateCreatedByUserId(Integer userId) {
+        int employeeId = employeeService.getEmployeeIdByUserId(userId);
+
+        Session session = getCurrentSession();
+        Query query = session.createQuery("SELECT dateCreated FROM ApplicationWorkFlow WHERE employeeId = :employeeId AND type = 'I-983'");
+        query.setParameter("employeeId", employeeId);
+        return (Date) query.uniqueResult();
+    }
+
+    // Get the date created
     public Date getDateModifiedByUserId(Integer userId) {
         int employeeId = employeeService.getEmployeeIdByUserId(userId);
 
