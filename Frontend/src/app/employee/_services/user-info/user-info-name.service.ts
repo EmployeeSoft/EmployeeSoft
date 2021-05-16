@@ -15,7 +15,7 @@ export class UserInfoNameService {
   constructor(private router: Router,
               private http: HttpClient) { }
 
-  update(name: Name) {
-    return this.http.post(`${environment.backendUrl}/user-info/name`, name);
+  updateName(name: Name) {
+    return this.http.post(`${environment.backendUrl}/person/name`, name);
   }
 }

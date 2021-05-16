@@ -16,7 +16,8 @@ const accountModule = () => import('./common/account/account.module').then(x => 
 const usersModule = () => import('./common/users/users.module').then(x => x.UsersModule);
 
 const routes: Routes = [
-    { path: '', component: HomeComponent, canActivate: [AuthGuard] },
+    // { path: '', component: HomeComponent, canActivate: [AuthGuard] },
+    { path: '', component: HomeComponent},
     { path: 'hr/hire', component: HireComponent, canActivate: [AuthGuard], data: {roles: [Role.hr]}},
     { path: 'hr/home', component: HrHomeComponent, canActivate: [AuthGuard], data: {roles: [Role.hr]}},
     { path: 'employee/home', component: EmployeeHomeComponent, canActivate: [AuthGuard], data: {roles: [Role.hr, Role.employee]}},
