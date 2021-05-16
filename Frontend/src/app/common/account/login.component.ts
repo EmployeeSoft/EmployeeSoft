@@ -50,8 +50,8 @@ export class LoginComponent implements OnInit {
                     if (data.role === "hr") {
                       this.router.navigateByUrl('hr/home');
                     } else if (data.role === "employee") {
-                      const id = data.redirectUrl.split("=")[1];
-                      this.router.navigateByUrl('employee/home?id=' + id);
+                    //  const id = data.redirectUrl.split("=")[1];
+                      this.router.navigateByUrl('employee/home');
                     }
                   } else {
                     this.router.navigateByUrl('/account/login');

@@ -18,7 +18,7 @@ import { HomeComponent } from './common/home';
 import { HireComponent } from './hr/hire/hire.component';
 import { RegisterNewHireComponent } from './hr/hire/register-new-hire/register-new-hire.component';
 import { EmployeeHomeComponent} from './employee/employee-home/employee-home.component';
-import { NavbarComponent } from './employee/navbar/navbar.component';
+import { NavbarComponent } from './navbar/navbar.component';
 import { OnboardComponent } from './employee/onboard/onboard.component';
 import { HrHomeComponent } from './hr/hr-home/hr-home.component';
 import { EmployeeVisaStatusManagementComponent } from './employee/employee-visa-status-management/employee-visa-status-management.component';

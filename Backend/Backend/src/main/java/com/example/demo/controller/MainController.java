@@ -248,4 +248,114 @@ public class MainController {
 
         return response;
     }
+
+    // Will replace /user-info
+
+    @GetMapping("/employee")
+    public HomePageResponse getPersonalProfile(@RequestParam(value="userRole") String role, @RequestParam(value="userId") String id) {
+        // Creating return value
+        HomePageResponse response = new HomePageResponse();
+
+        // Getting user ID
+        int userId = Integer.parseInt(id);
+
+        // Get the Person ID from User ID
+        int personId = personService.getPersonIdByUserId(userId);
+
+        PersonDomain personDomain = personService.getPersonByUserId(userId);
+        EmployeeDomain employeeDomain = employeeService.getEmployeeByEmployeeId(personId);
+
+
+        // Getting the user Role
+        // The role can either be "employee" or "hr"
+        String userRole = role;
+
+
+        /////  Name Section /////
+
+        String firstName = personDomain.getFirstName();
+        String middleName = personDomain.getMiddleName();
+        String lastName = personDomain.getLastName();
+
+        // Getting the Full name
+        String fullName = firstName +
+                " " + ((middleName == null)? "" : middleName + " ") +
+                lastName;
+
+        String preferName = personDomain.getPreferName();
+        String avatar = employeeDomain.getAvatar();
+        String dob = personDomain.getDob();
+        int age = CalculateAge.age(personDomain.getDob());
+        String gender = personService.getGenderByUserId(userId);
+        String ssn = personDomain.getSsn();
+
+
+        ///// Address Section /////
+
+        ArrayList<AddressDomain> addresses = addressService.getAddressListByPersonId(personId);
+
+
+        ///// Contact information Section //////
+
+        String email = personService.getEmailByUserId(userId);
+        String cellPhone = personDomain.getCellPhone();
+        String altPhone = personDomain.getAltPhone();
+
+
+        ///// Employee Section /////
+
+        String title = employeeDomain.getTitle();
+        String car = employeeDomain.getCar();
+        String visaType = employeeDomain.getVisaType();
+
+        String visaStartDate = employeeDomain.getVisaStartDate();
+        String visaEndDate = employeeDomain.getVisaEndDate();
+        String employeeStartDate = employeeDomain.getStartDate();
+        String employeeEndDate = employeeDomain.getEndDate();
+
+        ///// Emergency Information Section /////
+
+        ArrayList<ContactDomain> contacts = contactService.getContactListByPersonId(personId);
+
+
+        ///// Document Section /////
+        // TODO
+
+
+        // Save response
+        response.setServiceStatus(new ServiceStatus("Success", true, ""));
+
+        // Name Section
+        response.setFullName(fullName);
+        response.setPreferName(preferName);
+        response.setAvatar(avatar);
+        response.setDob(dob);
+        response.setAge(age);
+        response.setGender(gender);
+        response.setSsn(ssn);
+
+        // Address Section
+        response.setAddress(addresses);
+
+        // Contact information section
+        response.setEmail(email);
+        response.setCellphone(cellPhone);
+        response.setAltPhone(altPhone);
+
+        // Employee Section
+        response.setTitle(title);
+        response.setCar(car);
+        response.setVisaType(visaType);
+        response.setVisaStartDate(visaStartDate);
+        response.setVisaEndDate(visaEndDate);
+        response.setEmployeeStartDate(employeeStartDate);
+        response.setEmployeeEndDate(employeeEndDate);
+
+        // Emergency Contact Section
+        response.setContracts(contacts);
+
+        return response;
+    }
+
+
 }
