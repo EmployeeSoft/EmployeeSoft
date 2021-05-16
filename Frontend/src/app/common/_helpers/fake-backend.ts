@@ -58,8 +58,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return updateUser();
                 case url.match(/\/users\/\d+$/) && method === 'DELETE':
                     return deleteUser();
-                case url.match(/\/employee\/visa\//) && method === 'GET':
-                  return getEmployeeVisaById();
+               // case url.match(/\/employee\/visa\//) && method === 'GET':
+               //   return getEmployeeVisaById();
                // case url.match(/\/hr\/employee-profile\//) && method === 'GET':
                  // return getAllEmployee();
                 default:
