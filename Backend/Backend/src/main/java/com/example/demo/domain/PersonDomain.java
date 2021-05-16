@@ -25,8 +25,8 @@ public class PersonDomain {
     private Integer userId;
     private AddressDomain addressDomain;
     private ContactDomain contactDomain;
-    private ArrayList<AddressDomain> addressDomain;
-    private ArrayList<ContactDomain> contactDomain;
+    private ArrayList<AddressDomain> addressDomains;
+    private ArrayList<ContactDomain> contactDomains;
 
     @Override
     public String toString() {

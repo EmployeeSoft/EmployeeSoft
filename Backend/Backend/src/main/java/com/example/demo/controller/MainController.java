@@ -213,13 +213,11 @@ public class MainController {
     }
 
     @GetMapping("/download")
-    public DownloadFileResponse downloadFromS3(@RequestBody DownloadDomain downloadDomain) {
+    public DownloadFileResponse downloadFromS3(@RequestParam Integer userId,
+                                               @RequestParam String filename) {
         DownloadFileResponse response = new DownloadFileResponse();
 
-        // Getting information from frontend
-        int userId = downloadDomain.getUserId();
-        String filename = downloadDomain.getFilename(); // In the personal_doc table, this will the the tile column
-        byte[] data = awss3Service.downloadFile(userId, filename);
+        ByteArrayResource data = awss3Service.downloadFile(userId, filename);
 
         // Check if there are data to be returned
         if (data != null) {
