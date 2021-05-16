@@ -13,34 +13,6 @@ import java.util.List;
 public class AddressDao extends AbstractHibernateDao<Address> implements InterfaceAddressDao {
     public AddressDao() { setClazz(Address.class); }
 
-    // Given the Address information, get the Person who live at that address
-    public Person getPersonByAddress(Address address) {
-        // TODO
-        return new Person();
-    }
-
-    // Given the person ID, get the address ID that belongs to that person
-    public int getAddressIdByPersonId(Integer personId) {
-        Session session = getCurrentSession();
-        Query query = session.createQuery("SELECT id FROM Address WHERE personId = :personId");
-        query.setParameter("personId", personId);
-        int id = (int) query.uniqueResult();
-        return id;
-    }
-
-    // Given the Address ID, get the address information
-    public Address getAddressById(Integer id) {
-        Session session = getCurrentSession();
-        Query query = session.createQuery("FROM Address WHERE id = :id");
-        query.setParameter("id", id);
-        Address address = (Address) query.uniqueResult();
-        return address;
-    }
-
-
-    ///// REQUIRED METHODS BELOW /////
-
-
     // Given person ID, get the person's address line 1
     public String getAddressLine1ByPersonId(Integer personId) {
         // Get current session

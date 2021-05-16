@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 @Service
 public class VisaStatusService {
     private InterfaceVisaStatusDao visaStatusDao;
@@ -17,6 +20,8 @@ public class VisaStatusService {
         this.visaStatusDao = visaStatusDao;
     }
 
+    private final DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+
     @Transactional
     public VisaStatusDomain getVisaStatusById(Integer id) {
         VisaStatus visaStatus = visaStatusDao.getVisaStatusById(id);
@@ -24,7 +29,7 @@ public class VisaStatusService {
                 .id(visaStatus.getId())
                 .visaType(visaStatus.getVisaType())
                 .isActive(visaStatus.getIsActive())
-                .dateModified(visaStatus.getDateModified())
+                .dateModified(df.format(visaStatus.getDateModified()))
                 .createUser(visaStatus.getCreateUser())
                 .build();
 

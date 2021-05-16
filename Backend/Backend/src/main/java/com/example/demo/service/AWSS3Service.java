@@ -4,20 +4,21 @@ import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
-import com.amazonaws.services.s3.model.CannedAccessControlList;
-import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.services.s3.model.*;
+import com.amazonaws.util.IOUtils;
+import com.example.demo.domain.PersonalDocumentDomain;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 
 @Service
 @PropertySource("classpath:application.properties")
@@ -45,8 +46,11 @@ public class AWSS3Service {
     @Autowired
     private PersonalDocService personalDocService;
 
+    @Autowired
+    private DigitalDocumentService digitalDocumentService;
+
     @PostConstruct
-    private void initializeAmazon() {
+    private void init() {
         AWSCredentials credentials = new BasicAWSCredentials(this.accessKey, this.secretKey);
         this.s3client = AmazonS3ClientBuilder
                 .standard()
@@ -55,13 +59,22 @@ public class AWSS3Service {
                 .build();
     }
 
-    public boolean uploadFile(MultipartFile multipartFile, String uploadTo, Integer userId, String fileTitle) {
+    public String getURL(String key) {
+        return "https://" + this.bucketName + ".s3-" + this.region + ".amazonaws.com/" + key;
+    }
+
+    public boolean uploadFile(MultipartFile mFile, String uploadTo, Integer userId, String fileTitle) {
         String filename = "";
         try {
-            File file = convertMultipartFileToFile(multipartFile);
-            filename = userId + "_" + multipartFile.getOriginalFilename();
+            File file = new File(mFile.getOriginalFilename());
+            FileOutputStream out = new FileOutputStream(file);
+            out.write(mFile.getBytes());
+
+            filename = userId + "_" + mFile.getOriginalFilename();
             String fileUrl = getURL(filename);
-            uploadFileToBucket(filename, file);
+
+            this.s3client.putObject(new PutObjectRequest(bucketName, filename, file)
+                    .withCannedAcl(CannedAccessControlList.PublicRead));    // Make file public
 
             // Update the avatar of the employee with the user ID of userId
             int personId = personService.getPersonIdByUserId(userId);
@@ -71,32 +84,58 @@ public class AWSS3Service {
                 System.out.println("User ID " + userId + " successfully updated profile avatar");
             } else {
                 int employeeId = employeeService.getEmployeeIdByPersonId(personId);
-                personalDocService.createPersonalDocumentByEmployeeId(employeeId, fileUrl, filename, fileTitle);
-                System.out.println("Employee ID " + employeeId + " successfully uploaded document " + fileTitle);
+                PersonalDocumentDomain create = personalDocService.createPersonalDocumentByEmployeeId(
+                        employeeId, fileUrl, filename, fileTitle);
+                if (create != null)
+                    System.out.println("Employee ID " + employeeId + " successfully uploaded document " + fileTitle);
             }
 
-            file.delete();
+            out.close();
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e);
             return false;
         }
     }
 
-    private File convertMultipartFileToFile(MultipartFile file) throws IOException {
-        File convertedFile = new File(file.getOriginalFilename());
-        FileOutputStream fos = new FileOutputStream(convertedFile);
-        fos.write(file.getBytes());
-        fos.close();
-        return convertedFile;
-    }
+    public byte[] downloadFile(Integer userId, String filename) {
+        byte[] data = null;
 
-    private void uploadFileToBucket(String fileName, File file) {
-        this.s3client.putObject(new PutObjectRequest(bucketName, fileName, file)
-                .withCannedAcl(CannedAccessControlList.PublicRead));
-    }
+        /*
+            if userId is 0 then
+                filename can either be "I-983 Form" or "I-983 Sample"
+            else
+                filename is the file title that is in the personal_doc table in backend database
+        */
 
-    public String getURL(String key) {
-        return "https://" + this.bucketName + ".s3-" + this.region + ".amazonaws.com/" + key;
+        String key;
+
+        // If userId is 0 then download from digital_doc
+        if (userId == 0) {
+            key = digitalDocumentService.getDigitalDocument(filename)
+                    .replace("https://employeefilebucket.s3-us-west-1.amazonaws.com/", "")
+                    .replace("+", " ");
+        } else {
+            key = personalDocService.getPath(userId, filename)
+                    .replace("https://employeefilebucket.s3-us-west-1.amazonaws.com/", "");
+        }
+
+        S3Object s3Object = s3client.getObject(bucketName, key);
+        S3ObjectInputStream in = s3Object.getObjectContent();
+
+        try {
+            data = IOUtils.toByteArray(in);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                // If the stream still contain data, abort HTTP request
+                s3Object.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return data;
     }
 }

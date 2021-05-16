@@ -5,7 +5,10 @@ import java.time.Period;
 import java.time.ZoneId;
 
 public class CalculateAge {
-    public static int age(java.sql.Date dob) {
+    public static int age(String dobStr) {
+        // Convert String to java.sql.Date
+        java.sql.Date dob = java.sql.Date.valueOf(dobStr);
+
         // Convert java.sql.Date to java.util.Date
         java.util.Date dobUtil = new java.util.Date(dob.getTime());
 

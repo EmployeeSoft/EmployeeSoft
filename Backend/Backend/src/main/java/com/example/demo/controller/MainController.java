@@ -2,6 +2,8 @@ package com.example.demo.controller;
 
 import com.example.demo.domain.*;
 import com.example.demo.domain.common.ServiceStatus;
+import com.example.demo.domain.response.AllEmployeeResponse;
+import com.example.demo.domain.response.DownloadFileResponse;
 import com.example.demo.domain.response.HomePageResponse;
 import com.example.demo.domain.response.OnBoardResponse;
 import com.example.demo.domain.response.UploadResponse;
@@ -9,11 +11,11 @@ import com.example.demo.entity.Person;
 import com.example.demo.service.*;
 import com.example.demo.util.CalculateAge;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.sql.Date;
 import java.util.ArrayList;
 
 @CrossOrigin(origins = {"http://localhost:4200", "http://localhost:9999"}, allowCredentials = "true")
@@ -73,8 +75,8 @@ public class MainController {
 
         String preferName = personDomain.getPreferName();
         String avatar = employeeDomain.getAvatar();
-        Date dob = Date.valueOf(personDomain.getDob());
-        int age = CalculateAge.age(dob);
+        String dob = personDomain.getDob();
+        int age = CalculateAge.age(personDomain.getDob());
         String gender = personService.getGenderByUserId(userId);
         String ssn = personDomain.getSsn();
 
@@ -96,11 +98,11 @@ public class MainController {
         String title = employeeDomain.getTitle();
         String car = employeeDomain.getCar();
         String visaType = employeeDomain.getVisaType();
-        Date visaStartDate = Date.valueOf(employeeDomain.getVisaStartDate());
-        Date visaEndDate = Date.valueOf(employeeDomain.getVisaEndDate());
-        Date employeeStartDate = employeeDomain.getStartDate();
-        Date employeeEndDate = employeeDomain.getEndDate();
-        
+
+        String visaStartDate = employeeDomain.getVisaStartDate();
+        String visaEndDate = employeeDomain.getVisaEndDate();
+        String employeeStartDate = employeeDomain.getStartDate();
+        String employeeEndDate = employeeDomain.getEndDate();        
 
         ///// Emergency Information Section /////
 
@@ -149,12 +151,21 @@ public class MainController {
     @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public UploadResponse fileUpload(@RequestParam("file") MultipartFile file, @RequestParam("userId") Integer userId,
                                      @RequestParam("uploadTo") String uploadTo, @RequestParam("fileTitle") String fileTitle) {
+
+        /*
+            uploadTo is used to distinguish if the file will be upload to the employee table for avatar pic
+                or
+            upload to the personal_doc table for personal documents
+
+            uploadTo can either be "avatar" or "personal document"
+        */
+
         String filename = file.getOriginalFilename();
         UploadResponse response = new UploadResponse();
 
         if (awss3Service.uploadFile(file, uploadTo, userId, fileTitle)) {
             response.setServiceStatus(new ServiceStatus("Success", true, ""));
-            response.setUrl(userId + "_" + awss3Service.getURL(filename));
+            response.setUrl(awss3Service.getURL(userId + "_" + filename));
         } else {
             response.setServiceStatus(new ServiceStatus("Failed", false, "Unable to upload file"));
         }
@@ -174,11 +185,50 @@ public class MainController {
         Person person = onBoardService.addNewPerson(personDomain);
         int employeeId = onBoardService.addNewEmployee(employeeDomain, person);
         onBoardService.addNewAddress(addressDomain, person);
-        for (ContactDomain contactDomain: contactDomains) {
+        for (ContactDomain contactDomain : contactDomains) {
             onBoardService.addNewContact(contactDomain, person);
         }
 
         response.setServiceStatus(new ServiceStatus("SUCCESS", true, ""));
+        return response;
+    }
+
+    @GetMapping("/all-employees")
+    public AllEmployeeResponse getAllEmployees(@RequestBody UserDomain userDomain) {
+        // Return type
+        AllEmployeeResponse response = new AllEmployeeResponse();
+
+        // Used to check user's role
+        String userRole = userDomain.getUserRole();
+
+        if (userRole.equals("hr")) {
+            response.setEmployees(employeeService.getAllEmployees());
+            response.setServiceStatus(new ServiceStatus("Success", true, ""));
+        } else {
+            String errorMsg = "You are not authorized";
+            response.setServiceStatus(new ServiceStatus("Fail", false, errorMsg));
+        }
+
+        return response;
+    }
+
+    @GetMapping("/download")
+    public DownloadFileResponse downloadFromS3(@RequestBody DownloadDomain downloadDomain) {
+        DownloadFileResponse response = new DownloadFileResponse();
+
+        // Getting information from frontend
+        int userId = downloadDomain.getUserId();
+        String filename = downloadDomain.getFilename(); // In the personal_doc table, this will the the tile column
+        byte[] data = awss3Service.downloadFile(userId, filename);
+
+        // Check if there are data to be returned
+        if (data != null) {
+            response.setServiceStatus(new ServiceStatus("Success", true, ""));
+            response.setFile(data);
+        } else {
+            String errorMsg = "Unable to retrieve file";
+            response.setServiceStatus(new ServiceStatus("Fail", false, errorMsg));
+        }
         return response;
     }
 }

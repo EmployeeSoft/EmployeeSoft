@@ -11,9 +11,9 @@ import java.sql.Date;
 @Builder
 public class ApplicationWorkFlowDomain {
     private Integer id;
-    private EmployeeDomain employeeDomain;
-    private Date dateCreated;
-    private Date dateModified;
+//    private EmployeeDomain employeeDomain;
+    private String dateCreated;
+    private String dateModified;
     private Integer status;
     private String comment;
     private String type;

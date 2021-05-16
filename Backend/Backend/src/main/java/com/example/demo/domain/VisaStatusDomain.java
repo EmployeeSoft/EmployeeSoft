@@ -13,6 +13,6 @@ public class VisaStatusDomain {
     private Integer id;
     private String visaType;
     private Boolean isActive;
-    private Date dateModified;
+    private String dateModified;
     private String createUser;
 }

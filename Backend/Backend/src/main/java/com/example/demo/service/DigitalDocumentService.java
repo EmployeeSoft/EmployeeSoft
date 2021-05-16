@@ -56,4 +56,9 @@ public class DigitalDocumentService {
 
         return digitalDocumentDomains;
     }
+
+    @Transactional
+    public String getDigitalDocument(String filename) {
+        return digitalDocDao.getDigitalDocument(filename);
+    }
 }

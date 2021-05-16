@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.dao.InterfaceEmployeeDao;
+import com.example.demo.dao.implementation.EmployeeDao;
 import com.example.demo.domain.EmployeeDomain;
 import com.example.demo.entity.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,40 +11,53 @@ import org.springframework.transaction.annotation.Transactional;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 @Service
 public class EmployeeService {
     private InterfaceEmployeeDao employeeDao;
 
     @Autowired
+    private PersonalDocService personalDocService;
+
+    @Autowired
+    private AppWorkFlowService appWorkFlowService;
+
+    @Autowired
+    private VisaStatusService visaStatusService;
+
+    @Autowired
+    private PersonService personService;
+
+    @Autowired
     public void setInterfaceEmployeeDao(InterfaceEmployeeDao employeeDao) {
         this.employeeDao = employeeDao;
     }
-
-    private final String pattern = "yyyy-MM-dd";
 
     @Transactional
     public EmployeeDomain getEmployeeByEmployeeId(Integer id) {
         Employee employee = employeeDao.getEmployeeByEmployeeId(id);
 
-        DateFormat df = new SimpleDateFormat(this.pattern);
-        String date = df.format(employee.getDriverLicenseExpDate());
-
-        int personId = employee.getPerson().getId();
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        int userId = personService.getUserIdByPersonId(employee.getPersonId());
 
         EmployeeDomain employeeDomain = EmployeeDomain.builder()
                 .id(employee.getId())
                 .title(employee.getTitle())
                 .managerId(employee.getManagerId())
-                .startDate(employee.getStartDate())
-                .endDate(employee.getEndDate())
+                .startDate(df.format(employee.getStartDate()))
+                .endDate(df.format(employee.getEndDate()))
                 .avatar(employee.getAvatar())
                 .car(employee.getCar())
-                .visaType(employeeDao.getVisaTypeByPersonId(personId))
-                .visaStartDate(employee.getVisaStartDate().toString())
-                .visaEndDate(employee.getVisaEndDate().toString())
+                .visaStatusDomain(visaStatusService.getVisaStatusById(employee.getVisaStatus()))
+                .visaType(employeeDao.getVisaTypeByPersonId(employee.getPersonId()))
+                .visaStartDate(df.format(employee.getVisaStartDate()))
+                .visaEndDate(df.format(employee.getVisaEndDate()))
                 .driverLicense(employee.getDriverLicense())
-                .driverLicenseExpDate(date)
+                .driverLicenseExpDate(df.format(employee.getDriverLicenseExpDate()))
+                .personDomain(personService.getPersonByUserId(userId))
+                .personalDocumentDomain(personalDocService.getPersonalDocsByEmployeeId(employee.getId()))
+                .applicationWorkFlowDomain(appWorkFlowService.getAppWorkFlowsByEmployeeId(employee.getId()))
                 .build();
 
         return employeeDomain;
@@ -102,22 +116,27 @@ public class EmployeeService {
     @Transactional
     public EmployeeDomain getEmployeeByPersonId(Integer personId) {
         Employee employee = employeeDao.getEmployeeByPersonId(personId);
+        int userId = personService.getUserIdByPersonId(employee.getPersonId());
 
-        DateFormat df = new SimpleDateFormat(this.pattern);
-        String date = df.format(employee.getDriverLicenseExpDate());
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
         EmployeeDomain employeeDomain = EmployeeDomain.builder()
                 .id(employee.getId())
                 .title(employee.getTitle())
                 .managerId(employee.getManagerId())
-                .startDate(employee.getStartDate())
-                .endDate(employee.getEndDate())
+                .startDate(df.format(employee.getStartDate()))
+                .endDate(df.format(employee.getEndDate()))
+                .avatar(employee.getAvatar())
                 .car(employee.getCar())
-                .visaType(employeeDao.getVisaTypeByPersonId(personId))
-                .visaStartDate(employee.getVisaStartDate().toString())
-                .visaEndDate(employee.getVisaEndDate().toString())
+                .visaStatusDomain(visaStatusService.getVisaStatusById(employee.getVisaStatus()))
+                .visaType(employeeDao.getVisaTypeByPersonId(employee.getPersonId()))
+                .visaStartDate(df.format(employee.getVisaStartDate()))
+                .visaEndDate(df.format(employee.getVisaEndDate()))
                 .driverLicense(employee.getDriverLicense())
-                .driverLicenseExpDate(date)
+                .driverLicenseExpDate(df.format(employee.getDriverLicenseExpDate()))
+                .personDomain(personService.getPersonByUserId(userId))
+                .personalDocumentDomain(personalDocService.getPersonalDocsByEmployeeId(employee.getId()))
+                .applicationWorkFlowDomain(appWorkFlowService.getAppWorkFlowsByEmployeeId(employee.getId()))
                 .build();
 
         return employeeDomain;
@@ -131,5 +150,41 @@ public class EmployeeService {
     @Transactional
     public int getEmployeeIdByPersonId(Integer personId) {
         return employeeDao.getEmployeeIdByPersonId(personId);
+    }
+
+    @Transactional
+    public ArrayList<EmployeeDomain> getAllEmployees() {
+        // Return
+        ArrayList<EmployeeDomain> employeeDomains = new ArrayList<>();
+
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+
+        // Convert Employee to employeeDomain and save to employeeDomains
+        for (Employee employee : employeeDao.getAllEmployees()) {
+            int userId = personService.getUserIdByPersonId(employee.getPersonId());
+
+            EmployeeDomain domain = EmployeeDomain.builder()
+                    .id(employee.getId())
+                    .title(employee.getTitle())
+                    .managerId(employee.getManagerId())
+                    .startDate(df.format(employee.getStartDate()))
+                    .endDate(df.format(employee.getEndDate()))
+                    .avatar(employee.getAvatar())
+                    .car(employee.getCar())
+                    .visaStatusDomain(visaStatusService.getVisaStatusById(employee.getVisaStatus()))
+                    .visaType(employeeDao.getVisaTypeByPersonId(employee.getPersonId()))
+                    .visaStartDate(df.format(employee.getVisaStartDate()))
+                    .visaEndDate(df.format(employee.getVisaEndDate()))
+                    .driverLicense(employee.getDriverLicense())
+                    .driverLicenseExpDate(df.format(employee.getDriverLicenseExpDate()))
+                    .personDomain(personService.getPersonByUserId(userId))
+                    .personalDocumentDomain(personalDocService.getPersonalDocsByEmployeeId(employee.getId()))
+                    .applicationWorkFlowDomain(appWorkFlowService.getAppWorkFlowsByEmployeeId(employee.getId()))
+                    .build();
+
+            employeeDomains.add(domain);
+        }
+
+        return employeeDomains;
     }
 }
