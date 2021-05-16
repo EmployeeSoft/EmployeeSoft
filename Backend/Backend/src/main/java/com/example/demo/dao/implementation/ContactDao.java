@@ -2,6 +2,7 @@ package com.example.demo.dao.implementation;
 
 import com.example.demo.config.HibernateConfig;
 import com.example.demo.dao.InterfaceContactDao;
+import com.example.demo.domain.ContactDomain;
 import com.example.demo.domain.PersonalContactDomain;
 import com.example.demo.entity.Contact;
 import org.hibernate.Session;
@@ -40,17 +41,17 @@ public class ContactDao extends AbstractHibernateDao<Contact> implements Interfa
     }
 
     // Update Contact with person ID
-    public boolean updateContact(PersonalContactDomain domain){
+    public boolean updateContact(ContactDomain domain){
         Session session = getCurrentSession();
         Query query = session.createQuery("UPDATE Contact SET fullName =: fullName," +
                 " phone =: phone, relationship =: relationship, title =: title, " +
                 " address =: address WHERE personId =: id");
-        query.setParameter("fullName", domain.getFull_name());
+        query.setParameter("fullName", domain.getFullName());
         query.setParameter("phone", domain.getPhone());
         query.setParameter("relationship", domain.getRelationship());
         query.setParameter("title", domain.getTitle());
         query.setParameter("address", domain.getAddress());
-        query.setParameter("id", domain.getPerson_id());
+        query.setParameter("id", domain.getId());
         int res = query.executeUpdate();
         return res != 0;
     }

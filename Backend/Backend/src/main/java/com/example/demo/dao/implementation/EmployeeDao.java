@@ -172,12 +172,12 @@ public class EmployeeDao extends AbstractHibernateDao<Employee> implements Inter
                 "driverLicense =: driverLicense, driverLicenseExpDate =: driverLicenseExpDate " +
                 "WHERE personId =: id");
         query.setParameter("title", domain.getTitle());
-        query.setParameter("startDate", domain.getStart_date());
-        query.setParameter("endDate", domain.getEnd_date());
+        query.setParameter("startDate", Date.valueOf(domain.getStartDate()));
+        query.setParameter("endDate", Date.valueOf(domain.getEndDate()));
         query.setParameter("car", domain.getCar());
-        query.setParameter("driverLicense", domain.getDriver_license());
-        query.setParameter("driverLicenseExpDate", domain.getDriver_license_exp_date());
-        query.setParameter("id", domain.getPerson_id());
+        query.setParameter("driverLicense", domain.getDriverLicense());
+        query.setParameter("driverLicenseExpDate", Date.valueOf(domain.getDriverLicenseExpDate()));
+        query.setParameter("id", domain.getPersonId());
 
         int res = query.executeUpdate();
         return res != 0;

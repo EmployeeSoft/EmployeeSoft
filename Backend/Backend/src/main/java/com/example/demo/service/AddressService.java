@@ -100,7 +100,7 @@ public class AddressService {
     }
 
     @Transactional
-    public boolean updateAddress(PersonalAddressDomain domain){
+    public boolean updateAddress(AddressDomain domain){
         return addressDao.updateAddress(domain);
     }
 }

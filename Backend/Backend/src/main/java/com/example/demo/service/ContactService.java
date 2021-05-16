@@ -45,6 +45,7 @@ public class ContactService {
 
         for (Contact contact : contacts) {
             ContactDomain domain = ContactDomain.builder()
+                    .id(contact.getId())
                     .fullName(contact.getFullName())
                     .phone(contact.getPhone())
                     .relationship(contact.getRelationship())
@@ -57,7 +58,12 @@ public class ContactService {
     }
 
     @Transactional
-    public boolean updateContactByPersonId(PersonalContactDomain domain){
-        return contactDao.updateContact(domain);
+    public boolean updateContactByPersonId(ContactDomain[] domains){
+        for(ContactDomain domain : domains){
+            if(!contactDao.updateContact(domain)){
+                return false;
+            }
+        }
+        return true;
     }
 }

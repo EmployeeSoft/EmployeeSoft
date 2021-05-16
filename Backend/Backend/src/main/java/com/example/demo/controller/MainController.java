@@ -312,6 +312,8 @@ public class MainController {
         String visaEndDate = employeeDomain.getVisaEndDate();
         String employeeStartDate = employeeDomain.getStartDate();
         String employeeEndDate = employeeDomain.getEndDate();
+        String driverLicense = employeeDomain.getDriverLicense();
+        String driverLicenseExpDate = employeeDomain.getDriverLicenseExpDate();
 
         ///// Emergency Information Section /////
 
@@ -336,6 +338,7 @@ public class MainController {
 
         // Address Section
         response.setAddress(addresses);
+        response.setPersonId(personId);
 
         // Contact information section
         response.setEmail(email);
@@ -350,6 +353,8 @@ public class MainController {
         response.setVisaEndDate(visaEndDate);
         response.setEmployeeStartDate(employeeStartDate);
         response.setEmployeeEndDate(employeeEndDate);
+        response.setDriverLicense(driverLicense);
+        response.setDriverLicenseExpDate(driverLicenseExpDate);
 
         // Emergency Contact Section
         response.setContracts(contacts);

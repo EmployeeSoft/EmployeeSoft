@@ -30,7 +30,7 @@ public class PersonalInfoController {
     private AWSS3Service awss3Service;
 
     @PostMapping("/person/address")
-    public PersonalInfoResponse updateAddress(@RequestBody PersonalAddressDomain addressDomain) {
+    public PersonalInfoResponse updateAddress(@RequestBody AddressDomain addressDomain) {
         PersonalInfoResponse infoResponse = new PersonalInfoResponse();
         if(addressService.updateAddress(addressDomain)){
             infoResponse.setServiceStatus(new ServiceStatus("Success", true, ""));
@@ -44,7 +44,8 @@ public class PersonalInfoController {
     @PostMapping("/person/contact")
     public PersonalInfoResponse updateContact(@RequestBody PersonalContactDomain contactDomain) {
         PersonalInfoResponse infoResponse = new PersonalInfoResponse();
-        if(contactService.updateContactByPersonId(contactDomain)){
+        ContactDomain[] contactDomains = contactDomain.getEmergency();
+        if(contactService.updateContactByPersonId(contactDomains)){
             infoResponse.setServiceStatus(new ServiceStatus("Success", true, ""));
         } else {
             infoResponse.setServiceStatus(new ServiceStatus("Failed", false, "Unable to update address"));

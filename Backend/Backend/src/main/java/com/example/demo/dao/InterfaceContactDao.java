@@ -1,5 +1,6 @@
 package com.example.demo.dao;
 
+import com.example.demo.domain.ContactDomain;
 import com.example.demo.domain.PersonalContactDomain;
 import com.example.demo.entity.Contact;
 
@@ -14,5 +15,5 @@ public interface InterfaceContactDao {
 
     void addNewContact(Contact contact);
 
-    boolean updateContact(PersonalContactDomain domain);
+    boolean updateContact(ContactDomain domain);
 }
