@@ -2,11 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.domain.*;
 import com.example.demo.domain.common.ServiceStatus;
-import com.example.demo.domain.response.AllEmployeeResponse;
-import com.example.demo.domain.response.DownloadFileResponse;
-import com.example.demo.domain.response.HomePageResponse;
-import com.example.demo.domain.response.OnBoardResponse;
-import com.example.demo.domain.response.UploadResponse;
+import com.example.demo.domain.response.*;
 import com.example.demo.entity.Person;
 import com.example.demo.service.*;
 import com.example.demo.util.CalculateAge;
@@ -41,6 +37,9 @@ public class MainController {
 
     @Autowired
     private OnBoardService onBoardService;
+
+    @Autowired
+    private AppWorkFlowService appWorkFlowService;
 
     @GetMapping("/user-info")
     public HomePageResponse getPersonalProfile(@RequestBody UserDomain userDomain) {
@@ -194,12 +193,10 @@ public class MainController {
     }
 
     @GetMapping("/all-employees")
-    public AllEmployeeResponse getAllEmployees(@RequestBody UserDomain userDomain) {
+    public AllEmployeeResponse getAllEmployees(@RequestBody AllEmployeeDomain allEmployeeDomain) {
         // Return type
         AllEmployeeResponse response = new AllEmployeeResponse();
-
-        // Used to check user's role
-        String userRole = userDomain.getUserRole();
+        String userRole = allEmployeeDomain.getUserRole();
 
         if (userRole.equals("hr")) {
             response.setEmployees(employeeService.getAllEmployees());
@@ -227,6 +224,28 @@ public class MainController {
             String errorMsg = "Unable to retrieve file";
             response.setServiceStatus(new ServiceStatus("Fail", false, errorMsg));
         }
+        return response;
+    }
+
+    @GetMapping("/employee-visa-status")
+    public VisaStatusResponse getVisaStatus(@RequestBody VisaStatusRequestDomain vsrd) {
+        VisaStatusResponse response = new VisaStatusResponse();
+
+        // Used to grab the information where user ID = userId
+        int userId = vsrd.getUserId();
+        String userRole = vsrd.getUserRole();
+
+        if (userRole.equals("employee")) {
+            if (appWorkFlowService.checkEmployeeAppWorkFlowExist(userId)) {
+                response.setComment(appWorkFlowService.getComment(userId));
+                response.setType(appWorkFlowService.getType(userId));
+                response.setServiceStatus(new ServiceStatus("Success", true, ""));
+            } else {
+                String errorMsg = "User ID " + userId + " has not uploaded any files yet";
+                response.setServiceStatus(new ServiceStatus("Fail", false, errorMsg));
+            }
+        }
+
         return response;
     }
 }

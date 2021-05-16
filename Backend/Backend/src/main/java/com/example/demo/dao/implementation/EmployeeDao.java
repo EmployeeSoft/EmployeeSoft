@@ -2,8 +2,10 @@ package com.example.demo.dao.implementation;
 
 import com.example.demo.dao.InterfaceEmployeeDao;
 import com.example.demo.entity.Employee;
+import com.example.demo.service.EmployeeService;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.io.File;
@@ -13,6 +15,7 @@ import java.util.ArrayList;
 @Repository
 public class EmployeeDao extends AbstractHibernateDao<Employee> implements InterfaceEmployeeDao {
     public EmployeeDao() { setClazz(Employee.class); }
+
     // Given the employee ID, get the manager ID
     public int getManagerIdByEmployeeId(Integer id) {
         Session session = getCurrentSession();
@@ -51,16 +54,11 @@ public class EmployeeDao extends AbstractHibernateDao<Employee> implements Inter
 
     // Given the person ID, get the Visa Type as a string
     public String getVisaTypeByPersonId(Integer personId) {
-        Session session1 = openSession();
-        Session session2 = openSession();
-
-        Query query1 = session1.createQuery("SELECT visaStatus FROM Employee WHERE personId = :personId");
-        query1.setParameter("personId", personId);
-        int visaId = (int) query1.uniqueResult();
-
-        Query query2 = session2.createQuery("SELECT visaType FROM VisaStatus WHERE id = :visaId");
-        query2.setParameter("visaId", visaId);
-        String visaType = (String) query2.uniqueResult();
+        int employeeId = getEmployeeIdByPersonId(personId);
+        Session session = getCurrentSession();
+        Query query = session.createQuery("SELECT visaType FROM VisaStatus WHERE id = :employeeId");
+        query.setParameter("employeeId", employeeId);
+        String visaType = (String) query.uniqueResult();
         return visaType;
     }
 
