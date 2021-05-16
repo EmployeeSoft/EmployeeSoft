@@ -111,8 +111,8 @@ public class PersonService {
                 .ssn(person.getSsn())
                 .dob(person.getDob().toString())
                 .dob(df.format(person.getDob()))
-                .addressDomains(addressService.getAddressListByPersonId(person.getId()))
-                .contactDomains(contactService.getContactListByPersonId(person.getId()))
+                .addressDomain(addressService.getAddressListByPersonId(person.getId()))
+                .contactDomain(contactService.getContactListByPersonId(person.getId()))
                 .build();
 
         return personDomain;
