@@ -109,4 +109,9 @@ public class AppWorkFlowService {
     public Date getDateModified(Integer userId) {
         return appWorkFlowDao.getDateModifiedByUserId(userId);
     }
+
+    @Transactional
+    public Date getDateCreatedByUserId(Integer userId) {
+        return appWorkFlowDao.getDateCreatedByUserId(userId);
+    }
 }
