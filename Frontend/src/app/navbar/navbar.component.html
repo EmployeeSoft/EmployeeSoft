@@ -1,11 +1,12 @@
   <nav class="navbar navbar-expand navbar-dark bg-dark">
     <div class="navbar-nav">
       <a class="navbar-brand" href="#">EmployeeSoft</a>
-      <div *ngIf="user">
-        <a class="nav-item nav-link" routerLink="/employee/home" routerLinkActive="active">Home</a>
-        <a class="nav-item nav-link" routerLink="/employee/personal" routerLinkActive="active">Personal Information</a>
-        <a class="nav-item nav-link" routerLink="/employee/visa" routerLinkActive="active">Visa Status Manage</a>
-        <a class="nav-item nav-link" (click)="logout()">Logout</a>
-      </div>
+        <a *ngIf="user.role==='employee'" class="nav-item nav-link" routerLink="/employee/home" routerLinkActive="active">Home</a>
+        <a *ngIf="user.role==='employee'" class="nav-item nav-link" routerLink="/employee/personal" routerLinkActive="active">Personal Information</a>
+        <a *ngIf="user.role==='employee'" class="nav-item nav-link" routerLink="/employee/visa" routerLinkActive="active">Visa Status Manage</a>
+        <a *ngIf="user.role==='hr'" class="nav-item nav-link" routerLink="/hr/home" routerLinkActive="active">Home</a>
+        <a *ngIf="user.role==='hr'" class="nav-item nav-link" routerLink="/hr/hire" routerLinkActive="active">Hire</a>
+        <a *ngIf="user.role==='hr'" class="nav-item nav-link" routerLink="/hr/employee-profile" routerLinkActive="active">Employee Profile</a>
+        <a *ngIf="user" class="nav-item nav-link" (click)="logout()">Logout</a>
     </div>
   </nav>

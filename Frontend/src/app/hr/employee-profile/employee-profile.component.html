@@ -1,4 +1,4 @@
-
+<app-navbar></app-navbar>
 <div class="container text-center">
   <h1>Employee Profile</h1>
 </div>
@@ -18,11 +18,11 @@
         </thead>
         <tbody>
             <tr *ngFor="let employee of employees | filter:searchText">
-                <td>{{employee.name}}</td>
-                <td>{{employee.ssn}}</td>
+                <td>{{employee.personDomain.firstName}} {{employee.personDomain.middleName}} {{employee.personDomain.lastName}}</td>
+                <td>{{employee.personDomain.ssn}}</td>
                 <td>{{employee.startDate}}</td>
                 <td style="white-space: nowrap">
-                  {{employee.visaStatus}}
+                  {{employee.visaType}}
                 </td>
             </tr>
         </tbody>
