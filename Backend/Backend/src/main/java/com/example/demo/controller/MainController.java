@@ -358,7 +358,7 @@ public class MainController {
 
     // will replace /all-employees
     @GetMapping("/employees")
-    public AllEmployeeResponse getAllEmployees(@RequestParam(value="userRole") String role) {
+    public AllEmployeeResponse getAllEmployees2nd(@RequestParam(value="userRole") String role) {
         // Return type
         AllEmployeeResponse response = new AllEmployeeResponse();
         String userRole = role.toString();
