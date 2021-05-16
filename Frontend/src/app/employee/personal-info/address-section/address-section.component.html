@@ -5,11 +5,11 @@
   <div class="card-body" style="width: 23rem;" *ngIf="!addressSecEdit">
     <div>
       <p class="card-text">Address Line 1</p>
-      <h5 class="card-title">{{formData.controls['address_line_1'].value}}</h5>
+      <h5 class="card-title">{{formData.controls['addressLine1'].value}}</h5>
     </div>
     <div>
       <p class="card-text">Address Line 2</p>
-      <h5 class="card-title">{{formData.controls['address_line_2'].value}}</h5>
+      <h5 class="card-title">{{formData.controls['addressLine2'].value}}</h5>
     </div>
     <div>
       <p class="card-text">City</p>
@@ -21,11 +21,11 @@
     </div>
     <div>
       <p class="card-text">State Name</p>
-      <h5 class="card-title">{{formData.controls['state_name'].value}}</h5>
+      <h5 class="card-title">{{formData.controls['stateName'].value}}</h5>
     </div>
     <div>
       <p class="card-text">State Abbreviation</p>
-      <h5 class="card-title">{{formData.controls['state_abbr'].value}}</h5>
+      <h5 class="card-title">{{formData.controls['stateAbbr'].value}}</h5>
     </div>
     <button type="button" class="btn btn-primary" (click)="startEdit()">Edit</button>
   </div>
@@ -33,11 +33,11 @@
     <form [formGroup]="formData" (ngSubmit)="onSubmit()">
       <div class="form-group">
         <p class="card-text">Address</p>
-        <input type = 'text' formControlName="address_line_1">
+        <input type = 'text' formControlName="addressLine1">
       </div>
       <div class="form-group">
         <p class="card-text">Address Line 2</p>
-        <input type = 'text' formControlName="address_line_2">
+        <input type = 'text' formControlName="addressLine2">
       </div>
       <div class="form-group">
         <p class="card-text">Zipcode</p>
@@ -49,11 +49,11 @@
       </div>
       <div class="form-group">
         <p class="card-text">State</p>
-        <input type = 'text' formControlName="state_name">
+        <input type = 'text' formControlName="stateName">
       </div>
       <div class="form-group">
         <p class="card-text">State Abbreviation</p>
-        <input type = 'text' formControlName="state_abbr">
+        <input type = 'text' formControlName="stateAbbr">
       </div>
       <button type="button" class="btn btn-primary" (click)="endEdit()">Cancel</button>
       <button type="submit" class="btn btn-primary">Save</button>

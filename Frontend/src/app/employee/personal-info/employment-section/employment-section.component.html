@@ -9,11 +9,11 @@
     </div>
     <div>
       <p class="card-text">Employment Start Date</p>
-      <h5 class="card-title">{{formData.controls['start_date'].value}}</h5>
+      <h5 class="card-title">{{formData.controls['startDate'].value}}</h5>
     </div>
     <div>
       <p class="card-text">Employment End Date</p>
-      <h5 class="card-title">{{formData.controls['start_date'].value}}</h5>
+      <h5 class="card-title">{{formData.controls['endDate'].value}}</h5>
     </div>
     <div>
       <p class="card-text">Car</p>
@@ -21,19 +21,19 @@
     </div>
     <div>
       <p class="card-text">Visa Start Date</p>
-      <h5 class="card-title">{{formData.controls['visa_start_date'].value}}</h5>
+      <h5 class="card-title">{{formData.controls['visaStartDate'].value}}</h5>
     </div>
     <div>
       <p class="card-text">Visa End Date</p>
-      <h5 class="card-title">{{formData.controls['visa_end_date'].value}}</h5>
+      <h5 class="card-title">{{formData.controls['visaEndDate'].value}}</h5>
     </div>
     <div>
       <p class="card-text">Driver License</p>
-      <h5 class="card-title">{{formData.controls['driver_license'].value}}</h5>
+      <h5 class="card-title">{{formData.controls['driverLicense'].value}}</h5>
     </div>
     <div>
       <p class="card-text">Driver License Expire Date</p>
-      <h5 class="card-title">{{formData.controls['driver_license_exp_date'].value}}</h5>
+      <h5 class="card-title">{{formData.controls['driverLicenseExpDate'].value}}</h5>
     </div>
     <button type="button" class="btn btn-primary" (click)="startEdit()">Edit</button>
   </div>
@@ -45,11 +45,11 @@
       </div>
       <div class="form-group">
         <p class="card-text">Employment Start Date</p>
-        <input type = 'text' formControlName="start_date">
+        <input type = 'text' formControlName="startDate">
       </div>
       <div class="form-group">
         <p class="card-text">Employment End Date</p>
-        <input type = 'text' formControlName="end_date">
+        <input type = 'text' formControlName="endDate">
       </div>
       <div class="form-group">
         <p class="card-text">Car</p>
@@ -57,19 +57,19 @@
       </div>
       <div class="form-group">
         <p class="card-text">Visa Start Date</p>
-        <input type = 'text' formControlName="visa_start_date">
+        <input type = 'text' formControlName="visaStartDate">
       </div>
       <div class="form-group">
         <p class="card-text">Visa End Date</p>
-        <input type = 'text' formControlName="visa_end_date">
+        <input type = 'text' formControlName="visaEndDate">
       </div>
       <div class="form-group">
         <p class="card-text">Driver License</p>
-        <input type = 'text' formControlName="driver_license">
+        <input type = 'text' formControlName="driverLicense">
       </div>
       <div class="form-group">
         <p class="card-text">Driver License Expire Date</p>
-        <input type = 'text' formControlName="driver_license_exp_date">
+        <input type = 'text' formControlName="driverLicenseExpDate">
       </div>
       <button type="button" class="btn btn-primary" (click)="endEdit()">Cancel</button>
       <button type="submit" class="btn btn-primary">Save</button>

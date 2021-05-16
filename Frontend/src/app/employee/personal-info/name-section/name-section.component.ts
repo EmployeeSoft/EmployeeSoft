@@ -21,16 +21,20 @@ export class NameSectionComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
-    this.nameSection = ['Ding Wang', '1995-09-21', '0', '*0000'];
+    const userInfo = JSON.parse(localStorage.getItem('user-info')!);
+    const personId = userInfo.personId;
+
+    this.nameSection = [userInfo.preferName, userInfo.dob,
+      userInfo.gender, userInfo.ssn];
     this.genderOp = ['Male', 'Female', 'Do not want to answer'];
     this.nameSecEdit = false;
     this.formData = this.fb.group({
-      id: [2],
-      preferName: [this.nameSection[0]],
+      personId: [personId],
+      preferName: [userInfo.preferName],
       avatar: [''],
-      dob: [this.nameSection[1]],
-      gender: [this.nameSection[2]],
-      ssn: [this.nameSection[3]]
+      dob: [userInfo.dob],
+      gender: [userInfo.gender],
+      ssn: [userInfo.ssn]
     });
   }
   get getAvatar() {

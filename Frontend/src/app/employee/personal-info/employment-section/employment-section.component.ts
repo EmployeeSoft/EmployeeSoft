@@ -3,6 +3,7 @@ import {FormBuilder} from '@angular/forms';
 import {first} from 'rxjs/operators';
 import {UserInfoEmploymentService} from '../../_services/user-info/user-info-employment.service';
 import {AlertService} from '../../../common/_services';
+import {UserInfoNameService} from '../../_services/user-info/user-info-name.service';
 
 @Component({
   selector: 'app-employment-section',
@@ -15,27 +16,26 @@ export class EmploymentSectionComponent implements OnInit {
   SecEdit: boolean;
   constructor(
     private fb: FormBuilder,
-    private employmentService: UserInfoEmploymentService,
+    private employmentService: UserInfoNameService,
     private alertService: AlertService,
   ) { }
 
   ngOnInit(): void {
-    this.employmentSection = ['Software Developer', '2020/08/20',
-      '2023/09/21', 'aaa_bb_ccc', '2021/03/09', '2022/09/31', '382912832', '2023/11/23'];
+    const userInfo = JSON.parse(localStorage.getItem('user-info')!);
+    const personId = userInfo.personId;
+
     this.SecEdit = false;
     this.formData = this.fb.group({
-      person_id: [2],
-      title: [this.employmentSection[0]],
-      manager_id: [3],
-      start_date: [this.employmentSection[1]],
-      end_date: [this.employmentSection[2]],
+      personId: [personId],
+      title: [userInfo.title],
+      startDate: [userInfo.employeeStartDate],
+      endDate: [userInfo.employeeEndDate],
       avatar: [],
-      car: [this.employmentSection[3]],
-      visa_status_id: [],
-      visa_start_date: [this.employmentSection[4]],
-      visa_end_date: [this.employmentSection[5]],
-      driver_license: [this.employmentSection[6]],
-      driver_license_exp_date: [this.employmentSection[7]]
+      car: [userInfo.car],
+      visaStartDate: [userInfo.visaStartDate],
+      visaEndDate: [userInfo.visaEndDate],
+      driverLicense: [userInfo.driverLicense],
+      driverLicenseExpDate: [userInfo.driverLicenseExpDate]
     });
   }
   startEdit() {
@@ -49,7 +49,7 @@ export class EmploymentSectionComponent implements OnInit {
 
   onSubmit(){
     this.SecEdit = false;
-    this.employmentService.update(this.formData.value)
+    this.employmentService.updateEmployment(this.formData.value)
       .pipe(first())
       .subscribe({
         next: (data) => {
