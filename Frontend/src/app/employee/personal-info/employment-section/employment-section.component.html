@@ -1,59 +1,75 @@
 <div class="card">
   <div class="card-header">
-    Contact Information Section
+    Employment Information Section
   </div>
   <div class="card-body" style="width: 23rem;" *ngIf="!SecEdit">
     <div>
-      <p class="card-text">Work Authentication</p>
-      <h5 class="card-title">{{formData.controls['workAuth'].value}}</h5>
-    </div>
-    <div>
-      <p class="card-text">Work Auth Start Date</p>
-      <h5 class="card-title">{{formData.controls['waStart'].value}}</h5>
-    </div>
-    <div>
-      <p class="card-text">Work Auth End Date</p>
-      <h5 class="card-title">{{formData.controls['waEnd'].value}}</h5>
+      <p class="card-text">Title</p>
+      <h5 class="card-title">{{formData.controls['title'].value}}</h5>
     </div>
     <div>
       <p class="card-text">Employment Start Date</p>
-      <h5 class="card-title">{{formData.controls['employStart'].value}}</h5>
+      <h5 class="card-title">{{formData.controls['start_date'].value}}</h5>
     </div>
     <div>
       <p class="card-text">Employment End Date</p>
-      <h5 class="card-title">{{formData.controls['employEnd'].value}}</h5>
+      <h5 class="card-title">{{formData.controls['start_date'].value}}</h5>
     </div>
     <div>
-      <p class="card-text">Title</p>
-      <h5 class="card-title">{{formData.controls['title'].value}}</h5>
+      <p class="card-text">Car</p>
+      <h5 class="card-title">{{formData.controls['car'].value}}</h5>
+    </div>
+    <div>
+      <p class="card-text">Visa Start Date</p>
+      <h5 class="card-title">{{formData.controls['visa_start_date'].value}}</h5>
+    </div>
+    <div>
+      <p class="card-text">Visa End Date</p>
+      <h5 class="card-title">{{formData.controls['visa_end_date'].value}}</h5>
+    </div>
+    <div>
+      <p class="card-text">Driver License</p>
+      <h5 class="card-title">{{formData.controls['driver_license'].value}}</h5>
+    </div>
+    <div>
+      <p class="card-text">Driver License Expire Date</p>
+      <h5 class="card-title">{{formData.controls['driver_license_exp_date'].value}}</h5>
     </div>
     <button type="button" class="btn btn-primary" (click)="startEdit()">Edit</button>
   </div>
   <div class="card-body" style="width: 23rem;" *ngIf="SecEdit">
     <form [formGroup]="formData" (ngSubmit)="onSubmit()">
       <div class="form-group">
-        <p class="card-text">Work Authentication</p>
-        <input type = 'text' formControlName="workAuth">
-      </div>
-      <div class="form-group">
-        <p class="card-text">Work Auth Start Date</p>
-        <input type = 'text' formControlName="waStart">
-      </div>
-      <div class="form-group">
-        <p class="card-text">Work Auth End Date</p>
-        <input type = 'text' formControlName="waEnd">
+        <p class="card-text">Title</p>
+        <input type = 'text' formControlName="title">
       </div>
       <div class="form-group">
         <p class="card-text">Employment Start Date</p>
-        <input type = 'text' formControlName="employStart">
+        <input type = 'text' formControlName="start_date">
       </div>
       <div class="form-group">
         <p class="card-text">Employment End Date</p>
-        <input type = 'text' formControlName="employStart">
+        <input type = 'text' formControlName="end_date">
       </div>
       <div class="form-group">
-        <p class="card-text">Title</p>
-        <input type = 'text' formControlName="title">
+        <p class="card-text">Car</p>
+        <input type = 'text' formControlName="car">
+      </div>
+      <div class="form-group">
+        <p class="card-text">Visa Start Date</p>
+        <input type = 'text' formControlName="visa_start_date">
+      </div>
+      <div class="form-group">
+        <p class="card-text">Visa End Date</p>
+        <input type = 'text' formControlName="visa_end_date">
+      </div>
+      <div class="form-group">
+        <p class="card-text">Driver License</p>
+        <input type = 'text' formControlName="driver_license">
+      </div>
+      <div class="form-group">
+        <p class="card-text">Driver License Expire Date</p>
+        <input type = 'text' formControlName="driver_license_exp_date">
       </div>
       <button type="button" class="btn btn-primary" (click)="endEdit()">Cancel</button>
       <button type="submit" class="btn btn-primary">Save</button>

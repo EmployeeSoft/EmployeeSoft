@@ -20,16 +20,22 @@ export class EmploymentSectionComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.employmentSection = ['F1', '2020/08/20', '2023/09/21', '2021/03/09', '2022/09/31', 'Software Developer'];
+    this.employmentSection = ['Software Developer', '2020/08/20',
+      '2023/09/21', 'aaa_bb_ccc', '2021/03/09', '2022/09/31', '382912832', '2023/11/23'];
     this.SecEdit = false;
     this.formData = this.fb.group({
-      id: [2],
-      workAuth: [this.employmentSection[0]],
-      waStart: [this.employmentSection[1]],
-      waEnd: [this.employmentSection[2]],
-      employStart: [this.employmentSection[3]],
-      employEnd: [this.employmentSection[4]],
-      title: [this.employmentSection[5]]
+      person_id: [2],
+      title: [this.employmentSection[0]],
+      manager_id: [3],
+      start_date: [this.employmentSection[1]],
+      end_date: [this.employmentSection[2]],
+      avatar: [],
+      car: [this.employmentSection[3]],
+      visa_status_id: [],
+      visa_start_date: [this.employmentSection[4]],
+      visa_end_date: [this.employmentSection[5]],
+      driver_license: [this.employmentSection[6]],
+      driver_license_exp_date: [this.employmentSection[7]]
     });
   }
   startEdit() {

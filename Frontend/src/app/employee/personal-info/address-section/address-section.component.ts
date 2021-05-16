@@ -12,7 +12,7 @@ import {AlertService} from '../../../common/_services';
 })
 export class AddressSectionComponent implements OnInit {
   formData: any;
-  addressSection: any;
+  addressData: any;
   addressSecEdit: boolean;
   primaryAddress: any;
   secondAddress: any;
@@ -23,13 +23,17 @@ export class AddressSectionComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.primaryAddress = '1221 K Eve Blvd';
-    this.secondAddress = 'Apt 4';
+    this.addressData = ['1221 K Eve Blvd', 'Apt 4', 'LA',
+    '90034', 'California', 'CA'];
     this.addressSecEdit = false;
     this.formData = this.fb.group({
-      id: [2],
-      primaryAddress: [this.primaryAddress],
-      secondAddress: [this.secondAddress],
+      person_id: [2],
+      address_line_1: [this.addressData[0]],
+      address_line_2: [this.addressData[1]],
+      city: [this.addressData[2]],
+      zipcode: [this.addressData[3]],
+      state_name: [this.addressData[4]],
+      state_abbr: [this.addressData[5]]
     });
   }
   startEdit() {

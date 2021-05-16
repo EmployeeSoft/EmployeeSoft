@@ -6,11 +6,19 @@
     <div *ngFor="let eg of getContact" [formGroup]="eg">
       <div>
         <p class="card-text">Full Name</p>
-        <h5 class="card-title">{{eg.controls.name.value}}</h5>
+        <h5 class="card-title">{{eg.controls.full_name.value}}</h5>
       </div>
       <div>
         <p class="card-text">Phone</p>
         <h5 class="card-title">{{eg.controls.phone.value}}</h5>
+      </div>
+      <div>
+        <p class="card-text">Relationship</p>
+        <h5 class="card-title">{{eg.controls.relationship.value}}</h5>
+      </div>
+      <div>
+        <p class="card-text">Title</p>
+        <h5 class="card-title">{{eg.controls.title.value}}</h5>
       </div>
       <div>
         <p class="card-text">Address</p>
@@ -24,11 +32,15 @@
       <form [formGroup]="eg" (ngSubmit)="onSubmit()">
         <div class="form-group">
           <p class="card-text">Full Name</p>
-          <input type = 'text' formControlName="name">
+          <input type = 'text' formControlName="full_name">
         </div>
         <div class="form-group">
           <p class="card-text">Phone</p>
           <input type = 'text' formControlName="phone">
+        </div>
+        <div class="form-group">
+          <p class="card-text">Relationship</p>
+          <input type = 'text' formControlName="relationship">
         </div>
         <div class="form-group">
           <p class="card-text">Address</p>
