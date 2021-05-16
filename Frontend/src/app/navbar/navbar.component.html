@@ -3,7 +3,7 @@
       <a class="navbar-brand" href="#">EmployeeSoft</a>
         <a *ngIf="user.role==='employee'" class="nav-item nav-link" routerLink="/employee/home" routerLinkActive="active">Home</a>
         <a *ngIf="user.role==='employee'" class="nav-item nav-link" routerLink="/employee/personal" routerLinkActive="active">Personal Information</a>
-        <a *ngIf="user.role==='employee'" class="nav-item nav-link" routerLink="/employee/visa" routerLinkActive="active">Visa Status Manage</a>
+        <a *ngIf="user.role==='employee' && user-info.visaType==='F1-OPT'" class="nav-item nav-link" routerLink="/employee/visa" routerLinkActive="active">Visa Status Manage</a>
         <a *ngIf="user.role==='hr'" class="nav-item nav-link" routerLink="/hr/home" routerLinkActive="active">Home</a>
         <a *ngIf="user.role==='hr'" class="nav-item nav-link" routerLink="/hr/hire" routerLinkActive="active">Hire</a>
         <a *ngIf="user.role==='hr'" class="nav-item nav-link" routerLink="/hr/employee-profile" routerLinkActive="active">Employee Profile</a>
