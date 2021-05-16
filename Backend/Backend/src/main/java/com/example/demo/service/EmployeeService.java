@@ -49,15 +49,15 @@ public class EmployeeService {
                 .endDate(df.format(employee.getEndDate()))
                 .avatar(employee.getAvatar())
                 .car(employee.getCar())
-                .visaStatusDomain(visaStatusService.getVisaStatusById(employee.getVisaStatus()))
+                .visaStatusDomain(visaStatusService.getVisaStatusById(employee.getId()))
                 .visaType(employeeDao.getVisaTypeByPersonId(employee.getPersonId()))
                 .visaStartDate(df.format(employee.getVisaStartDate()))
                 .visaEndDate(df.format(employee.getVisaEndDate()))
                 .driverLicense(employee.getDriverLicense())
                 .driverLicenseExpDate(df.format(employee.getDriverLicenseExpDate()))
                 .personDomain(personService.getPersonByUserId(userId))
-                .personalDocumentDomain(personalDocService.getPersonalDocsByEmployeeId(employee.getId()))
-                .applicationWorkFlowDomain(appWorkFlowService.getAppWorkFlowsByEmployeeId(employee.getId()))
+                .personalDocumentDomains(personalDocService.getPersonalDocsByEmployeeId(employee.getId()))
+                .applicationWorkFlowDomains(appWorkFlowService.getAppWorkFlowsByEmployeeId(employee.getId()))
                 .build();
 
         return employeeDomain;
@@ -128,15 +128,15 @@ public class EmployeeService {
                 .endDate(df.format(employee.getEndDate()))
                 .avatar(employee.getAvatar())
                 .car(employee.getCar())
-                .visaStatusDomain(visaStatusService.getVisaStatusById(employee.getVisaStatus()))
+                .visaStatusDomain(visaStatusService.getVisaStatusById(employee.getId()))
                 .visaType(employeeDao.getVisaTypeByPersonId(employee.getPersonId()))
                 .visaStartDate(df.format(employee.getVisaStartDate()))
                 .visaEndDate(df.format(employee.getVisaEndDate()))
                 .driverLicense(employee.getDriverLicense())
                 .driverLicenseExpDate(df.format(employee.getDriverLicenseExpDate()))
                 .personDomain(personService.getPersonByUserId(userId))
-                .personalDocumentDomain(personalDocService.getPersonalDocsByEmployeeId(employee.getId()))
-                .applicationWorkFlowDomain(appWorkFlowService.getAppWorkFlowsByEmployeeId(employee.getId()))
+                .personalDocumentDomains(personalDocService.getPersonalDocsByEmployeeId(employee.getId()))
+                .applicationWorkFlowDomains(appWorkFlowService.getAppWorkFlowsByEmployeeId(employee.getId()))
                 .build();
 
         return employeeDomain;
@@ -171,15 +171,15 @@ public class EmployeeService {
                     .endDate(df.format(employee.getEndDate()))
                     .avatar(employee.getAvatar())
                     .car(employee.getCar())
-                    .visaStatusDomain(visaStatusService.getVisaStatusById(employee.getVisaStatus()))
+                    .visaStatusDomain(visaStatusService.getVisaStatusById(employee.getId()))
                     .visaType(employeeDao.getVisaTypeByPersonId(employee.getPersonId()))
                     .visaStartDate(df.format(employee.getVisaStartDate()))
                     .visaEndDate(df.format(employee.getVisaEndDate()))
                     .driverLicense(employee.getDriverLicense())
                     .driverLicenseExpDate(df.format(employee.getDriverLicenseExpDate()))
                     .personDomain(personService.getPersonByUserId(userId))
-                    .personalDocumentDomain(personalDocService.getPersonalDocsByEmployeeId(employee.getId()))
-                    .applicationWorkFlowDomain(appWorkFlowService.getAppWorkFlowsByEmployeeId(employee.getId()))
+                    .personalDocumentDomains(personalDocService.getPersonalDocsByEmployeeId(employee.getId()))
+                    .applicationWorkFlowDomains(appWorkFlowService.getAppWorkFlowsByEmployeeId(employee.getId()))
                     .build();
 
             employeeDomains.add(domain);

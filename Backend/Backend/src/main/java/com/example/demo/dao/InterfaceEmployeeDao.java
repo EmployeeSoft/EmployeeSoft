@@ -46,21 +46,15 @@ public interface InterfaceEmployeeDao {
     // Given the personId, merge the file
     void updateEmployeeAvatarByPersonId(Integer personId, String avatar);
 
-<<<<<<< HEAD
-=======
     int addNewEmployee(Employee employee);
 
->>>>>>> main
     // Given the person ID, get their employee ID
     int getEmployeeIdByPersonId(Integer personId);
 
     // Get the employee's name
     String getFirstNameByEmployeeId(Integer id);
 
-<<<<<<< HEAD
-    int addNewEmployee(Employee employee);
-=======
     // Get all employees for HR
     ArrayList<Employee> getAllEmployees();
->>>>>>> main
+
 }

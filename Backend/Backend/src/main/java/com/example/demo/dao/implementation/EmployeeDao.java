@@ -136,16 +136,12 @@ public class EmployeeDao extends AbstractHibernateDao<Employee> implements Inter
         query.executeUpdate();
     }
 
-<<<<<<< HEAD
-=======
-
     @Override
     public int addNewEmployee(Employee employee) {
         Session session = getCurrentSession();
         return (int) session.save(employee);
     }
 
->>>>>>> main
     // Given the person ID, get their employee ID
     public int getEmployeeIdByPersonId(Integer personId) {
         Session session = getCurrentSession();
@@ -160,13 +156,6 @@ public class EmployeeDao extends AbstractHibernateDao<Employee> implements Inter
         Query query = session.createQuery("SELECT e.person.firstName FROM Employee e WHERE e.person.id = :id");
         query.setParameter("id", id);
         return (String) query.uniqueResult();
-<<<<<<< HEAD
-        
-    @Override
-    public int addNewEmployee(Employee employee) {
-        Session session = getCurrentSession();
-        return (int) session.save(employee);
-=======
     }
 
     // Get all employees for HR
@@ -174,6 +163,5 @@ public class EmployeeDao extends AbstractHibernateDao<Employee> implements Inter
         Session session = getCurrentSession();
         Query query = session.createQuery("FROM Employee");
         return (ArrayList<Employee>) query.list();
->>>>>>> main
     }
 }

@@ -28,6 +28,6 @@ public class EmployeeDomain {
     private PersonalDocumentDomain personalDocumentDomain;
     private ApplicationWorkFlowDomain applicationWorkFlowDomain;
     private Integer visaStatusId;
-    private ArrayList<PersonalDocumentDomain> personalDocumentDomain;
-    private ArrayList<ApplicationWorkFlowDomain> applicationWorkFlowDomain;
+    private ArrayList<PersonalDocumentDomain> personalDocumentDomains;
+    private ArrayList<ApplicationWorkFlowDomain> applicationWorkFlowDomains;
 }
