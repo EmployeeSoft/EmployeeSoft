@@ -109,6 +109,7 @@ public class PersonService {
                 .email(person.getEmail())
                 .gender(person.getGender())
                 .ssn(person.getSsn())
+                .dob(person.getDob().toString())
                 .dob(df.format(person.getDob()))
                 .addressDomains(addressService.getAddressListByPersonId(person.getId()))
                 .contactDomains(contactService.getContactListByPersonId(person.getId()))

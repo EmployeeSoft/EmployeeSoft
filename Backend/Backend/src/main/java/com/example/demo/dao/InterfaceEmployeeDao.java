@@ -56,4 +56,5 @@ public interface InterfaceEmployeeDao {
 
     // Get all employees for HR
     ArrayList<Employee> getAllEmployees();
+
 }
