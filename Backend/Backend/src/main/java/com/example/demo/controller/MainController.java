@@ -356,5 +356,20 @@ public class MainController {
         return response;
     }
 
+    // will replace /all-employees
+    @GetMapping("/employees")
+    public AllEmployeeResponse getAllEmployees(@RequestParam(value="userRole") String role) {
+        // Return type
+        AllEmployeeResponse response = new AllEmployeeResponse();
+        String userRole = role.toString();
+        if (userRole.equals("hr")) {
+            response.setEmployees(employeeService.getAllEmployees());
+            response.setServiceStatus(new ServiceStatus("Success", true, ""));
+        } else {
+            String errorMsg = "You are not authorized";
+            response.setServiceStatus(new ServiceStatus("Fail", false, errorMsg));
+        }
 
+        return response;
+    }
 }
