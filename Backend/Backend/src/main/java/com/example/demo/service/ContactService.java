@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.dao.InterfaceContactDao;
 import com.example.demo.domain.ContactDomain;
+import com.example.demo.domain.PersonalContactDomain;
 import com.example.demo.entity.Contact;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,6 +45,7 @@ public class ContactService {
 
         for (Contact contact : contacts) {
             ContactDomain domain = ContactDomain.builder()
+                    .id(contact.getId())
                     .fullName(contact.getFullName())
                     .phone(contact.getPhone())
                     .relationship(contact.getRelationship())
@@ -53,5 +55,15 @@ public class ContactService {
         }
 
         return contactDomains;
+    }
+
+    @Transactional
+    public boolean updateContactByPersonId(ContactDomain[] domains){
+        for(ContactDomain domain : domains){
+            if(!contactDao.updateContact(domain)){
+                return false;
+            }
+        }
+        return true;
     }
 }

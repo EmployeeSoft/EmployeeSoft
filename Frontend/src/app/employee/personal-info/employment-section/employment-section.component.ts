@@ -3,6 +3,7 @@ import {FormBuilder} from '@angular/forms';
 import {first} from 'rxjs/operators';
 import {UserInfoEmploymentService} from '../../_services/user-info/user-info-employment.service';
 import {AlertService} from '../../../common/_services';
+import {UserInfoNameService} from '../../_services/user-info/user-info-name.service';
 
 @Component({
   selector: 'app-employment-section',
@@ -15,20 +16,26 @@ export class EmploymentSectionComponent implements OnInit {
   SecEdit: boolean;
   constructor(
     private fb: FormBuilder,
-    private employmentService: UserInfoEmploymentService,
+    private employmentService: UserInfoNameService,
     private alertService: AlertService,
   ) { }
 
   ngOnInit(): void {
-    this.employmentSection = ['F1', '2020/08/20', '2023/09/21', '2021/03/09', '2022/09/31', 'Software Developer'];
+    const userInfo = JSON.parse(localStorage.getItem('user-info')!);
+    const personId = userInfo.personId;
+
     this.SecEdit = false;
     this.formData = this.fb.group({
-      workAuth: [this.employmentSection[0]],
-      waStart: [this.employmentSection[1]],
-      waEnd: [this.employmentSection[2]],
-      employStart: [this.employmentSection[3]],
-      employEnd: [this.employmentSection[4]],
-      title: [this.employmentSection[5]]
+      personId: [personId],
+      title: [userInfo.title],
+      startDate: [userInfo.employeeStartDate],
+      endDate: [userInfo.employeeEndDate],
+      avatar: [],
+      car: [userInfo.car],
+      visaStartDate: [userInfo.visaStartDate],
+      visaEndDate: [userInfo.visaEndDate],
+      driverLicense: [userInfo.driverLicense],
+      driverLicenseExpDate: [userInfo.driverLicenseExpDate]
     });
   }
   startEdit() {
@@ -42,7 +49,7 @@ export class EmploymentSectionComponent implements OnInit {
 
   onSubmit(){
     this.SecEdit = false;
-    this.employmentService.update(this.formData.value)
+    this.employmentService.updateEmployment(this.formData.value)
       .pipe(first())
       .subscribe({
         next: (data) => {

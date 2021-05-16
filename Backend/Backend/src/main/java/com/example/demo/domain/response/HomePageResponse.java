@@ -30,6 +30,7 @@ public class HomePageResponse {
 
     // Address Section
     private ArrayList<AddressDomain> address;
+    private int personId;
 
     // Contact information Section
     private String email;
@@ -44,6 +45,8 @@ public class HomePageResponse {
     private String visaEndDate;
     private String employeeStartDate;
     private String employeeEndDate;
+    private String driverLicense;
+    private String driverLicenseExpDate;
 
     // Emergency Contact Section
     private ArrayList<ContactDomain> contracts;

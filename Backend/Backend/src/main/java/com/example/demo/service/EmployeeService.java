@@ -3,6 +3,7 @@ package com.example.demo.service;
 import com.example.demo.dao.InterfaceEmployeeDao;
 import com.example.demo.dao.implementation.EmployeeDao;
 import com.example.demo.domain.EmployeeDomain;
+import com.example.demo.domain.PersonalEmploymentDomain;
 import com.example.demo.entity.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -186,6 +187,11 @@ public class EmployeeService {
         }
 
         return employeeDomains;
+    }
+
+    @Transactional
+    public boolean updateEmploymentByPersonId(PersonalEmploymentDomain domain){
+        return employeeDao.updateEmployeeByPersonId(domain);
     }
 
     @Transactional

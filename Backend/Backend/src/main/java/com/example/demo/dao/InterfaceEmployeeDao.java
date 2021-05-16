@@ -1,5 +1,6 @@
 package com.example.demo.dao;
 
+import com.example.demo.domain.PersonalEmploymentDomain;
 import com.example.demo.entity.Employee;
 
 import java.io.File;
@@ -57,8 +58,10 @@ public interface InterfaceEmployeeDao {
     // Get all employees for HR
     ArrayList<Employee> getAllEmployees();
 
+    // Update Employee with person ID
+    boolean updateEmployeeByPersonId(PersonalEmploymentDomain domain);
+
     // Get the Employee ID by User ID
     int getEmployeeIdByUserId(Integer userId);
-
 
 }

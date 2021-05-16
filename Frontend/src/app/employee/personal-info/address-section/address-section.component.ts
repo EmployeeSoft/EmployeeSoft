@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder} from '@angular/forms';
-import {Address} from '../../_models/address';
-import {UserInfoAddressService} from '../../_services/user-info/user-info-address.service';
 import {first} from 'rxjs/operators';
 import {AlertService} from '../../../common/_services';
+import {UserInfoNameService} from '../../_services/user-info/user-info-name.service';
+import {JwtHelperService} from '@auth0/angular-jwt';
 
 @Component({
   selector: 'app-address-section',
@@ -12,23 +12,30 @@ import {AlertService} from '../../../common/_services';
 })
 export class AddressSectionComponent implements OnInit {
   formData: any;
-  addressSection: any;
+  addressData: any;
   addressSecEdit: boolean;
   primaryAddress: any;
   secondAddress: any;
   constructor(
     private fb: FormBuilder,
-    private addressService: UserInfoAddressService,
+    private addressService: UserInfoNameService,
     private alertService: AlertService,
   ) { }
 
   ngOnInit(): void {
-    this.primaryAddress = '1221 K Eve Blvd';
-    this.secondAddress = 'Apt 4';
+    const userInfo = JSON.parse(localStorage.getItem('user-info')!);
+    const personId = userInfo.personId;
+
     this.addressSecEdit = false;
     this.formData = this.fb.group({
-      primaryAddress: [this.primaryAddress],
-      secondAddress: [this.secondAddress],
+      id: [userInfo.address[0].id],
+      personId: [personId],
+      addressLine1: [userInfo.address[0].addressLine1],
+      addressLine2: [userInfo.address[0].addressLine2],
+      city: [userInfo.address[0].city],
+      zipcode: [userInfo.address[0].zipcode],
+      stateName: [userInfo.address[0].stateName],
+      stateAbbr: [userInfo.address[0].stateAbbr]
     });
   }
   startEdit() {
@@ -42,7 +49,7 @@ export class AddressSectionComponent implements OnInit {
 
   onSubmit() {
     this.addressSecEdit = false;
-    this.addressService.update(this.formData.value)
+    this.addressService.updateAddress(this.formData.value)
       .pipe(first())
       .subscribe({
         next: (data) => {

@@ -25,17 +25,24 @@ export class EmergencySectionComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    const userInfo = JSON.parse(localStorage.getItem('user-info')!);
+    const personId = userInfo.personId;
+
     this.SecEdit = false;
     this.emergencySection = [
       {
-        name: 'Ding Wang',
-        phone: '2222939329',
-        address: '2222 fhue Blvd'
+        fullName: 'Ding Wang',
+        phone: '2392931921',
+        relationship: 'Parents',
+        title: 'SDE',
+        address: '2332 I fhud blvd',
       },
       {
-        name: 'Uno kk',
-        phone: '2394949192',
-        address: '3333 djdd Blvd'
+        fullName: 'Alice Dao',
+        phone: '3382391293',
+        relationship: 'Friends',
+        title: 'SDE',
+        address: '3994 I fhud blvd',
       }
     ];
     const arr = [];
@@ -45,6 +52,7 @@ export class EmergencySectionComponent implements OnInit {
     }
 
     this.formData = this.fb.group({
+      personId: [2],
       emergency: this.fb.array(arr)
     });
   }
@@ -54,9 +62,11 @@ export class EmergencySectionComponent implements OnInit {
 
   BuildFormDynamic(contact: any): FormGroup{
     return this.fb.group({
-      name: [contact.name],
+      fullName: [contact.full_name],
       phone: [contact.phone],
-      address: [contact.address]
+      relationship: [contact.relationship],
+      title: [contact.title],
+      address: [contact.address],
     });
   }
 

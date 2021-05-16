@@ -1,5 +1,7 @@
 package com.example.demo.dao;
 
+import com.example.demo.domain.AddressDomain;
+import com.example.demo.domain.PersonalAddressDomain;
 import com.example.demo.entity.Address;
 import com.example.demo.entity.Person;
 
@@ -32,4 +34,6 @@ public interface InterfaceAddressDao {
     List<Address> getAddressListByPersonId(Integer personId);
 
     void addNewAddress(Address address);
+
+    boolean updateAddress(AddressDomain domain);
 }

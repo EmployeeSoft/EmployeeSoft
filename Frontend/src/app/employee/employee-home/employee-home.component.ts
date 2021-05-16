@@ -30,7 +30,7 @@ export class EmployeeHomeComponent implements OnInit {
       console.log(data);
       localStorage.setItem("user-info", JSON.stringify(data));
       this.data = data;
-    })
+    });
   }
 
 }
