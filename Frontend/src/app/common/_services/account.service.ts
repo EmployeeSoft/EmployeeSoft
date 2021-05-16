@@ -54,8 +54,8 @@ export class AccountService {
 
     logout() {
         // remove user from local storage and set current user to null
-        localStorage.removeItem('user');
-        localStorage.removeItem('jwt');
+        localStorage.clear();
+        sessionStorage.clear();
 
         // CALL LOGOUT API FROM LOCALHOST:9999
         // TO DO
