@@ -1,6 +1,7 @@
 package com.example.demo.dao.implementation;
 
 import com.example.demo.dao.InterfaceAddressDao;
+import com.example.demo.domain.PersonalAddressDomain;
 import com.example.demo.entity.Address;
 import com.example.demo.entity.Person;
 import org.hibernate.Session;
@@ -137,4 +138,19 @@ public class AddressDao extends AbstractHibernateDao<Address> implements Interfa
         List<Address> addressList = query.list();
         return addressList;
     }
+
+    public boolean updateAddress(PersonalAddressDomain domain) {
+        Session session = getCurrentSession();
+        Query query = session.createQuery("UPDATE Address SET addressLine1 =: addressLine1, addressLine2 =: addressLine2, " +
+                "city =: city, zipcode =: zipcode, stateName =: stateName, " +
+                "stateAbbr =: stateAbbr WHERE personId = :id");
+        query.setParameter("addressLine1", domain.getAddress_line_1());
+        query.setParameter("addressLine2", domain.getAddress_line_2());
+        query.setParameter("city", domain.getCity());
+        query.setParameter("zipcode", domain.getZipcode());
+        query.setParameter("stateName", domain.getState_name());
+        query.setParameter("stateAbbr", domain.getState_abbr());
+        int res = query.executeUpdate();
+        return res != 0;
+    };
 }

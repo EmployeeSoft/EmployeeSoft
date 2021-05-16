@@ -1,5 +1,6 @@
 package com.example.demo.dao;
 
+import com.example.demo.domain.PersonalContactDomain;
 import com.example.demo.entity.Contact;
 
 import java.util.List;
@@ -12,4 +13,6 @@ public interface InterfaceContactDao {
     List<Contact> getContactListByPersonId(Integer personId);
 
     void addNewContact(Contact contact);
+
+    boolean updateContact(PersonalContactDomain domain);
 }

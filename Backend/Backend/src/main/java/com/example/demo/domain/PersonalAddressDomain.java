@@ -7,7 +7,11 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 public class PersonalAddressDomain {
-    private Integer id;
-    private String primaryAddress;
-    private String secondAddress;
+    private Integer person_id;
+    private String address_line_1;
+    private String address_line_2;
+    private String city;
+    private String zipcode;
+    private String state_name;
+    private String state_abbr;
 }

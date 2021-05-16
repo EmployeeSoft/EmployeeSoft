@@ -179,26 +179,6 @@ public class PersonService {
     }
 
     @Transactional
-    public boolean updateAddressByUserId(Integer userId, String primaryAddress, String secondAddress){
-        return personDao.updateAddressByUserId(userId, primaryAddress, secondAddress);
-    }
-
-    @Transactional
-    public boolean updateContact(PersonalContactDomain contactDomain){
-        return personDao.updateContact(contactDomain);
-    }
-
-    @Transactional
-    public boolean updateEmergency(PersonalEmergencyDomain emergencyDomain){
-        return personDao.updateEmergency(emergencyDomain);
-    }
-
-    @Transactional
-    public boolean updateEmployment(PersonalEmploymentDomain employmentDomain){
-        return personDao.updateEmployment(employmentDomain);
-    }
-
-    @Transactional
     public boolean updatePersonInfo(PersonDomain personDomain){
         return personDao.updatePersonInfo(personDomain);
     }

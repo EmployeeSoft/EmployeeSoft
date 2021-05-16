@@ -32,10 +32,7 @@ public class PersonalInfoController {
     @PostMapping("/person/address")
     public PersonalInfoResponse updateAddress(@RequestBody PersonalAddressDomain addressDomain) {
         PersonalInfoResponse infoResponse = new PersonalInfoResponse();
-        Integer userId = addressDomain.getId();
-        String primaryAddress = addressDomain.getPrimaryAddress();
-        String secondAddress = addressDomain.getSecondAddress();
-        if(personService.updateAddressByUserId(userId, primaryAddress, secondAddress)){
+        if(addressService.updateAddress(addressDomain)){
             infoResponse.setServiceStatus(new ServiceStatus("Success", true, ""));
         } else {
             infoResponse.setServiceStatus(new ServiceStatus("Failed", false, "Unable to update address"));
@@ -47,7 +44,7 @@ public class PersonalInfoController {
     @PostMapping("/person/contact")
     public PersonalInfoResponse updateContact(@RequestBody PersonalContactDomain contactDomain) {
         PersonalInfoResponse infoResponse = new PersonalInfoResponse();
-        if(personService.updateContact(contactDomain)){
+        if(contactService.updateContactByPersonId(contactDomain)){
             infoResponse.setServiceStatus(new ServiceStatus("Success", true, ""));
         } else {
             infoResponse.setServiceStatus(new ServiceStatus("Failed", false, "Unable to update address"));
@@ -71,7 +68,7 @@ public class PersonalInfoController {
     @PostMapping("/person/employment")
     public PersonalInfoResponse updateEmployment(@RequestBody PersonalEmploymentDomain domain) {
         PersonalInfoResponse infoResponse = new PersonalInfoResponse();
-        if(personService.updateEmployment(domain)){
+        if(employeeService.updateEmploymentByPersonId(domain)){
             infoResponse.setServiceStatus(new ServiceStatus("Success", true, ""));
         } else {
             infoResponse.setServiceStatus(new ServiceStatus("Failed", false, "Unable to update address"));

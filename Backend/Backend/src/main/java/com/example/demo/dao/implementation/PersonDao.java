@@ -212,55 +212,7 @@ public class PersonDao extends AbstractHibernateDao<Person> implements Interface
         return dob;
     }
 
-    // Update person's address by user ID
-    public boolean updateAddressByUserId(Integer userId, String primaryAddress, String secondAddress){
-        try{
-//            Session session = getCurrentSession();
-//            Query query = session.createQuery("UPDATE Person SET addressList =: avatar WHERE id = :personId");
-//            query.setParameter("primaryAdd", primaryAddress);
-//            query.setParameter("secondAdd", secondAddress);
-//            query.executeUpdate();
-            return true;
-        } catch (Exception err){
-            err.printStackTrace();
-            return false;
-        }
-    }
-
-    public boolean updateContact(PersonalContactDomain contactDomain){
-        try{
-            Session session = getCurrentSession();
-            Query query = session.createQuery("UPDATE Person SET email =: email, cellPhone =: phone, altPhone =: altPhone WHERE id = :personId");
-            query.setParameter("email", contactDomain.getEmail());
-            query.setParameter("phone", contactDomain.getPhone());
-            query.setParameter("altPhone", contactDomain.getWorkPhone());
-            query.setParameter("personId", contactDomain.getId());
-            query.executeUpdate();
-            return true;
-        } catch (Exception err){
-            err.printStackTrace();
-            return false;
-        }
-    }
-
-    public boolean updateEmergency(PersonalEmergencyDomain emergencyDomain){
-        try{
-            return true;
-        } catch (Exception err){
-            err.printStackTrace();
-            return false;
-        }
-    }
-
-    public boolean updateEmployment(PersonalEmploymentDomain employmentDomain){
-        try{
-            return true;
-        } catch (Exception err){
-            err.printStackTrace();
-            return false;
-        }
-    }
-
+    // Update the person's Info by ID
     public boolean updatePersonInfo(PersonDomain personDomain) {
         try {
             Session session = getCurrentSession();

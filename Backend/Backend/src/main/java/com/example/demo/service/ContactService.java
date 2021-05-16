@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.dao.InterfaceContactDao;
 import com.example.demo.domain.ContactDomain;
+import com.example.demo.domain.PersonalContactDomain;
 import com.example.demo.entity.Contact;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -53,5 +54,10 @@ public class ContactService {
         }
 
         return contactDomains;
+    }
+
+    @Transactional
+    public boolean updateContactByPersonId(PersonalContactDomain domain){
+        return contactDao.updateContact(domain);
     }
 }
