@@ -145,4 +145,10 @@ export class AccountService {
         // responseType: 'blob'
       });
     }
+
+    fetchData() {
+      return this.http.get('/api/data').subscribe((data: any) => {
+        return data.json();
+      })
+    }
 }
