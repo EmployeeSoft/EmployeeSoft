@@ -19,38 +19,49 @@
             <div class="file-man-box"><a href="" class="file-close"><i class="fa fa-times-circle"></i></a>
             <div class="file-img-box"><img src="https://coderthemes.com/highdmin/layouts/assets/images/file_icons/pdf.svg" alt="icon"></div>
               <div class="file-man-title">
-                <p>Download File: </p><a href="{{document[3]}}">{{document[2]}}</a>
+                <button type="button" class="btn-link" (click)="downloadUserFile(document[0])">Download</button>
               </div>
             </div>
           </div>
 
           <div *ngIf="document[0] === 'OPT Receipt' && document[1] === 'INCOMPLETE'">
-            <button>Upload</button>
+            <label>Please upload OPT Receipt</label>
+            <input type="file" class="form-control" (change)="setOptReceipt($event)"/>
           </div>
 
           <div *ngIf="document[0] === 'OPT EAD' && document[1] === 'INCOMPLETE'">
-            <button>Upload</button>
+            <label>Please upload OPT EAD</label>
+            <input type="file" class="form-control" (change)="setOptEad($event)">
           </div>
 
           <div *ngIf="document[0] === 'Form I-983 submitted to HR' && document[1] === 'INCOMPLETE'">
-            <button>Download I-983 Form</button><br><br>
-            <button>Download Sample I-983 Template</button><br><br>
-            <button>Upload Student Completed I-983</button>
+            <button type="button" class="btn btn-primary" (click)="downloadI983()">Download I-983 Form</button><br><br>
+            <button type="button" class="btn btn-primary" (click)="downloadI983Sample()">Download Sample I-983 Sample</button><br><br>
+            <label>Please upload I-983 Form</label>
+            <input type="file" class="form-control" (change)="setI983($event)"/>
           </div>
 
           <div *ngIf="document[0] === 'Form I-20' && document[1] === 'INCOMPLETE'">
-            <button>Upload</button>
+            <label>Please upload I-20 Form</label>
+            <input type="file" class="form-control" (change)="setI20($event)">
           </div>
 
           <div *ngIf="document[0] === 'OPT STEM Receipt' && document[1] === 'INCOMPLETE'">
-            <button>Upload</button>
+            <label>Please upload OPT STEM Receipt</label>
+            <input type="file" class="form-control" (change)="setOptStemReceipt($event)">
           </div>
 
           <div *ngIf="document[0] === 'OPT STEM EAD' && document[1] === 'INCOMPLETE'">
-            <button>Upload</button>
+            <label>Please upload OPT STEM EAD</label>
+            <input type="file" class="form-control" (change)="setOptStemEad($event)">
           </div>
 
         </td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><button type="button" class="btn btn-primary" (click)="uploadFile()">Submit</button></td>
+        <td *ngIf="noFileError" style="color: crimson">Please select a file to upload</td>
       </tr>
     </tbody>
   </table>
