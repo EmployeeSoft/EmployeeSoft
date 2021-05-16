@@ -17,9 +17,9 @@
 
           <div *ngIf="document[1] === 'COMPLETE'">
             <div class="file-man-box"><a href="" class="file-close"><i class="fa fa-times-circle"></i></a>
-            <div class="file-img-box"><img src="https://coderthemes.com/highdmin/layouts/assets/images/file_icons/pdf.svg" alt="icon"></div><a href="#" class="file-download"><i class="fa fa-download"></i></a>
+            <div class="file-img-box"><img src="https://coderthemes.com/highdmin/layouts/assets/images/file_icons/pdf.svg" alt="icon"></div>
               <div class="file-man-title">
-                  <h5 class="mb-0 text-overflow">{{document[2]}}</h5>
+                <p>Download File: </p><a href="{{document[3]}}">{{document[2]}}</a>
               </div>
             </div>
           </div>
