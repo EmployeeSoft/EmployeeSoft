@@ -11,6 +11,6 @@ public interface InterfaceVisaStatusDao {
     // Visa Status Management is only available if the user is NOT a citizen or a green card holder
     Boolean visaStatusManagementAble(String createUser);
 
-    // Given the visa status ID, get the create user ?
+    // Given the visa status ID, get the create user
     String getCreateUserById(Integer id);
 }

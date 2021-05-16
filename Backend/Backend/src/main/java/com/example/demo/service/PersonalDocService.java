@@ -34,7 +34,7 @@ public class PersonalDocService {
         if (document != null) {
             PersonalDocumentDomain domain = PersonalDocumentDomain.builder()
                     .id(document.getId())
-                    .employeeDomain(employeeService.getEmployeeByEmployeeId(employeeId))
+//                    .employeeDomain(employeeService.getEmployeeByEmployeeId(employeeId))
                     .path(document.getPath())
                     .title(document.getTitle())
                     .comment(document.getComment())

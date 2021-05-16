@@ -23,8 +23,6 @@ public class PersonDomain {
     private String ssn;
     private String dob;
     private Integer userId;
-    private AddressDomain addressDomain;
-    private ContactDomain contactDomain;
     private ArrayList<AddressDomain> addressDomain;
     private ArrayList<ContactDomain> contactDomain;
 
