@@ -18,7 +18,7 @@ export class EmployeeProfileService {
     this.empVisa = this.empVisaSubject.asObservable();
   }
 
-  getAll() {
-    return this.http.get<EmployeeProfile>(`${environment.apiUrl}/hr/employee-profile/`)
+  getAll(role: string) {
+    return this.http.get<EmployeeProfile>(`http://localhost:8080/employees?userRole=${role}`)
   }
 }

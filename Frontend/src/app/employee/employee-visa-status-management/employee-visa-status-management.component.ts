@@ -49,7 +49,7 @@ export class EmployeeVisaStatusManagementComponent implements OnInit {
               console.log(this.showDocuments)
             }
           }, error=> console.log(error));}
-      ,1000);
+      ,0);
 
   }
 

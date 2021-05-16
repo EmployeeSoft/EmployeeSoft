@@ -20,15 +20,15 @@ const routes: Routes = [
     { path: '', component: LoginComponent },
     { path: 'hr/hire', component: HireComponent, canActivate: [AuthGuard], data: {roles: [Role.hr]}},
     { path: 'hr/home', component: HrHomeComponent, canActivate: [AuthGuard], data: {roles: [Role.hr]}},
-    { path: 'employee/home', component: EmployeeHomeComponent, canActivate: [AuthGuard], data: {roles: [Role.hr, Role.employee]}},
+    { path: 'hr/employee-profile', component: EmployeeProfileComponent, canActivate: [AuthGuard], data: {roles: [Role.hr]}},
+    { path: 'employee/home', component: EmployeeHomeComponent, canActivate: [AuthGuard], data: {roles: [Role.employee]}},
     { path: 'employee/visa', component: EmployeeVisaStatusManagementComponent, canActivate: [AuthGuard], data: {roles: [Role.employee]}},
-    { path: 'employee/personal', component: PersonalInfoComponent},
+    { path: 'employee/personal', component: PersonalInfoComponent, canActivate: [AuthGuard], data: {roles: [Role.employee]}},
     { path: 'users', loadChildren: usersModule },
     { path: 'account', loadChildren: accountModule },
     { path: 'register', component: RegisterComponent },
     { path: 'onboard', component: OnboardComponent},
-    { path: 'test', component: PersonalInfoComponent},
-    { path: 'hr/employee-profile', component: EmployeeProfileComponent},
+    { path: 'test', component: PersonalInfoComponent}
 
     // otherwise redirect to home
     // { path: '**', redirectTo: '' }
