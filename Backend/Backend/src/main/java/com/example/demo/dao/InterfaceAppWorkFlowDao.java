@@ -32,5 +32,8 @@ public interface InterfaceAppWorkFlowDao {
     String getType(Integer userId);
 
     // Get the date created
-    Date getDateModifiedByEmployeeId(Integer employeeId);
+    Date getDateCreatedByUserId(Integer userId);
+
+    // Get the date modified
+    Date getDateModifiedByUserId(Integer userId);
 }

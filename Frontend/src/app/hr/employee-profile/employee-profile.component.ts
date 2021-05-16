@@ -9,15 +9,19 @@ import { EmployeeProfileService } from '../_services/employee-profile.service';
 export class EmployeeProfileComponent implements OnInit {
 
   searchText: any;
-  employees: any;
+  data: any;
+  employees: any[];
   constructor(private employeeProfileService: EmployeeProfileService) { }
 
   ngOnInit(): void {
-    this.employeeProfileService.getAll()
+
+    const user = JSON.parse(localStorage.getItem('user')!);
+    this.employeeProfileService.getAll(user.role)
       .subscribe(data=> {
         console.log(data);
-        this.employees = data;
-
+        this.data = data;
+        console.log(this.data.employees[0].personDomain);
+        this.employees = this.data.employees;
       }, error => console.log(error));
   }
 

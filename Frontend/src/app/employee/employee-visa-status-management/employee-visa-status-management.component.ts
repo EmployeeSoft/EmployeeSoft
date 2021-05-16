@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { EmployeeVisa } from '../../common/_models';
 import { AlertService } from '../../common/_services';
 import { EmployeeVisaService } from '../_services/employee-visa.service'
@@ -13,27 +14,76 @@ export class EmployeeVisaStatusManagementComponent implements OnInit {
   documents: string[][];
   showDocuments: any[] =[];
 
-  employeeVisa: EmployeeVisa;
+//  employeeVisa: EmployeeVisa;
+  data: any;
+
+  employeeVisa = {
+    "hasOptReceipt": false,
+    "hasUploadedOptEad": false,
+    "isOptEadLessThan100Days": false,
+    "hasUploadedFormI983": false,
+    "hasFormI983HrSignedAndApproved": false,
+    "hasUploadedFormI20": false,
+    "hasUploadedOptStemReceipt": false,
+    "hasUploadedOptStemEad": false,
+    "AwsUrlOptReceipt": "",
+    "AwsUrlOptEad": "",
+    "AwsUrlFormI983": "",
+    "AwsUrlFormI983Signed": "",
+    "AwsUrlFormI20": "",
+    "AwsUrlFormOptStemReceipt": "",
+    "AwsUrlFormOptStemEad": "",
+    "FileNameOptReceipt": "",
+    "FileNameOptEad": "",
+    "FileNameFormI983": "",
+    "FileNameFormI983Signed": "",
+    "FileNameFormI20": "",
+    "FileNameFormOptStemReceipt": "",
+    "FileNameFormOptStemEad": "",
+  }
 
   constructor(private alertService: AlertService, private employeeVisaService: EmployeeVisaService) { }
 
   ngOnInit(): void {
     console.log(this.employeeVisa);
+    const jwt = localStorage.getItem('jwt');
+    const helper = new JwtHelperService();
+    const decodedJwt = helper.decodeToken(jwt!);
+    const userId = decodedJwt.sub.toString();
+    const user = JSON.parse(localStorage.getItem('user')!);
 
     setTimeout(
-      ()=> {this.employeeVisaService.getById()
+      ()=> {this.employeeVisaService.getVisaStatus(userId, user.role)
         .subscribe(data=>{
             console.log(data);
-            this.employeeVisa = data;
-            this.showCurrentStatusNotification();
+            this.data = data;
+            console.log(this.data.personalDocuments["OPT Receipt"].split("/").pop());
+            console.log(this.data.personalDocuments["OPT Receipt"]);
+            console.log(this.data.personalDocuments["OPT EAD"]);
+            console.log(this.data.lessThan100Days);
+            console.log(this.data.personalDocuments["I-983"]);
+            console.log(this.data.personalDocuments["I-983 Signed"]);
+            console.log(this.data.personalDocuments["I-20"]);
+            console.log(this.data.personalDocuments["OPT STEM Receipt"]);
+            console.log(this.data.personalDocuments["OPT STEM EAD"]);
+
+            if (this.data.personalDocuments["OPT Receipt"]) { this.employeeVisa.hasOptReceipt = true; this.employeeVisa.AwsUrlOptReceipt = this.data.personalDocuments["OPT Receipt"]; this.employeeVisa.FileNameOptEad = this.data.personalDocuments["OPT Receipt"].split("/").pop();}
+            if (this.data.personalDocuments["OPT EAD"]) { this.employeeVisa.hasUploadedOptEad = true; this.employeeVisa.AwsUrlOptEad = this.data.personalDocuments["OPT EAD"]; this.employeeVisa.FileNameOptEad = this.data.personalDocuments["OPT EAD"].split("/").pop();}
+            if (this.data.lessThan100Days) { this.employeeVisa.isOptEadLessThan100Days = true;}
+            if (this.data.personalDocuments["I-983"]) { this.employeeVisa.hasUploadedFormI983 = true; this.employeeVisa.AwsUrlFormI983 = this.data.personalDocuments["I-983"]; this.employeeVisa.FileNameFormI983 =  this.data.personalDocuments["I-983"].split("/").pop();}
+            if (this.data.personalDocuments["I-983 Signed"]) { this.employeeVisa.hasUploadedFormI983 = true; this.employeeVisa.AwsUrlFormI983Signed = this.data.personalDocuments["I-983 Signed"]; this.employeeVisa.FileNameFormI983Signed = this.data.personalDocuments["I-983 Signed"].split("/").pop();}
+            if (this.data.personalDocuments["I-20"]) { this.employeeVisa.hasFormI983HrSignedAndApproved = true; this.employeeVisa.AwsUrlFormI20 = this.data.personalDocuments["I-20"]; this.employeeVisa.FileNameFormI20 = this.data.personalDocuments["I-20"];}
+            if (this.data.personalDocuments["OPT STEM Receipt"]) { this.employeeVisa.hasUploadedOptStemReceipt = true; this.employeeVisa.AwsUrlFormOptStemReceipt = this.data.personalDocuments["OPT STEM Receipt"]; this.employeeVisa.FileNameFormOptStemReceipt = this.data.personalDocuments["OPT STEM Receipt"].split("/").pop();}
+            if (this.data.personalDocuments["OPT STEM EAD"]) { this.employeeVisa.hasUploadedOptStemEad = true; this.employeeVisa.AwsUrlFormOptStemEad = this.data.personalDocuments["OPT STEM EAD"]; this.employeeVisa.FileNameFormOptStemEad = this.data.personalDocuments["OPT STEM EAD"].split("/").pop();}
+
             this.documents = [
-              ["OPT Receipt", this.changeBoolStr(this.employeeVisa.hasOptReceipt), "opt_receipt.pdf"],
-              ["OPT EAD", this.changeBoolStr(this.employeeVisa.hasUploadedOptEad), "opt_ead.pdf"],
-              ["Form I-983 submitted to HR", this.changeBoolStr(this.employeeVisa.hasUploadedFormI983), "emp_signed_i983.pdf"],
-              ["Form I-983 signed and approved by HR", this.changeBoolStr(this.employeeVisa.hasFormI983HrSignedAndApproved), "hr_signed_i983.pdf"],
-              ["Form I-20", this.changeBoolStr(this.employeeVisa.hasUploadedFormI20), "most_recent_i20.pdf"],
-              ["OPT STEM Receipt", this.changeBoolStr(this.employeeVisa.hasUploadedOptStemReceipt), "opt_stem_receipt.pdf"],
-              ["OPT STEM EAD", this.changeBoolStr(this.employeeVisa.hasUploadedOptStemEad), "opt_stem_ead.pdf"],
+              ["OPT Receipt", this.changeBoolStr(this.employeeVisa.hasOptReceipt), this.employeeVisa.FileNameOptEad, this.employeeVisa.AwsUrlOptEad],
+              ["OPT EAD", this.changeBoolStr(this.employeeVisa.hasUploadedOptEad), this.employeeVisa.FileNameOptEad, this.employeeVisa.AwsUrlOptEad],
+              ["Form I-983 submitted to HR", this.changeBoolStr(this.employeeVisa.hasUploadedFormI983), this.employeeVisa.FileNameFormI983, this.employeeVisa.AwsUrlFormI983],
+              ["Form I-983 signed and approved by HR", this.changeBoolStr(this.employeeVisa.hasFormI983HrSignedAndApproved), this.employeeVisa.FileNameFormI983Signed, this.employeeVisa.AwsUrlFormI983Signed],
+              ["Form I-20", this.changeBoolStr(this.employeeVisa.hasUploadedFormI20), this.employeeVisa.FileNameFormI983, this.employeeVisa.AwsUrlFormI20],
+              ["OPT STEM Receipt", this.changeBoolStr(this.employeeVisa.hasUploadedOptStemReceipt), this.employeeVisa.FileNameFormOptStemReceipt, this.employeeVisa.AwsUrlFormOptStemReceipt],
+              ["OPT STEM EAD", this.changeBoolStr(this.employeeVisa.hasUploadedOptStemEad), this.employeeVisa.FileNameFormOptStemEad, this.employeeVisa.AwsUrlFormOptStemEad]
             ]
 
             for (let i = 0; i < this.documents.length; i++) {
@@ -48,8 +98,10 @@ export class EmployeeVisaStatusManagementComponent implements OnInit {
               console.log(this.documents)
               console.log(this.showDocuments)
             }
+            console.log(this.employeeVisa)
+            this.showCurrentStatusNotification();
           }, error=> console.log(error));}
-      ,1000);
+      ,0);
 
   }
 

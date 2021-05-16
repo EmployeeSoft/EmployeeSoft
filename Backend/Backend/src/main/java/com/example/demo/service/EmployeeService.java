@@ -193,4 +193,10 @@ public class EmployeeService {
     public boolean updateEmploymentByPersonId(PersonalEmploymentDomain domain){
         return employeeDao.updateEmployeeByPersonId(domain);
     }
+
+    @Transactional
+    public int getEmployeeIdByUserId(Integer userId) {
+        return employeeDao.getEmployeeIdByUserId(userId);
+    }
+
 }

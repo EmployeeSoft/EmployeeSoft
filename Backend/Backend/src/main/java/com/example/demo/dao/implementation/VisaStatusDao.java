@@ -11,6 +11,7 @@ import java.sql.Date;
 @Repository
 public class VisaStatusDao extends AbstractHibernateDao<VisaStatus> implements InterfaceVisaStatusDao {
     public VisaStatusDao() { setClazz(VisaStatus.class); }
+
     // Given the ID, get the visa status information
     public VisaStatus getVisaStatusById(Integer id) {
         Session session = getCurrentSession();

@@ -5,16 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.core.io.ByteArrayResource;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class DownloadFileResponse {
+public class IncompleteVisaStatusResponse {
     // Http Section
     private ServiceStatus serviceStatus;
-
-    // The File
-    private byte[] file;
 }

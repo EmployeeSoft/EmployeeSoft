@@ -6,12 +6,14 @@ import com.example.demo.domain.response.*;
 import com.example.demo.entity.Person;
 import com.example.demo.service.*;
 import com.example.demo.util.CalculateAge;
+import com.example.demo.util.CalculateDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.sql.Date;
 import java.util.ArrayList;
 
 @CrossOrigin(origins = {"http://localhost:4200", "http://localhost:9999"}, allowCredentials = "true")
@@ -30,9 +32,6 @@ public class MainController {
     private PersonService personService;
 
     @Autowired
-    private VisaStatusService visaStatusService;
-
-    @Autowired
     private AWSS3Service awss3Service;
 
     @Autowired
@@ -40,6 +39,9 @@ public class MainController {
 
     @Autowired
     private AppWorkFlowService appWorkFlowService;
+
+    @Autowired
+    private PersonalDocService personalDocService;
 
     @GetMapping("/user-info")
     public HomePageResponse getPersonalProfile(@RequestBody UserDomain userDomain) {
@@ -193,10 +195,9 @@ public class MainController {
     }
 
     @GetMapping("/all-employees")
-    public AllEmployeeResponse getAllEmployees(@RequestBody AllEmployeeDomain allEmployeeDomain) {
+    public AllEmployeeResponse getAllEmployees(@RequestParam("userRole") String userRole) {
         // Return type
         AllEmployeeResponse response = new AllEmployeeResponse();
-        String userRole = allEmployeeDomain.getUserRole();
 
         if (userRole.equals("hr")) {
             response.setEmployees(employeeService.getAllEmployees());
@@ -210,11 +211,11 @@ public class MainController {
     }
 
     @GetMapping("/download")
-    public DownloadFileResponse downloadFromS3(@RequestParam Integer userId,
+    public DownloadFileResponse downloadFromS3(@RequestParam String userId,
                                                @RequestParam String filename) {
         DownloadFileResponse response = new DownloadFileResponse();
 
-        ByteArrayResource data = awss3Service.downloadFile(userId, filename);
+        byte[] data = awss3Service.downloadFile(Integer.parseInt(userId), filename);
 
         // Check if there are data to be returned
         if (data != null) {
@@ -228,17 +229,19 @@ public class MainController {
     }
 
     @GetMapping("/employee-visa-status")
-    public VisaStatusResponse getVisaStatus(@RequestBody VisaStatusRequestDomain vsrd) {
+    public VisaStatusResponse getVisaStatus(@RequestParam("userId") String userId, @RequestParam("userRole") String userRole) {
         VisaStatusResponse response = new VisaStatusResponse();
 
-        // Used to grab the information where user ID = userId
-        int userId = vsrd.getUserId();
-        String userRole = vsrd.getUserRole();
-
         if (userRole.equals("employee")) {
-            if (appWorkFlowService.checkEmployeeAppWorkFlowExist(userId)) {
-                response.setComment(appWorkFlowService.getComment(userId));
-                response.setType(appWorkFlowService.getType(userId));
+            if (appWorkFlowService.checkEmployeeAppWorkFlowExist(Integer.parseInt(userId))) {
+                Date dateCreated = appWorkFlowService.getDateCreatedByUserId(Integer.parseInt(userId));
+                Date dateModified= appWorkFlowService.getDateModified(Integer.parseInt(userId));
+
+                response.setLessThan100Days(CalculateDate.hundredDays(dateCreated, dateModified));
+                response.setType(appWorkFlowService.getType(Integer.parseInt(userId)));
+                response.setComment(appWorkFlowService.getComment(Integer.parseInt(userId)));
+                response.setStatus(true);   // Always set to true
+                response.setPersonalDocuments(personalDocService.getEmployeeFilePaths(Integer.parseInt(userId)));
                 response.setServiceStatus(new ServiceStatus("Success", true, ""));
             } else {
                 String errorMsg = "User ID " + userId + " has not uploaded any files yet";
@@ -362,5 +365,27 @@ public class MainController {
         return response;
     }
 
+    // will replace /all-employees
+    @GetMapping("/employees")
+    public AllEmployeeResponse getAllEmployees2nd(@RequestParam(value="userRole") String role) {
+        // Return type
+        AllEmployeeResponse response = new AllEmployeeResponse();
+        String userRole = role.toString();
+        if (userRole.equals("hr")) {
+            response.setEmployees(employeeService.getAllEmployees());
+            response.setServiceStatus(new ServiceStatus("Success", true, ""));
+        } else {
+            String errorMsg = "You are not authorized";
+            response.setServiceStatus(new ServiceStatus("Fail", false, errorMsg));
+        }
 
+        return response;
+    }
+
+//    @GetMapping("/imcomplete-visa-status")
+//    public IncompleteVisaStatusResponse getAllEmployeesWithIncompleteStatus() {
+//        IncompleteVisaStatusResponse response = new IncompleteVisaStatusResponse();
+//
+//        return response;
+//    }
 }

@@ -61,4 +61,7 @@ public interface InterfaceEmployeeDao {
     // Update Employee with person ID
     boolean updateEmployeeByPersonId(PersonalEmploymentDomain domain);
 
+    // Get the Employee ID by User ID
+    int getEmployeeIdByUserId(Integer userId);
+
 }
