@@ -9,6 +9,7 @@ import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 
 @Repository
 public class PersonDao extends AbstractHibernateDao<Person> implements InterfacePersonDao {
@@ -219,7 +220,7 @@ public class PersonDao extends AbstractHibernateDao<Person> implements Interface
             Query query = session.createQuery("UPDATE Person SET preferName =: preferName, dob =: dob, gender =: gender, " +
                     "ssn =: ssn WHERE id = :id");
             query.setParameter("preferName", personDomain.getPreferName());
-            query.setParameter("dob", personDomain.getDob());
+            query.setParameter("dob", Date.valueOf(personDomain.getDob()));
             query.setParameter("gender", personDomain.getGender());
             query.setParameter("ssn", personDomain.getSsn());
             query.setParameter("id", personDomain.getId());

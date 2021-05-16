@@ -150,6 +150,7 @@ public class AddressDao extends AbstractHibernateDao<Address> implements Interfa
         query.setParameter("zipcode", domain.getZipcode());
         query.setParameter("stateName", domain.getState_name());
         query.setParameter("stateAbbr", domain.getState_abbr());
+        query.setParameter("id", domain.getPerson_id());
         int res = query.executeUpdate();
         return res != 0;
     };

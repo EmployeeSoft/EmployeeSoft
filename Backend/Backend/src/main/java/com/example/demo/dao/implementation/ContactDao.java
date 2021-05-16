@@ -50,6 +50,7 @@ public class ContactDao extends AbstractHibernateDao<Contact> implements Interfa
         query.setParameter("relationship", domain.getRelationship());
         query.setParameter("title", domain.getTitle());
         query.setParameter("address", domain.getAddress());
+        query.setParameter("id", domain.getPerson_id());
         int res = query.executeUpdate();
         return res != 0;
     }
