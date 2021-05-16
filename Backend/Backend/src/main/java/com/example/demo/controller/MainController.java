@@ -215,7 +215,7 @@ public class MainController {
                                                @RequestParam String filename) {
         DownloadFileResponse response = new DownloadFileResponse();
 
-        ByteArrayResource data = awss3Service.downloadFile(Integer.parseInt(userId), filename);
+        byte[] data = awss3Service.downloadFile(Integer.parseInt(userId), filename);
 
         // Check if there are data to be returned
         if (data != null) {
