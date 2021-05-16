@@ -134,7 +134,6 @@ public class EmployeeDao extends AbstractHibernateDao<Employee> implements Inter
         query.executeUpdate();
     }
 
-
     @Override
     public int addNewEmployee(Employee employee) {
         Session session = getCurrentSession();

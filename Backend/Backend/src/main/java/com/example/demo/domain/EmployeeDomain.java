@@ -26,6 +26,6 @@ public class EmployeeDomain {
     private String driverLicenseExpDate;
     private PersonDomain personDomain;
     private Integer visaStatusId;
-    private ArrayList<PersonalDocumentDomain> personalDocumentDomain;
-    private ArrayList<ApplicationWorkFlowDomain> applicationWorkFlowDomain;
+    private ArrayList<PersonalDocumentDomain> personalDocumentDomains;
+    private ArrayList<ApplicationWorkFlowDomain> applicationWorkFlowDomains;
 }

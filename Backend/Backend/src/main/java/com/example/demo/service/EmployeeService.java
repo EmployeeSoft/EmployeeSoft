@@ -56,8 +56,8 @@ public class EmployeeService {
                 .driverLicense(employee.getDriverLicense())
                 .driverLicenseExpDate(df.format(employee.getDriverLicenseExpDate()))
                 .personDomain(personService.getPersonByUserId(userId))
-                .personalDocumentDomain(personalDocService.getPersonalDocsByEmployeeId(employee.getId()))
-                .applicationWorkFlowDomain(appWorkFlowService.getAppWorkFlowsByEmployeeId(employee.getId()))
+                .personalDocumentDomains(personalDocService.getPersonalDocsByEmployeeId(employee.getId()))
+                .applicationWorkFlowDomains(appWorkFlowService.getAppWorkFlowsByEmployeeId(employee.getId()))
                 .build();
 
         return employeeDomain;
@@ -135,8 +135,8 @@ public class EmployeeService {
                 .driverLicense(employee.getDriverLicense())
                 .driverLicenseExpDate(df.format(employee.getDriverLicenseExpDate()))
                 .personDomain(personService.getPersonByUserId(userId))
-                .personalDocumentDomain(personalDocService.getPersonalDocsByEmployeeId(employee.getId()))
-                .applicationWorkFlowDomain(appWorkFlowService.getAppWorkFlowsByEmployeeId(employee.getId()))
+                .personalDocumentDomains(personalDocService.getPersonalDocsByEmployeeId(employee.getId()))
+                .applicationWorkFlowDomains(appWorkFlowService.getAppWorkFlowsByEmployeeId(employee.getId()))
                 .build();
 
         return employeeDomain;
@@ -178,8 +178,8 @@ public class EmployeeService {
                     .driverLicense(employee.getDriverLicense())
                     .driverLicenseExpDate(df.format(employee.getDriverLicenseExpDate()))
                     .personDomain(personService.getPersonByUserId(userId))
-                    .personalDocumentDomain(personalDocService.getPersonalDocsByEmployeeId(employee.getId()))
-                    .applicationWorkFlowDomain(appWorkFlowService.getAppWorkFlowsByEmployeeId(employee.getId()))
+                    .personalDocumentDomains(personalDocService.getPersonalDocsByEmployeeId(employee.getId()))
+                    .applicationWorkFlowDomains(appWorkFlowService.getAppWorkFlowsByEmployeeId(employee.getId()))
                     .build();
 
             employeeDomains.add(domain);

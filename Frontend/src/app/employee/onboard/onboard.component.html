@@ -178,10 +178,6 @@
         <label for="driverLicenseExpDate">License Expiration Date</label>
         <input id="driverLicenseExpDate" type="text" formControlName="driverLicenseExpDate" class="form-control" placeholder="yyyy/mm/dd" />
       </div>
-      <div class="form-group" *ngIf="isDriverLicense">
-        <label for="driverLicenseCopy">Upload Copy of your Driver License</label>
-        <input id="driverLicenseCopy" type="file" formControlName="driverLicenseCopy" class="form-control" />
-      </div>
       <hr>
       <div class="form-group">
         <label>Emergency Contact</label>
@@ -214,8 +210,38 @@
           </div>
           <hr>
         </div>
+        <div class="form-group">
+          <label for="optReceipt">Upload OPT Receipt</label>
+          <input id="optReceipt" type="file" formControlName="optReceipt" class="form-control" (change)="setOptReceipt($event)"/>
+        </div>
+        <div class="form-group">
+          <label for="optEad">Upload OPT EAD</label>
+          <input id="optEad" type="file" formControlName="optEad" class="form-control" (change)="setOptEad($event)"/>
+        </div>
+        <div class="form-group">
+          <label for="i983">Upload I-983 Form</label>
+          <input id="i983" type="file" formControlName="i983" class="form-control" (change)="setI983($event)"/>
+        </div>
+        <div class="form-group">
+          <button type="button" (click)="onDownload()">Download I-983 Form</button>
+        </div>
+        <div class="form-group">
+          <label for="i20">Upload I-20 Form</label>
+          <input id="i20" type="file" formControlName="i20" class="form-control" (change)="setI20($event)"/>
+        </div>
+        <div class="form-group">
+          <label for="optStemReceipt">Upload OPT STEM Receipt</label>
+          <input id="optStemReceipt" type="file" formControlName="optStemReceipt" class="form-control" (change)="setOptStemReceipt($event)"/>
+        </div>
+        <div class="form-group">
+          <label for="optStemEad">Upload OPT STEM EAD</label>
+          <input id="optStemEad" type="file" formControlName="optStemEad" class="form-control" (change)="setOptStemEad($event)"/>
+        </div>
       </div>
       <button type="submit">Submit</button>
     </form>
+    <div *ngIf="finish">
+      <h5 style="color: forestgreen">Form submitted. Please wait for HR to review</h5>
+    </div>
   </div>
 </div>

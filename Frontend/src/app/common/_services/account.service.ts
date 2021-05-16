@@ -136,7 +136,13 @@ export class AccountService {
       const helper = new JwtHelperService();
       const decodedJwt = helper.decodeToken(jwt!);
       const userId = decodedJwt.sub.toString();
+//       const userId = '4';
       const params = new HttpParams().set('userId', userId).set('filename', filename);
-      return this.http.get(`http://localhost:8080/download`, { params });
+      return this.http.get(`http://localhost:8080/download`, {
+        params,
+        reportProgress: true,
+        observe: 'events',
+        // responseType: 'blob'
+      });
     }
 }
