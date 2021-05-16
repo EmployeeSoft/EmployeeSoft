@@ -1,5 +1,6 @@
 package com.example.demo.dao.implementation;
 
+import com.example.demo.dao.InterfaceEmployeeDao;
 import com.example.demo.dao.InterfacePersonalDocDao;
 import com.example.demo.entity.Employee;
 import com.example.demo.entity.PersonalDocument;
@@ -10,13 +11,18 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 @Repository
 public class PersonalDocDao extends AbstractHibernateDao<PersonalDocument> implements InterfacePersonalDocDao {
     public PersonalDocDao() { setClazz(PersonalDocument.class); }
 
+    private InterfaceEmployeeDao employeeDao;
+
     @Autowired
-    private EmployeeDao employeeDao;
+    public void setEmployeeDao(InterfaceEmployeeDao employeeDao) { this.employeeDao = employeeDao; }
 
     // Create a new personal document to be stored in the database
     public Object createPersonalDocumentByEmployeeId(Integer employeeId, String path, String filename,
@@ -83,5 +89,19 @@ public class PersonalDocDao extends AbstractHibernateDao<PersonalDocument> imple
         query.setParameter("userId", userId);
         query.setParameter("fileTitle", fileTitle);
         return (String) query.uniqueResult();
+    }
+
+    // Get a map of employee's files
+    public Map<String, String> getEmployeeFilePaths(Integer userId) {
+        Map<String, String> pairs = new LinkedHashMap<>();
+        int employeeId = employeeDao.getEmployeeIdByUserId(userId);
+
+        Query query = getCurrentSession().createQuery("FROM PersonalDocument WHERE employeeId = :employeeId");
+        query.setParameter("employeeId", employeeId);
+
+        for (PersonalDocument document : (List<PersonalDocument>) query.list()) {
+            pairs.put(document.getTitle(), document.getPath());
+        }
+        return pairs;
     }
 }

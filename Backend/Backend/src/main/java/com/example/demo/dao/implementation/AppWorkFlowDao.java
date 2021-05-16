@@ -4,6 +4,7 @@ import com.example.demo.config.HibernateConfig;
 import com.example.demo.dao.InterfaceAppWorkFlowDao;
 import com.example.demo.entity.Address;
 import com.example.demo.entity.ApplicationWorkFlow;
+import com.example.demo.entity.Employee;
 import com.example.demo.service.EmployeeService;
 import com.example.demo.service.PersonService;
 import com.example.demo.util.CalculateDate;
@@ -21,11 +22,14 @@ import java.util.List;
 public class AppWorkFlowDao extends AbstractHibernateDao<ApplicationWorkFlow> implements InterfaceAppWorkFlowDao {
     public AppWorkFlowDao() { setClazz(ApplicationWorkFlow.class); }
 
-    @Autowired
     private PersonService personService;
+    private EmployeeService employeeService;
 
     @Autowired
-    private EmployeeService employeeService;
+    public void setPersonService(PersonService personService) { this.personService = personService; }
+
+    @Autowired
+    public void setEmployeeService(EmployeeService employeeService) { this.employeeService = employeeService; }
 
     // Given the Application WorkFlow ID, get the application's information
     public ApplicationWorkFlow getApplicationWorkFlowById(Integer id) {
@@ -176,7 +180,9 @@ public class AppWorkFlowDao extends AbstractHibernateDao<ApplicationWorkFlow> im
     }
 
     // Get the date created
-    public Date getDateModifiedByEmployeeId(Integer employeeId) {
+    public Date getDateModifiedByUserId(Integer userId) {
+        int employeeId = employeeService.getEmployeeIdByUserId(userId);
+
         Session session = getCurrentSession();
         Query query = session.createQuery("SELECT dateModified FROM ApplicationWorkFlow WHERE employeeId = :employeeId AND type = 'I-983'");
         query.setParameter("employeeId", employeeId);

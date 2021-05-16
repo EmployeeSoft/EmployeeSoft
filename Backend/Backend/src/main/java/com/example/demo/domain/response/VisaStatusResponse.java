@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Map;
+
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -17,6 +20,15 @@ public class VisaStatusResponse {
     // What type of file did the user currently hold
     private String type;
 
-    // Tell the user the next step
+    // Status
+    private boolean status;
+
+    // Check if 100 days
+    private boolean lessThan100Days;
+
+    // Comment from HR for the most recent document
     private String comment;
+
+    // titles and paths to those files
+    private Map<String, String> personalDocuments;
 }
