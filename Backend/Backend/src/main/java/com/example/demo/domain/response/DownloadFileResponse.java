@@ -16,5 +16,5 @@ public class DownloadFileResponse {
     private ServiceStatus serviceStatus;
 
     // The File
-    private ByteArrayResource file;
+    private byte[] file;
 }
