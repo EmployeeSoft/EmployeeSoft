@@ -187,4 +187,10 @@ public class EmployeeService {
 
         return employeeDomains;
     }
+
+    @Transactional
+    public int getEmployeeIdByUserId(Integer userId) {
+        return employeeDao.getEmployeeIdByUserId(userId);
+    }
+
 }

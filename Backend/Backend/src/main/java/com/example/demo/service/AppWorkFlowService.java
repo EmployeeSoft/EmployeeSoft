@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -102,5 +103,10 @@ public class AppWorkFlowService {
     @Transactional
     public String getType(Integer userId) {
         return appWorkFlowDao.getType(userId);
+    }
+
+    @Transactional
+    public Date getDateModified(Integer userId) {
+        return appWorkFlowDao.getDateModifiedByUserId(userId);
     }
 }

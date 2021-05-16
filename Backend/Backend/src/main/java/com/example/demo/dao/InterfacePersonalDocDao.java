@@ -5,6 +5,7 @@ import com.example.demo.entity.PersonalDocument;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public interface InterfacePersonalDocDao {
     // Create a new personal document to be stored in the database
@@ -19,4 +20,7 @@ public interface InterfacePersonalDocDao {
     // Method to get the path from S3 bucket
     // We will use this method to get the path (which is the key in the S3 bucket) to download that file
     String getPath(Integer userId, String fileTitle);
+
+    // Get a map of employee's files
+    Map<String, String> getEmployeeFilePaths(Integer userId);
 }
