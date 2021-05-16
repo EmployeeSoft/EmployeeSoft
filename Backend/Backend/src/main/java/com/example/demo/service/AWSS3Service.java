@@ -127,7 +127,7 @@ public class AWSS3Service {
         }
     }
 
-    public ByteArrayResource downloadFile(Integer userId, String filename) {
+    public byte[] downloadFile(Integer userId, String filename) {
         byte[] data = null;
 
         /*
@@ -165,6 +165,6 @@ public class AWSS3Service {
             }
         }
 
-        return new ByteArrayResource(data);
+        return data;
     }
 }
