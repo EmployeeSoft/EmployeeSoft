@@ -112,7 +112,9 @@ public class AWSS3Service {
 
         // If userId is 0 then download from digital_doc
         if (userId == 0) {
-            key = digitalDocumentService.getDigitalDocument(filename);
+            key = digitalDocumentService.getDigitalDocument(filename)
+                    .replace("https://employeefilebucket.s3-us-west-1.amazonaws.com/", "")
+                    .replace("+", " ");
         } else {
             key = personalDocService.getPath(userId, filename)
                     .replace("https://employeefilebucket.s3-us-west-1.amazonaws.com/", "");
