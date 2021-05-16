@@ -11,15 +11,15 @@ let users = JSON.parse(localStorage.getItem(usersKey)!) || [];
 
 // - start: employee visa fake data
 const employeeVisaKey = 'empVisaKey'
-let optEadDaysLeft = 10;
+let optEadDaysLeft = 90;
 let employeeVisaObject = {
   "hasOptReceipt": true,
   "hasUploadedOptEad": true,
   "optEadDaysLeft": optEadDaysLeft,
   "isOptEadLessThan100Days": optEadDaysLeft < 100,
-  "hasUploadedFormI983": true,
-  "hasFormI983HrSignedAndApproved": true,
-  "hasUploadedFormI20": true,
+  "hasUploadedFormI983": false,
+  "hasFormI983HrSignedAndApproved": false,
+  "hasUploadedFormI20": false,
   "hasUploadedOptStemReceipt": false,
   "hasUploadedOptStemEad": false
 }
@@ -60,8 +60,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return deleteUser();
                 case url.match(/\/employee\/visa\//) && method === 'GET':
                   return getEmployeeVisaById();
-                case url.match(/\/hr\/employee-profile\//) && method === 'GET':
-                  return getAllEmployee();
+               // case url.match(/\/hr\/employee-profile\//) && method === 'GET':
+                 // return getAllEmployee();
                 default:
                     // pass through any requests not handled above
                     return next.handle(request);

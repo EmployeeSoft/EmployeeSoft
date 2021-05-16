@@ -4,6 +4,8 @@
 
 <div class="p-4">
   <div class="container">
-    <h1>Hi User!</h1>
+    <h1>Hi {{data.fullName}}!</h1>
+    <p>Job Role: {{data.title}}</p>
+    <p *ngIf="data.visaType">Visa Type: {{data.visaType}}</p>
   </div>
 </div>

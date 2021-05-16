@@ -1,7 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { environment } from '../../../environments/environment';
 import { EmployeeVisa } from '../../common/_models';
 
 @Injectable({
@@ -19,7 +18,8 @@ export class EmployeeHomeService {
     this.empHome = this.empHomeSubject.asObservable();
   }
 
-  getById() {
-    return this.http.get<EmployeeVisa>(`${environment.apiUrl}/employee/visa/`)
+  getByRoleAndId(userRole: string, userId: string) {
+    return this.http.get<any>(`http://localhost:8080/employee/?userRole="${userRole}"&userId=${userId}`)
   }
+
 }
