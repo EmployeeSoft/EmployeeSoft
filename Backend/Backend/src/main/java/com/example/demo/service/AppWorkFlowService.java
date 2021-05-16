@@ -62,4 +62,45 @@ public class AppWorkFlowService {
         }
         return domains;
     }
+
+    @Transactional
+    public ApplicationWorkFlowDomain getCurrentByUserId(Integer userId) {
+        ApplicationWorkFlow applicationWorkFlow = appWorkFlowDao.getCurrentByUserId(userId);
+
+        ApplicationWorkFlowDomain domain = ApplicationWorkFlowDomain.builder()
+                .id(applicationWorkFlow.getId())
+                .dateCreated(df.format(applicationWorkFlow.getDateCreated()))
+                .dateModified(df.format(applicationWorkFlow.getDateModified()))
+                .status(applicationWorkFlow.getStatus())
+                .comment(applicationWorkFlow.getComment())
+                .type(applicationWorkFlow.getType())
+                .build();
+
+        return domain;
+    }
+
+    @Transactional
+    public boolean checkEmployeeAppWorkFlowExist(Integer userId) {
+        return appWorkFlowDao.checkEmployeeAppWorkFlowExist(userId);
+    }
+
+    @Transactional
+    public void updateCurrentAppWorkFlow(Integer userId) {
+        appWorkFlowDao.updateCurrentAppWorkFlow(userId);
+    }
+
+    @Transactional
+    public void createAppWorkFlow(Integer userId, String filename) {
+        Object obj = appWorkFlowDao.createAppWorkFlow(userId, filename);
+    }
+
+    @Transactional
+    public String getComment(Integer userId) {
+        return appWorkFlowDao.getComment(userId);
+    }
+
+    @Transactional
+    public String getType(Integer userId) {
+        return appWorkFlowDao.getType(userId);
+    }
 }

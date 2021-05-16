@@ -20,11 +20,12 @@ const routes: Routes = [
     { path: 'hr/hire', component: HireComponent, canActivate: [AuthGuard], data: {roles: [Role.hr]}},
     { path: 'hr/home', component: HrHomeComponent, canActivate: [AuthGuard], data: {roles: [Role.hr]}},
     { path: 'employee/home', component: EmployeeHomeComponent, canActivate: [AuthGuard], data: {roles: [Role.hr, Role.employee]}},
+    { path: 'employee/visa', component: EmployeeVisaStatusManagementComponent},
+    { path: 'employee/personal', component: PersonalInfoComponent},
     { path: 'users', loadChildren: usersModule },
     { path: 'account', loadChildren: accountModule },
     { path: 'register', component: RegisterComponent },
     { path: 'onboard', component: OnboardComponent},
-    { path: 'employee/visa', component: EmployeeVisaStatusManagementComponent},
     { path: 'test', component: PersonalInfoComponent},
     { path: 'hr/employee-profile', component: EmployeeProfileComponent},
 

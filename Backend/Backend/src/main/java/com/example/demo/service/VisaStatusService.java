@@ -25,6 +25,7 @@ public class VisaStatusService {
     @Transactional
     public VisaStatusDomain getVisaStatusById(Integer id) {
         VisaStatus visaStatus = visaStatusDao.getVisaStatusById(id);
+
         VisaStatusDomain visaStatusDomain = VisaStatusDomain.builder()
                 .id(visaStatus.getId())
                 .visaType(visaStatus.getVisaType())

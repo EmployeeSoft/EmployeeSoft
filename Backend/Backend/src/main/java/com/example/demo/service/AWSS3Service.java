@@ -49,6 +49,9 @@ public class AWSS3Service {
     @Autowired
     private DigitalDocumentService digitalDocumentService;
 
+    @Autowired
+    private AppWorkFlowService appWorkFlowService;
+
     @PostConstruct
     private void init() {
         AWSCredentials credentials = new BasicAWSCredentials(this.accessKey, this.secretKey);
@@ -64,6 +67,14 @@ public class AWSS3Service {
     }
 
     public boolean uploadFile(MultipartFile mFile, String uploadTo, Integer userId, String fileTitle) {
+        /**
+         * mFile = File type - the file the user wants to upload
+         * uploadTo = String - can either be "avatar" or "personal document"
+         * userId = Integer - the user's ID
+         * fileTitle = String - Can be either "OPT Receipt", "OPT STEM Receipt", "OPT EAD", "I-983", "I-983 signed",
+         *                      "I-20", or "OPT STEM EAD"
+         **/
+
         String filename = "";
         try {
             File file = new File(mFile.getOriginalFilename());
@@ -73,12 +84,14 @@ public class AWSS3Service {
             filename = userId + "_" + mFile.getOriginalFilename();
             String fileUrl = getURL(filename);
 
+            // Upload the document/file
             this.s3client.putObject(new PutObjectRequest(bucketName, filename, file)
                     .withCannedAcl(CannedAccessControlList.PublicRead));    // Make file public
 
-            // Update the avatar of the employee with the user ID of userId
+            // Update employee with the user ID of {userId}
             int personId = personService.getPersonIdByUserId(userId);
 
+            // If {uploadTo} = avatar
             if (uploadTo.equals("avatar")) {
                 employeeService.updateEmployeeAvatarByPersonId(personId, fileUrl);
                 System.out.println("User ID " + userId + " successfully updated profile avatar");
@@ -86,14 +99,30 @@ public class AWSS3Service {
                 int employeeId = employeeService.getEmployeeIdByPersonId(personId);
                 PersonalDocumentDomain create = personalDocService.createPersonalDocumentByEmployeeId(
                         employeeId, fileUrl, filename, fileTitle);
-                if (create != null)
+
+                // if the file is successfully added to the database
+                if (create != null) {
+                    if (fileTitle.equals("OPT Receipt")) {
+                        // If the filename is OPT Receipt then create a row in the app_workflow table
+                        appWorkFlowService.createAppWorkFlow(userId, fileTitle);
+                        System.out.println("Added OPT Receipt to employee ID " + employeeId);
+                    } else {
+                        // If the filename is not OPT Receipt than update the row in the app_workflow table
+                        // where the user ID is {userId} and the filename is {filename}
+                        appWorkFlowService.updateCurrentAppWorkFlow(userId);    // Set the current in app_workflow to false
+                        appWorkFlowService.createAppWorkFlow(userId, fileTitle);
+
+                        System.out.println("Added " + fileTitle + " to employee ID " + employeeId);
+                    }
+
                     System.out.println("Employee ID " + employeeId + " successfully uploaded document " + fileTitle);
+                }
             }
 
             out.close();
             return true;
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
             return false;
         }
     }
@@ -112,7 +141,9 @@ public class AWSS3Service {
 
         // If userId is 0 then download from digital_doc
         if (userId == 0) {
-            key = digitalDocumentService.getDigitalDocument(filename);
+            key = digitalDocumentService.getDigitalDocument(filename)
+                    .replace("https://employeefilebucket.s3-us-west-1.amazonaws.com/", "")
+                    .replace("+", " ");
         } else {
             key = personalDocService.getPath(userId, filename)
                     .replace("https://employeefilebucket.s3-us-west-1.amazonaws.com/", "");

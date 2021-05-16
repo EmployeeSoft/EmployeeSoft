@@ -58,5 +58,7 @@ public interface InterfaceEmployeeDao {
     // Get all employees for HR
     ArrayList<Employee> getAllEmployees();
 
+    // Update Employee with person ID
     boolean updateEmployeeByPersonId(PersonalEmploymentDomain domain);
+
 }

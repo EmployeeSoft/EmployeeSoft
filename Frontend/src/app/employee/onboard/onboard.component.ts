@@ -1,16 +1,18 @@
-import { Component, OnInit } from '@angular/core';
-import {Validators} from '@angular/forms';
-import { FormBuilder, FormGroup, FormControl, FormArray } from '@angular/forms';
+import {Component, OnInit} from '@angular/core';
+import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
+// @ts-ignore
+import { saveAs } from 'file-saver';
 import {AccountService, AlertService} from '../../common/_services';
 import {User} from '../../common/_models';
 import {Address} from '../../common/_models/address';
 import {Contact} from '../../common/_models/contact';
-import {first} from 'rxjs/operators';
 import {ActivatedRoute, Router} from '@angular/router';
 import {VisaStatus} from '../../common/_models/visaStatus';
 import {Employee} from '../../common/_models/employee';
 import {Person} from '../../common/_models/person';
-import {HttpErrorResponse} from '@angular/common/http';
+import {HttpErrorResponse, HttpEvent, HttpEventType} from '@angular/common/http';
+import {first} from 'rxjs/operators';
+// import {type} from 'os';
 
 @Component({
   selector: 'app-onboard',
@@ -35,8 +37,13 @@ export class OnboardComponent implements OnInit {
   email: string | null;
   userId: string | null;
   avatarFile: File = {} as File;
-  userInfoSuccess: false;
-  avatarSuccess: false;
+  optReceiptFile: File = {} as File;
+  optEadFile: File = {} as File;
+  i983File: File = {} as File;
+  i20File: File = {} as File;
+  optStemReceiptFile: File = {} as File;
+  optStemEadFile: File = {} as File;
+  finish = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -69,17 +76,16 @@ export class OnboardComponent implements OnInit {
       email: [''],
       ssn: ['', Validators.required],
       dob: ['', Validators.required],
-      gender: [''],
-      citizenOrNot: [''],
+      gender: ['', Validators.required],
+      citizenOrNot: ['', Validators.required],
       greenCardOrCitizen: [''],
       workAuthorization: [''],
       otherWorkAuthorization: [''],
       visaStartDate: [''],
       visaEndDate: [''],
-      haveDriverLicense: [''],
+      haveDriverLicense: ['', Validators.required],
       driverLicenseNumber: [''],
       driverLicenseExpDate: [''],
-      driverLicenseCopy: [''],
       emergency: this.formBuilder.array([
         this.formBuilder.group({
           emergencyFullName: [''],
@@ -88,7 +94,13 @@ export class OnboardComponent implements OnInit {
           emergencyTitle: [''],
           emergencyAddress: ['']
         })
-      ])
+      ]),
+      optReceipt: [''],
+      optEad: [''],
+      i983: [''],
+      i20: [''],
+      optStemReceipt: [''],
+      optStemEad: ['']
     });
   }
 
@@ -118,7 +130,6 @@ export class OnboardComponent implements OnInit {
   }
 
   onSubmit(form: FormGroup) {
-    console.log(form.value);
     this.submitted = true;
     this.alertService.clear();
     if (this.sample.invalid) {
@@ -179,39 +190,31 @@ export class OnboardComponent implements OnInit {
     }
 
     // Uploading user info
-    // this.accountService.onboard(this.person, this.employee, this.address, this.contactList)
-    //   .pipe(first())
-    //   .subscribe({
-    //     next: (x) => {
-    //       console.log(x);
-    //       this.alertService.success('successful', { keepAfterRouteChange: true });
-    //       this.router.navigateByUrl('/home');
-    //     },
-    //     error: error => {
-    //       this.alertService.error(error);
-    //     }
-    //   });
+    this.accountService.onboard(this.person, this.employee, this.address, this.contactList)
+      .pipe(first())
+      .subscribe({
+        next: (x) => {
+          console.log(x);
+          this.alertService.success('successful', { keepAfterRouteChange: true });
+          this.router.navigateByUrl('/home');
+        },
+        error: error => {
+          this.alertService.error(error);
+        }
+      });
 
     // Uploading file
-    console.log('Uploading file');
-    const formData = new FormData();
-    formData.append('file', this.avatarFile, this.avatarFile.name);
-    // formData.append('userId', this.userId!);
-    formData.append('userId', '1');
-    formData.append('uploadTo', 'avatar');
-    formData.append('fileTitle', this.avatarFile.name);
-    this.accountService.upload(formData).subscribe(
-      event => {
-        console.log(event);
-        console.log(typeof event);
-        // console.log();
-      },
-      (error: HttpErrorResponse) => {
-        console.log(error);
-      }
-    );
+    // console.log('Uploading file');
+    if (this.avatarFile !== null) { this.uploadFile(this.avatarFile, 'avatar', 'avatar'); }
+    if (this.optReceiptFile !== null) { this.uploadFile(this.optReceiptFile, 'personal document', 'OPT Receipt'); }
+    if (this.optEadFile !== null) { this.uploadFile(this.optEadFile, 'personal document', 'OPT EAD'); }
+    if (this.i983File !== null) { this.uploadFile(this.i983File, 'personal document', 'I-983 signed'); }
+    if (this.i20File !== null) { this.uploadFile(this.i20File, 'personal document', 'I-20'); }
+    if (this.optStemReceiptFile !== null) { this.uploadFile(this.optStemReceiptFile, 'personal document', 'OPT STEM Receipt'); }
+    if (this.optStemEadFile !== null) { this.uploadFile(this.optStemEadFile, 'personal document', 'OPT STEM EAD'); }
 
-    // Redirect to a different page
+    // Show Result
+    this.finish = true;
   }
 
   get genderValue() {
@@ -238,12 +241,88 @@ export class OnboardComponent implements OnInit {
     } else { this.isOtherWorkAuthorization = false; }
   }
 
+  onDownload() {
+    const filename = 'I-983 Form';
+    this.accountService.download(filename).subscribe(
+      event => {
+        console.log(event);
+        this.reportProgress(event, filename);
+      },
+      (error: HttpErrorResponse) => {
+        console.log(error);
+      }
+    );
+  }
+
+  reportProgress(event: HttpEvent<any>, filename: string) {
+    switch (event.type) {
+      case HttpEventType.UploadProgress:
+        console.log('upload progress');
+        break;
+      case HttpEventType.DownloadProgress:
+        console.log('download progress');
+        break;
+      case HttpEventType.ResponseHeader:
+        console.log('header');
+        break;
+      case HttpEventType.Response:
+        const byteCharacters = atob(event.body.file);
+        const byteNumbers = new Array(byteCharacters.length);
+        for (let i = 0; i < byteCharacters.length; i++) {
+          byteNumbers[i] = byteCharacters.charCodeAt(i);
+        }
+        const byteArray = new Uint8Array(byteNumbers);
+        const blob = new Blob([byteArray], {type: 'application/pdf'});
+        const objectURL = URL.createObjectURL(blob);
+        console.log(objectURL);
+        saveAs(objectURL, filename);
+        break;
+      default:
+        console.log(event);
+    }
+  }
+
   setAvatar(event: any) {
-    console.log(event.target.files[0]);
     this.avatarFile = event.target.files[0];
   }
 
-  onDownload() {
-    this.accountService.download('test');
+  setOptReceipt(event: any) {
+    this.optReceiptFile = event.target.files[0];
+  }
+
+  setOptEad(event: any) {
+    this.optEadFile = event.target.files[0];
+  }
+
+  setI983(event: any) {
+    this.i983File = event.target.files[0];
+  }
+
+  setI20(event: any) {
+    this.i20File = event.target.files[0];
+  }
+
+  setOptStemReceipt(event: any) {
+    this.optStemReceiptFile = event.target.files[0];
+  }
+
+  setOptStemEad(event: any) {
+    this.optStemEadFile = event.target.files[0];
+  }
+
+  private uploadFile(file: File, uploadTo: string, fileTitle: string) {
+    const formData = new FormData();
+    formData.append('file', file, file.name);
+    formData.append('userId', this.userId!);
+    formData.append('uploadTo', uploadTo);
+    formData.append('fileTitle', fileTitle);
+    this.accountService.upload(formData).subscribe(
+      event => {
+        console.log(event);
+      },
+      (error: HttpErrorResponse) => {
+        console.log(error);
+      }
+    );
   }
 }
