@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.dao.InterfacePersonalDocDao;
 import com.example.demo.domain.PersonalDocumentDomain;
+import com.example.demo.entity.Employee;
 import com.example.demo.entity.PersonalDocument;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,13 +11,11 @@ import org.springframework.transaction.annotation.Transactional;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Map;
 
 @Service
 public class PersonalDocService {
     private InterfacePersonalDocDao personalDocDao;
-
-    @Autowired
-    private EmployeeService employeeService;
 
     @Autowired
     public void setPersonalDocDao(InterfacePersonalDocDao personalDocDao) {
@@ -71,5 +70,10 @@ public class PersonalDocService {
     @Transactional
     public String getPath(Integer userId, String fileTitle) {
         return personalDocDao.getPath(userId, fileTitle);
+    }
+
+    @Transactional
+    public Map<String, String> getEmployeeFilePaths(Integer userId) {
+        return personalDocDao.getEmployeeFilePaths(userId);
     }
 }

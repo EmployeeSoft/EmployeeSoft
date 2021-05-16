@@ -57,4 +57,8 @@ public interface InterfaceEmployeeDao {
     // Get all employees for HR
     ArrayList<Employee> getAllEmployees();
 
+    // Get the Employee ID by User ID
+    int getEmployeeIdByUserId(Integer userId);
+
+
 }
