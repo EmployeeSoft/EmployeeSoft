@@ -15,14 +15,14 @@ export class AuthGuard implements CanActivate {
         const user = this.accountService.userValue;
         if (user) {
           this.data = (JSON.parse(localStorage.getItem('user')!));
-          if (!route.data.roles.includes(this.data.role) && this.data.role != 'hr') {
+          if (!route.data.roles.includes(this.data.role) && this.data.role !== 'hr') {
             // role not authorised so redirect to home page
             this.router.navigate(['/employee/home']);
             return false;
           }
 
             // authorised so return true
-            return true;
+          return true;
         }
 
         // not logged in so redirect to login page with the return url

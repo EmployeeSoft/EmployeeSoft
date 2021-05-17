@@ -18,8 +18,8 @@
         </thead>
         <tbody>
             <tr *ngFor="let employee of employees | filter:searchText">
-                <td>{{employee.personDomain.firstName}} {{employee.personDomain.middleName}} {{employee.personDomain.lastName}}</td>
-                <td>{{employee.personDomain.ssn}}</td>
+                <td>{{employee.name}}</td>
+                <td>{{employee.ssn}}</td>
                 <td>{{employee.startDate}}</td>
                 <td style="white-space: nowrap">
                   {{employee.visaType}}

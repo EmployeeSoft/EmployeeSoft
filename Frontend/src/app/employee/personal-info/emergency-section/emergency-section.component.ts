@@ -4,6 +4,8 @@ import { AlertService } from '../../../common/_services';
 import {UserInfoEmergencyService} from '../../_services/user-info/user-info-emergency.service';
 import {Address} from '../../_models/address';
 import {first} from 'rxjs/operators';
+import {Contact} from '../../../common/_models/contact';
+import {UserInfoNameService} from '../../_services/user-info/user-info-name.service';
 
 @Component({
   selector: 'app-emergency-section',
@@ -12,7 +14,7 @@ import {first} from 'rxjs/operators';
 })
 export class EmergencySectionComponent implements OnInit {
   formData: any;
-  emergencySection: any;
+  emergencySection: Contact[];
   SecEdit: boolean;
   emergency: any;
   controls: any;
@@ -20,24 +22,24 @@ export class EmergencySectionComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private alertService: AlertService,
-    private emergencyService: UserInfoEmergencyService,
+    private emergencyService: UserInfoNameService,
   ) {
   }
 
   ngOnInit(): void {
+    const userInfo = JSON.parse(localStorage.getItem('user-info')!);
+    const personId = userInfo.personId;
+
     this.SecEdit = false;
-    this.emergencySection = [
-      {
-        name: 'Ding Wang',
-        phone: '2222939329',
-        address: '2222 fhue Blvd'
-      },
-      {
-        name: 'Uno kk',
-        phone: '2394949192',
-        address: '3333 djdd Blvd'
-      }
-    ];
+    console.log(userInfo.contracts[0].fullName);
+
+    this.emergencySection = [];
+    for(let i = 0; i < userInfo.contracts.length; i++){
+      this.emergencySection.push(new Contact(userInfo.contracts[i].id,
+        userInfo.contracts[i].fullName, userInfo.contracts[i].phone,
+        userInfo.contracts[i].relationship, userInfo.contracts[i].address));
+    }
+
     const arr = [];
 
     for (let i = 0; i < this.emergencySection.length; i++){
@@ -45,8 +47,12 @@ export class EmergencySectionComponent implements OnInit {
     }
 
     this.formData = this.fb.group({
+      personId: [personId],
       emergency: this.fb.array(arr)
     });
+
+    console.log(this.formData.value);
+
   }
   get getContact(){
     return this.formData.get('emergency').controls;
@@ -54,9 +60,12 @@ export class EmergencySectionComponent implements OnInit {
 
   BuildFormDynamic(contact: any): FormGroup{
     return this.fb.group({
-      name: [contact.name],
+      id: [contact.id],
+      fullName: [contact.fullName],
       phone: [contact.phone],
-      address: [contact.address]
+      relationship: [contact.relationship],
+      // title: [contact.title],
+      address: [contact.address],
     });
   }
 
@@ -65,13 +74,14 @@ export class EmergencySectionComponent implements OnInit {
   }
 
   cancelEdit() {
-    this.alertService.warn('Are you sure to cancel all updates?');
+    alert('Are you sure to cancel all updates?');
     this.SecEdit = false;
   }
 
   onSubmit() {
     this.SecEdit = false;
-    this.emergencyService.update(this.formData.value)
+    console.log(this.formData.value.emergency);
+    this.emergencyService.updateContact(this.formData.value.personId, this.formData.value.emergency)
       .pipe(first())
       .subscribe({
         next: (data) => {

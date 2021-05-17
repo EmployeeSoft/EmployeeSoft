@@ -1,12 +1,15 @@
 package com.example.demo.dao.implementation;
 
 import com.example.demo.dao.InterfacePersonDao;
+import com.example.demo.domain.*;
+import com.example.demo.entity.Contact;
 import com.example.demo.entity.Person;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 
 @Repository
 public class PersonDao extends AbstractHibernateDao<Person> implements InterfacePersonDao {
@@ -210,6 +213,24 @@ public class PersonDao extends AbstractHibernateDao<Person> implements Interface
         return dob;
     }
 
+    // Update the person's Info by ID
+    public boolean updatePersonInfo(PersonDomain personDomain) {
+        try {
+            Session session = getCurrentSession();
+            Query query = session.createQuery("UPDATE Person SET preferName =: preferName, dob =: dob, gender =: gender, " +
+                    "ssn =: ssn WHERE id = :id");
+            query.setParameter("preferName", personDomain.getPreferName());
+            query.setParameter("dob", Date.valueOf(personDomain.getDob()));
+            query.setParameter("gender", personDomain.getGender());
+            query.setParameter("ssn", personDomain.getSsn());
+            query.setParameter("id", personDomain.getId());
+            query.executeUpdate();
+            return true;
+        } catch (Exception err) {
+            err.printStackTrace();
+            return false;
+        }
+    }
     @Override
     public Person addNewPerson(Person person) {
         return merge(person);

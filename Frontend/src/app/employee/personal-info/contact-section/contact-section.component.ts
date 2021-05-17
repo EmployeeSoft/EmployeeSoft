@@ -24,6 +24,7 @@ export class ContactSectionComponent implements OnInit {
     this.contactSection = ['dingwang0921@gmail.com', 'dingwang@dusifb.com', '2132932273', '2137263625'];
     this.SecEdit = false;
     this.formData = this.fb.group({
+      id: [2],
       email: [this.contactSection[0]],
       workEmail: [this.contactSection[1]],
       phone: [this.contactSection[2]],
@@ -36,7 +37,7 @@ export class ContactSectionComponent implements OnInit {
 
   endEdit() {
     this.SecEdit = false;
-    this.alertService.warn('Are you sure to discard all changes?');
+    alert('Are you sure to discard all changes?');
   }
 
   onSubmit(){

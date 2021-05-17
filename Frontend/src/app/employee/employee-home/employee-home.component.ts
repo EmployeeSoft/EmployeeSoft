@@ -19,18 +19,20 @@ export class EmployeeHomeComponent implements OnInit {
   ngOnInit(): void {
     // call the GET request here
     // Get all the information of an employee
-    console.log("employee home component initialized")
     const jwt = localStorage.getItem('jwt');
     const helper = new JwtHelperService();
     const decodedJwt = helper.decodeToken(jwt!);
     const userId = decodedJwt.sub.toString();
 
     const user = JSON.parse(localStorage.getItem('user')!);
-    this.employeeHomeService.getByRoleAndId(user.role, userId).subscribe((data)=> {
-      console.log(data);
-      localStorage.setItem("user-info", JSON.stringify(data));
-      this.data = data;
-    })
+    if (localStorage.getItem("user-info") === null) {
+      this.employeeHomeService.getByRoleAndId(user.role, userId).subscribe((data)=> {
+        localStorage.setItem("user-info", JSON.stringify(data));
+        this.data = data;
+      });
+    } else {
+      this.data = JSON.parse(localStorage.getItem("user-info")!);
+    }
   }
 
 }

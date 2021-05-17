@@ -208,7 +208,7 @@ export class OnboardComponent implements OnInit {
     if (this.avatarFile !== null) { this.uploadFile(this.avatarFile, 'avatar', 'avatar'); }
     if (this.optReceiptFile !== null) { this.uploadFile(this.optReceiptFile, 'personal document', 'OPT Receipt'); }
     if (this.optEadFile !== null) { this.uploadFile(this.optEadFile, 'personal document', 'OPT EAD'); }
-    if (this.i983File !== null) { this.uploadFile(this.i983File, 'personal document', 'I-983 signed'); }
+    if (this.i983File !== null) { this.uploadFile(this.i983File, 'personal document', 'I-983'); }
     if (this.i20File !== null) { this.uploadFile(this.i20File, 'personal document', 'I-20'); }
     if (this.optStemReceiptFile !== null) { this.uploadFile(this.optStemReceiptFile, 'personal document', 'OPT STEM Receipt'); }
     if (this.optStemEadFile !== null) { this.uploadFile(this.optStemEadFile, 'personal document', 'OPT STEM EAD'); }
@@ -243,7 +243,7 @@ export class OnboardComponent implements OnInit {
 
   onDownload() {
     const filename = 'I-983 Form';
-    this.accountService.download(filename).subscribe(
+    this.accountService.download(filename, '0').subscribe(
       event => {
         console.log(event);
         this.reportProgress(event, filename);

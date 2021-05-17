@@ -1,6 +1,7 @@
 package com.example.demo.dao.implementation;
 
 import com.example.demo.dao.InterfaceEmployeeDao;
+import com.example.demo.domain.PersonalEmploymentDomain;
 import com.example.demo.entity.Employee;
 import com.example.demo.service.EmployeeService;
 import org.hibernate.Session;
@@ -161,6 +162,25 @@ public class EmployeeDao extends AbstractHibernateDao<Employee> implements Inter
         Session session = getCurrentSession();
         Query query = session.createQuery("FROM Employee");
         return (ArrayList<Employee>) query.list();
+    }
+
+    // Update specific columns for Employee by person ID
+    public boolean updateEmployeeByPersonId(PersonalEmploymentDomain domain){
+        Session session = getCurrentSession();
+        Query query = session.createQuery("UPDATE Employee SET title =: title, " +
+                "startDate =: startDate, endDate =: endDate, car =: car, " +
+                "driverLicense =: driverLicense, driverLicenseExpDate =: driverLicenseExpDate " +
+                "WHERE personId =: id");
+        query.setParameter("title", domain.getTitle());
+        query.setParameter("startDate", Date.valueOf(domain.getStartDate()));
+        query.setParameter("endDate", Date.valueOf(domain.getEndDate()));
+        query.setParameter("car", domain.getCar());
+        query.setParameter("driverLicense", domain.getDriverLicense());
+        query.setParameter("driverLicenseExpDate", Date.valueOf(domain.getDriverLicenseExpDate()));
+        query.setParameter("id", domain.getPersonId());
+
+        int res = query.executeUpdate();
+        return res != 0;
     }
 
     // Get the Employee ID by User ID
