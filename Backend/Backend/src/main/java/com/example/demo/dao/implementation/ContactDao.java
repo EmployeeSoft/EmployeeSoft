@@ -45,7 +45,7 @@ public class ContactDao extends AbstractHibernateDao<Contact> implements Interfa
         Session session = getCurrentSession();
         Query query = session.createQuery("UPDATE Contact SET fullName =: fullName," +
                 " phone =: phone, relationship =: relationship, title =: title, " +
-                " address =: address WHERE personId =: id");
+                " address =: address WHERE id =: id");
         query.setParameter("fullName", domain.getFullName());
         query.setParameter("phone", domain.getPhone());
         query.setParameter("relationship", domain.getRelationship());

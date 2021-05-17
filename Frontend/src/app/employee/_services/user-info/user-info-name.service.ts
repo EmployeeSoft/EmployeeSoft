@@ -25,8 +25,8 @@ export class UserInfoNameService {
     return this.http.post(`${environment.backendUrl}/person/address`, address);
   }
 
-  updateContact(contact: Contact) {
-    return this.http.post(`${environment.backendUrl}/person/contact`, contact);
+  updateContact(personId: number, emergency: Contact[]) {
+    return this.http.post(`${environment.backendUrl}/person/contact`, {personId, emergency});
   }
 
   updateEmployment(employ: Employment) {

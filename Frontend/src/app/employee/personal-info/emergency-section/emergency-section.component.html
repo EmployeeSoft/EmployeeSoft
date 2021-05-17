@@ -16,10 +16,10 @@
         <p class="card-text">Relationship</p>
         <h5 class="card-title">{{eg.controls.relationship.value}}</h5>
       </div>
-      <div>
-        <p class="card-text">Title</p>
-        <h5 class="card-title">{{eg.controls.title.value}}</h5>
-      </div>
+<!--      <div>-->
+<!--        <p class="card-text">Title</p>-->
+<!--        <h5 class="card-title">{{eg.controls.title.value}}</h5>-->
+<!--      </div>-->
       <div>
         <p class="card-text">Address</p>
         <h5 class="card-title">{{eg.controls.address.value}}</h5>
@@ -49,6 +49,6 @@
       </form>
     </div>
     <button type="button" class="btn btn-primary" (click)="cancelEdit()">Cancel</button>
-    <button type="submit" class="btn btn-primary">Save</button>
+    <button type="submit" class="btn btn-primary" (click)="onSubmit()">Save</button>
   </div>
 </div>
