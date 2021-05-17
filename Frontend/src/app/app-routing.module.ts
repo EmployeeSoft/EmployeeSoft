@@ -30,7 +30,7 @@ const routes: Routes = [
     { path: 'test', component: PersonalInfoComponent},
 
     // otherwise redirect to home
-    { path: '**', redirectTo: '' }
+   // { path: '**', redirectTo: '' }
 ];
 
 

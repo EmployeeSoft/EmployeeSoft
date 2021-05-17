@@ -74,7 +74,7 @@ export class EmergencySectionComponent implements OnInit {
   }
 
   cancelEdit() {
-    this.alertService.warn('Are you sure to cancel all updates?');
+    alert('Are you sure to cancel all updates?');
     this.SecEdit = false;
   }
 

@@ -43,7 +43,7 @@ export class EmploymentSectionComponent implements OnInit {
   }
 
   endEdit() {
-    this.alertService.warn('Are you sure to discard all changes?');
+    alert('Are you sure to discard all changes?');
     this.SecEdit = false;
   }
 
