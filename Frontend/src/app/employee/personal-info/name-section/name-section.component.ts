@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormControl} from '@angular/forms';
-import {AlertService} from '../../../common/_services';
+import {AccountService, AlertService} from '../../../common/_services';
 import {UserInfoNameService} from '../../_services/user-info/user-info-name.service';
 import {first} from 'rxjs/operators';
+import {HttpErrorResponse} from '@angular/common/http';
+import {JwtHelperService} from '@auth0/angular-jwt';
 
 @Component({
   selector: 'app-name-section',
@@ -14,13 +16,20 @@ export class NameSectionComponent implements OnInit {
   nameSection: any;
   nameSecEdit: boolean;
   genderOp: any;
+  userId: any;
+
   constructor(
     private fb: FormBuilder,
     private alertService: AlertService,
     private nameService: UserInfoNameService,
+    private accountService: AccountService
     ) { }
 
   ngOnInit(): void {
+    const jwt = localStorage.getItem('jwt');
+    const helper = new JwtHelperService();
+    const decodedJwt = helper.decodeToken(jwt!);
+    this.userId = decodedJwt.sub.toString();
     const userInfo = JSON.parse(localStorage.getItem('user-info')!);
     const personId = userInfo.personId;
 
@@ -31,14 +40,31 @@ export class NameSectionComponent implements OnInit {
     this.formData = this.fb.group({
       personId: [personId],
       preferName: [userInfo.preferName],
-      avatar: [''],
+      avatar: [userInfo.avatar],
       dob: [userInfo.dob],
       gender: [userInfo.gender],
       ssn: [userInfo.ssn]
     });
   }
+
   get getAvatar() {
     return this.formData.get('avatar') as FormControl;
+  }
+
+  private uploadFile(file: File, uploadTo: string, fileTitle: string) {
+    const formData = new FormData();
+    formData.append('file', file, file.name);
+    formData.append('userId', this.userId!);
+    formData.append('uploadTo', uploadTo);
+    formData.append('fileTitle', fileTitle);
+    this.accountService.upload(formData).subscribe(
+      event => {
+        console.log(event);
+      },
+      (error: HttpErrorResponse) => {
+        console.log(error);
+      }
+    );
   }
 
   startEdit() {
