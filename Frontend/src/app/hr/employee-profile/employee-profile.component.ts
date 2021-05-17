@@ -10,7 +10,7 @@ export class EmployeeProfileComponent implements OnInit {
 
   searchText: any;
   data: any;
-  employees: any[];
+  employees: any[] = [];
   constructor(private employeeProfileService: EmployeeProfileService) { }
 
   ngOnInit(): void {
@@ -18,10 +18,15 @@ export class EmployeeProfileComponent implements OnInit {
     const user = JSON.parse(localStorage.getItem('user')!);
     this.employeeProfileService.getAll(user.role)
       .subscribe(data=> {
-        console.log(data);
         this.data = data;
-        console.log(this.data.employees[0].personDomain);
-        this.employees = this.data.employees;
+        for (let i = 0; i < this.data.employees.length; i++) {
+          let name = this.data.employees[i].personDomain.firstName + " " + this.data.employees[i].personDomain.middleName + " " + this.data.employees[i].personDomain.lastName;
+          let ssn = this.data.employees[i].personDomain.ssn;
+          let startDate = this.data.employees[i].startDate;
+          let visaType = this.data.employees[i].visaType;
+          let obj = {"name": name, "ssn": ssn, "startDate": startDate, "visaType": visaType}
+          this.employees.push(obj);
+        }
       }, error => console.log(error));
   }
 

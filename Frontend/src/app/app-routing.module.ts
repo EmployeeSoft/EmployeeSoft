@@ -24,14 +24,13 @@ const routes: Routes = [
     { path: 'employee/home', component: EmployeeHomeComponent, canActivate: [AuthGuard], data: {roles: [Role.employee]}},
     { path: 'employee/visa', component: EmployeeVisaStatusManagementComponent, canActivate: [AuthGuard], data: {roles: [Role.employee]}},
     { path: 'employee/personal', component: PersonalInfoComponent, canActivate: [AuthGuard], data: {roles: [Role.employee]}},
-    { path: 'users', loadChildren: usersModule },
     { path: 'account', loadChildren: accountModule },
     { path: 'register', component: RegisterComponent },
     { path: 'onboard', component: OnboardComponent},
-    { path: 'test', component: PersonalInfoComponent}
+    { path: 'test', component: PersonalInfoComponent},
 
     // otherwise redirect to home
-    // { path: '**', redirectTo: '' }
+    { path: '**', redirectTo: '' }
 ];
 
 
