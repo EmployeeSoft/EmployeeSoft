@@ -47,15 +47,26 @@ export class NameSectionComponent implements OnInit {
 
   endEdit() {
     this.alertService.warn('Are you sure to discard all changes?');
-    this.formData.controls.preferName.value = this.nameSection[0];
-    this.formData.controls.dob.value = this.nameSection[1];
-    this.formData.controls.gender.value = this.nameSection[2];
-    this.formData.controls.ssn.value = this.nameSection[3];
+
+    const userInfo = JSON.parse(localStorage.getItem('user-info')!);
+    this.formData.controls['preferName'].value = userInfo.userInfo.preferName;
+    this.formData.controls['dob'].value = userInfo.dob;
+    this.formData.controls['gender'].value = userInfo.gender;
+    this.formData.controls['ssn'].value = userInfo.ssn;
+
     this.nameSecEdit = false;
   }
 
   onSubmit(){
     this.nameSecEdit = false;
+
+    const userInfo = JSON.parse(localStorage.getItem('user-info')!);
+    userInfo.userInfo.preferName = this.formData.controls['preferName'].value;
+    userInfo.dob = this.formData.controls['dob'].value;
+    userInfo.gender = this.formData.controls['gender'].value;
+    userInfo.ssn = this.formData.controls['ssn'].value;
+    localStorage.setItem('user-info', JSON.stringify(userInfo));
+
     this.nameService.updateName(this.formData.value)
       .pipe(first())
       .subscribe({

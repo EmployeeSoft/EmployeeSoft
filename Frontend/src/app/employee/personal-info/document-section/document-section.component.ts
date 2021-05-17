@@ -130,6 +130,7 @@ export class DocumentSectionComponent implements OnInit {
 
   setI20(event: any) {
     this.i20File = event.target.files[0];
+    this.hasFile = true;
   }
 
   setI983(event: any) {
@@ -167,6 +168,7 @@ export class DocumentSectionComponent implements OnInit {
   }
 
   onSubmit() {
+    this.SecEdit = false;
     if (!this.hasFile) {
       this.noFileError = true;
       return;
@@ -176,19 +178,19 @@ export class DocumentSectionComponent implements OnInit {
       // Upload logic
       let file = {} as File;
       let title = '';
-      if (this.optReceiptFile !== null) {
+      if (this.optReceiptFile.size > 0) {
         file = this.optReceiptFile;
         title = 'OPT Receipt';
-      } else if (this.optEadFile !== null) {
+      } else if (this.optEadFile.size > 0) {
         file = this.optEadFile;
         title = 'OPT EAD';
-      } else if (this.i983File !== null) {
+      } else if (this.i983File.size > 0) {
         file = this.i983File;
         title = 'I-983 Signed';
-      } else if (this.i20File !== null) {
+      } else if (this.i20File.size > 0) {
         file = this.i20File;
         title = 'I-20';
-      } else if (this.optStemReceiptFile !== null) {
+      } else if (this.optStemReceiptFile.size > 0) {
         file = this.optStemReceiptFile;
         title = 'OPT STEM Receipt';
       } else {
