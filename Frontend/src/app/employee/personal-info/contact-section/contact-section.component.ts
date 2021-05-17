@@ -37,7 +37,7 @@ export class ContactSectionComponent implements OnInit {
 
   endEdit() {
     this.SecEdit = false;
-    this.alertService.warn('Are you sure to discard all changes?');
+    alert('Are you sure to discard all changes?');
   }
 
   onSubmit(){

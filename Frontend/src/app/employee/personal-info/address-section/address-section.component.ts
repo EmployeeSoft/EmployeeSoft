@@ -44,7 +44,7 @@ export class AddressSectionComponent implements OnInit {
 
   endEdit() {
     this.addressSecEdit = false;
-    this.alertService.warn('Are you sure to discard all changes?')
+    alert('Are you sure to discard all changes?')
   }
 
   onSubmit() {

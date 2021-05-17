@@ -46,7 +46,7 @@ export class NameSectionComponent implements OnInit {
   }
 
   endEdit() {
-    this.alertService.warn('Are you sure to discard all changes?');
+    alert('Are you sure to discard all changes?');
     this.formData.controls.preferName.value = this.nameSection[0];
     this.formData.controls.dob.value = this.nameSection[1];
     this.formData.controls.gender.value = this.nameSection[2];
