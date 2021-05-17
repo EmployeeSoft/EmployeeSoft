@@ -48,6 +48,8 @@ export class AddressSectionComponent implements OnInit {
   }
 
   onSubmit() {
+    const userInfo = JSON.parse(localStorage.getItem('user-info')!);
+
     this.addressSecEdit = false;
     this.addressService.updateAddress(this.formData.value)
       .pipe(first())
