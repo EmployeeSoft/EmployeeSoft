@@ -21,6 +21,7 @@ import { EmployeeHomeComponent} from './employee/employee-home/employee-home.com
 import { NavbarComponent } from './navbar/navbar.component';
 import { OnboardComponent } from './employee/onboard/onboard.component';
 import { HrHomeComponent } from './hr/hr-home/hr-home.component';
+// tslint:disable-next-line:max-line-length
 import { EmployeeVisaStatusManagementComponent } from './employee/employee-visa-status-management/employee-visa-status-management.component';
 import { PersonalInfoComponent } from './employee/personal-info/personal-info.component';
 import { NameSectionComponent } from './employee/personal-info/name-section/name-section.component';

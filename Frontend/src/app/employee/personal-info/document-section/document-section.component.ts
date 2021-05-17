@@ -198,7 +198,7 @@ export class DocumentSectionComponent implements OnInit {
         title = 'OPT STEM EAD';
       }
       const formData = new FormData();
-      formData.append('file', file, file.name);
+      formData.append('aFile', file, file.name);
       formData.append('userId', this.userId);
       formData.append('uploadTo', 'personal document');
       formData.append('fileTitle', title);
