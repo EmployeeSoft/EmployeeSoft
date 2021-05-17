@@ -11,10 +11,10 @@ export class NavbarComponent implements OnInit {
   constructor(private accountService: AccountService) { }
 
   user: any;
-  user-info: any;
+  userInfo: any;
   ngOnInit(): void {
     this.user = JSON.parse(localStorage.getItem("user")!);
-    this.user-info = JSON.parse(localStorage.getItem("user-info")!);
+    this.userInfo = JSON.parse(localStorage.getItem("user-info")!);
     console.log(this.user);
   }
 
