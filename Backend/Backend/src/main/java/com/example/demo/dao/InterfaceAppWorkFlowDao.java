@@ -36,4 +36,13 @@ public interface InterfaceAppWorkFlowDao {
 
     // Get the date modified
     Date getDateModifiedByUserId(Integer userId);
+
+    // Get the date created of the form
+    Date getDateCreatedByForm(Integer employeeId, String fileTitle);
+
+    // Get the date modified of the form
+    Date getDateModifiedByForm(Integer employeeId, String fileTitle);
+
+    // Check if form exist
+    boolean checkFormExist(Integer employeeId, String filename);
 }

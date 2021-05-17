@@ -35,6 +35,8 @@ public class EmployeeService {
         this.employeeDao = employeeDao;
     }
 
+    private final DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+
     @Transactional
     public EmployeeDomain getEmployeeByEmployeeId(Integer id) {
         Employee employee = employeeDao.getEmployeeByEmployeeId(id);
@@ -197,6 +199,37 @@ public class EmployeeService {
     @Transactional
     public int getEmployeeIdByUserId(Integer userId) {
         return employeeDao.getEmployeeIdByUserId(userId);
+    }
+
+    @Transactional
+    public ArrayList<EmployeeDomain> getEmployeesWithIncompleteVisaStatus() {
+        ArrayList<Employee> employees = employeeDao.getEmployeesWithIncompleteVisaStatus();
+        ArrayList<EmployeeDomain> domains = new ArrayList<>();
+
+        for (Employee employee : employees) {
+            EmployeeDomain domain = EmployeeDomain.builder()
+                    .id(employee.getId())
+                    .title(employee.getTitle())
+                    .managerId(employee.getManagerId())
+                    .startDate(df.format(employee.getStartDate()))
+                    .endDate(df.format(employee.getEndDate()))
+                    .avatar(employee.getAvatar())
+                    .car(employee.getCar())
+                    .visaStatusDomain(visaStatusService.getVisaStatusById(employee.getVisaStatusId()))
+                    .visaType(employeeDao.getVisaTypeByPersonId(employee.getPersonId()))
+                    .visaStartDate(df.format(employee.getVisaStartDate()))
+                    .visaEndDate(df.format(employee.getVisaEndDate()))
+                    .driverLicense(employee.getDriverLicense())
+                    .driverLicenseExpDate(df.format(employee.getDriverLicenseExpDate()))
+                    .personDomain(personService.getPersonByUserId(personService.getUserIdByPersonId(employee.getPersonId())))
+                    .personalDocumentDomains(personalDocService.getPersonalDocsByEmployeeId(employee.getId()))
+                    .applicationWorkFlowDomains(appWorkFlowService.getAppWorkFlowsByEmployeeId(employee.getId()))
+                    .build();
+
+            domains.add(domain);
+        }
+
+        return domains;
     }
 
 }
