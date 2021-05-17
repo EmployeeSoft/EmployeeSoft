@@ -127,11 +127,9 @@ public class AppWorkFlowService {
 
     @Transactional
     public boolean checkFormExist(Integer employeeId) {
-        String fileTitle = "";
         if (appWorkFlowDao.checkFormExist(employeeId, "OPT STEM EAD")) {
             return true;
         }
-
         return false;
     }
 }

@@ -184,7 +184,7 @@ public class AppWorkFlowDao extends AbstractHibernateDao<ApplicationWorkFlow> im
         int employeeId = employeeService.getEmployeeIdByUserId(userId);
 
         Session session = getCurrentSession();
-        Query query = session.createQuery("SELECT dateCreated FROM ApplicationWorkFlow WHERE employeeId = :employeeId AND type = 'I-983'");
+        Query query = session.createQuery("SELECT dateCreated FROM ApplicationWorkFlow WHERE employeeId = :employeeId AND type = 'OPT EAD'");
         query.setParameter("employeeId", employeeId);
         return (Date) query.uniqueResult();
     }
@@ -194,7 +194,7 @@ public class AppWorkFlowDao extends AbstractHibernateDao<ApplicationWorkFlow> im
         int employeeId = employeeService.getEmployeeIdByUserId(userId);
 
         Session session = getCurrentSession();
-        Query query = session.createQuery("SELECT dateModified FROM ApplicationWorkFlow WHERE employeeId = :employeeId AND type = 'I-983'");
+        Query query = session.createQuery("SELECT dateModified FROM ApplicationWorkFlow WHERE employeeId = :employeeId AND type = 'OPT EAD'");
         query.setParameter("employeeId", employeeId);
         return (Date) query.uniqueResult();
     }
