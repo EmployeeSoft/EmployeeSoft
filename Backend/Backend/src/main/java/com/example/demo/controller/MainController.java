@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 @CrossOrigin(origins = {"http://localhost:4200", "http://localhost:9999"}, allowCredentials = "true")
@@ -386,10 +388,59 @@ public class MainController {
         return response;
     }
 
-//    @GetMapping("/imcomplete-visa-status")
-//    public IncompleteVisaStatusResponse getAllEmployeesWithIncompleteStatus() {
-//        IncompleteVisaStatusResponse response = new IncompleteVisaStatusResponse();
-//
-//        return response;
-//    }
+    @GetMapping("/incomplete-visa-status")
+    public IncompleteVisaStatusResponse getAllEmployeesWithIncompleteStatus(@RequestParam("userRole") String userRole) {
+        IncompleteVisaStatusResponse response = new IncompleteVisaStatusResponse();
+
+        final DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+
+        if (userRole.equals("hr")) {
+            ArrayList<EmployeeDomain> employees = employeeService.getEmployeesWithIncompleteVisaStatus();
+            ArrayList<IncompleteEmployeeDomain> incompleteEmployees = new ArrayList<>();
+
+            for (EmployeeDomain employee: employees) {
+                IncompleteEmployeeDomain domain = new IncompleteEmployeeDomain();
+
+                String fullName = employee.getPersonDomain().getFirstName() + " " +
+                        employee.getPersonDomain().getMiddleName() + " " +
+                        employee.getPersonDomain().getLastName();
+
+
+                String formTitle = "";
+                if (appWorkFlowService.checkFormExist(employee.getId())) {
+                    formTitle = "F1-OPT STEM";
+                } else {
+                    formTitle = "F1-OPT";
+                }
+
+                long daysLeft = CalculateDate.checkDaysLeft(
+                        appWorkFlowService.getDateCreatedByForm(employee.getId(), formTitle),
+                        appWorkFlowService.getDateModifiedByForm(employee.getId(), formTitle),
+                        formTitle
+                );
+
+                java.sql.Date expire = CalculateDate.getExpirationDate(
+                        appWorkFlowService.getDateCreatedByForm(employee.getId(), formTitle),
+                        formTitle
+                );
+
+                domain.setName(fullName);
+                domain.setWorkAuthorization(employee.getVisaStatusDomain().getVisaType());
+                domain.setDaysLeft(daysLeft);
+                domain.setExpirationDate(df.format(expire));
+
+                incompleteEmployees.add(domain);
+            }
+
+            if (employees != null) {
+                response.setEmployees(incompleteEmployees);
+                response.setServiceStatus(new ServiceStatus("Success", true, ""));
+            } else {
+                String errorMsg = "There are no employees with incomplete visa status";
+                response.setServiceStatus(new ServiceStatus("Fail", false, errorMsg));
+            }
+        }
+
+        return response;
+    }
 }

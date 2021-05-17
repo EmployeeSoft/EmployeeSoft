@@ -184,7 +184,7 @@ public class AppWorkFlowDao extends AbstractHibernateDao<ApplicationWorkFlow> im
         int employeeId = employeeService.getEmployeeIdByUserId(userId);
 
         Session session = getCurrentSession();
-        Query query = session.createQuery("SELECT dateCreated FROM ApplicationWorkFlow WHERE employeeId = :employeeId AND type = 'I-983'");
+        Query query = session.createQuery("SELECT dateCreated FROM ApplicationWorkFlow WHERE employeeId = :employeeId AND type = 'OPT EAD'");
         query.setParameter("employeeId", employeeId);
         return (Date) query.uniqueResult();
     }
@@ -194,8 +194,50 @@ public class AppWorkFlowDao extends AbstractHibernateDao<ApplicationWorkFlow> im
         int employeeId = employeeService.getEmployeeIdByUserId(userId);
 
         Session session = getCurrentSession();
-        Query query = session.createQuery("SELECT dateModified FROM ApplicationWorkFlow WHERE employeeId = :employeeId AND type = 'I-983'");
+        Query query = session.createQuery("SELECT dateModified FROM ApplicationWorkFlow WHERE employeeId = :employeeId AND type = 'OPT EAD'");
         query.setParameter("employeeId", employeeId);
         return (Date) query.uniqueResult();
+    }
+
+    // Get the date created of the form
+    public Date getDateCreatedByForm(Integer employeeId, String filename) {
+        String fileTitle = "";
+
+        if (filename.equals("F1-OPT")) {
+            fileTitle = "OPT EAD";
+        } else {
+            fileTitle = "OPT STEM EAD";
+        }
+
+        Session session = getCurrentSession();
+        Query query = session.createQuery("SELECT dateCreated FROM ApplicationWorkFlow WHERE employeeId = :employeeId AND type = :fileTitle");
+        query.setParameter("fileTitle", fileTitle);
+        query.setParameter("employeeId", employeeId);
+        return (Date) query.uniqueResult();
+    }
+
+    // Get the date modified of the form
+    public Date getDateModifiedByForm(Integer employeeId, String filename) {
+        String fileTitle = "";
+
+        if (filename.equals("F1-OPT")) {
+            fileTitle = "OPT EAD";
+        } else {
+            fileTitle = "OPT STEM EAD";
+        }
+
+        Session session = getCurrentSession();
+        Query query = session.createQuery("SELECT dateModified FROM ApplicationWorkFlow WHERE employeeId = :employeeId AND type = :fileTitle");
+        query.setParameter("fileTitle", fileTitle);
+        query.setParameter("employeeId", employeeId);
+        return (Date) query.uniqueResult();
+    }
+
+    // Check if form exist
+    public boolean checkFormExist(Integer employeeId, String filename) {
+        Query query = getCurrentSession().createQuery("FROM ApplicationWorkFlow WHERE employeeId = :employeeId AND type = :filename");
+        query.setParameter("employeeId", employeeId);
+        query.setParameter("filename", filename);
+        return query.list().size() >= 1;
     }
 }
