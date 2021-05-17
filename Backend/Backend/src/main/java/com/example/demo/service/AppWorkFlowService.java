@@ -114,4 +114,24 @@ public class AppWorkFlowService {
     public Date getDateCreatedByUserId(Integer userId) {
         return appWorkFlowDao.getDateCreatedByUserId(userId);
     }
+
+    @Transactional
+    public Date getDateCreatedByForm(Integer employeeId, String fileTitle) {
+        return appWorkFlowDao.getDateCreatedByForm(employeeId, fileTitle);
+    }
+
+    @Transactional
+    public Date getDateModifiedByForm(Integer employeeId, String fileTitle) {
+        return appWorkFlowDao.getDateModifiedByForm(employeeId, fileTitle);
+    }
+
+    @Transactional
+    public boolean checkFormExist(Integer employeeId) {
+        String fileTitle = "";
+        if (appWorkFlowDao.checkFormExist(employeeId, "OPT STEM EAD")) {
+            return true;
+        }
+
+        return false;
+    }
 }

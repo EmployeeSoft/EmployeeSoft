@@ -172,5 +172,32 @@ public class EmployeeDao extends AbstractHibernateDao<Employee> implements Inter
         return (int) query.uniqueResult();
     }
 
+    // Get a list of all employees with incomplete visa status
+    public ArrayList<Employee> getEmployeesWithIncompleteVisaStatus() {
+        try {
+            ArrayList<Employee> employees = new ArrayList<>();
 
+            Session session1 = openSession();
+            Session session2 = openSession();
+
+            // Check if employee is not a Citizen or a Green Card holder
+            Query query1 = session1.createQuery("FROM Employee WHERE visaStatusId = 3");
+            ArrayList<Employee> f1Employees = (ArrayList<Employee>) query1.list();
+
+            // Check if the application is not complete
+            Query query2 = session2.createQuery("SELECT employeeId FROM ApplicationWorkFlow WHERE status = 1");
+            ArrayList<Integer> employeeIds = (ArrayList<Integer>) query2.list();
+
+            for (Employee employee: f1Employees) {
+                if (employeeIds.contains(employee.getId())) {
+                    employees.add(employee);
+                }
+            }
+
+            return employees;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
