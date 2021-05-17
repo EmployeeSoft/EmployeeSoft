@@ -19,6 +19,6 @@ export class EmployeeVisaService {
   }
 
   getVisaStatus(id: string, role: string) {
-    return this.http.get<EmployeeVisa>(`http://localhost:8080/employee-visa-status?userId=${id}&userRole=${role}`)
+    return this.http.get<EmployeeVisa>(`http://localhost:8080/employee-visa-status?userId=${id}&userRole=${role}`);
   }
 }

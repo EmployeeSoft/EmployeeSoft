@@ -31,7 +31,6 @@ export class EmergencySectionComponent implements OnInit {
     const personId = userInfo.personId;
 
     this.SecEdit = false;
-    console.log(userInfo.contracts[0].fullName);
 
     this.emergencySection = [];
     for(let i = 0; i < userInfo.contracts.length; i++){
@@ -50,8 +49,6 @@ export class EmergencySectionComponent implements OnInit {
       personId: [personId],
       emergency: this.fb.array(arr)
     });
-
-    console.log(this.formData.value);
 
   }
   get getContact(){
@@ -80,7 +77,6 @@ export class EmergencySectionComponent implements OnInit {
 
   onSubmit() {
     this.SecEdit = false;
-    console.log(this.formData.value.emergency);
     this.emergencyService.updateContact(this.formData.value.personId, this.formData.value.emergency)
       .pipe(first())
       .subscribe({

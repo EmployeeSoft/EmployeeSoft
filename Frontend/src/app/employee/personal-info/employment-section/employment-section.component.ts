@@ -43,12 +43,35 @@ export class EmploymentSectionComponent implements OnInit {
   }
 
   endEdit() {
-    alert('Are you sure to discard all changes?');
+    this.alertService.warn('Are you sure to discard all changes?');
+
+    const userInfo = JSON.parse(localStorage.getItem('user-info')!);
+    this.formData.controls['title'].value = userInfo.title;
+    this.formData.controls['startDate'].value = userInfo.startDate;
+    this.formData.controls['endDate'].value = userInfo.endDate;
+    this.formData.controls['car'].value = userInfo.car;
+    this.formData.controls['visaStartDate'].value = userInfo.visaStartDate;
+    this.formData.controls['visaEndDate'].value = userInfo.visaEndDate;
+    this.formData.controls['driverLicense'].value = userInfo.driverLicense;
+    this.formData.controls['driverLicenseExpDate'].value = userInfo.driverLicenseExpDate;
+
     this.SecEdit = false;
   }
 
   onSubmit(){
     this.SecEdit = false;
+
+    const userInfo = JSON.parse(localStorage.getItem('user-info')!);
+    userInfo.title = this.formData.controls['title'].value;
+    userInfo.startDate = this.formData.controls['startDate'].value;
+    userInfo.endDate = this.formData.controls['endDate'].value;
+    userInfo.car = this.formData.controls['car'].value;
+    userInfo.visaStartDate = this.formData.controls['visaStartDate'].value;
+    userInfo.visaEndDate = this.formData.controls['visaEndDate'].value;
+    userInfo.driverLicense = this.formData.controls['driverLicense'].value;
+    userInfo.driverLicenseExpDate = this.formData.controls['driverLicenseExpDate'].value;
+    localStorage.setItem('user-info', JSON.stringify(userInfo));
+
     this.employmentService.updateEmployment(this.formData.value)
       .pipe(first())
       .subscribe({

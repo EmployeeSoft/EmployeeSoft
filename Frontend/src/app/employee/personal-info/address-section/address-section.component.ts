@@ -44,10 +44,28 @@ export class AddressSectionComponent implements OnInit {
 
   endEdit() {
     this.addressSecEdit = false;
-    alert('Are you sure to discard all changes?')
+
+    const userInfo = JSON.parse(localStorage.getItem('user-info')!);
+    this.formData.controls['addressLine1'].value = userInfo.address[0].addressLine1;
+    this.formData.controls['addressLine2'].value = userInfo.address[0].addressLine2;
+    this.formData.controls['city'].value = userInfo.address[0].city;
+    this.formData.controls['zipcode'].value = userInfo.address[0].zipcode;
+    this.formData.controls['stateName'].value = userInfo.address[0].stateName;
+    this.formData.controls['stateAbbr'].value = userInfo.address[0].stateAbbr;
+
+    this.alertService.warn('Are you sure to discard all changes?');
   }
 
   onSubmit() {
+    const userInfo = JSON.parse(localStorage.getItem('user-info')!);
+    userInfo.address[0].addressLine1 = this.formData.controls['addressLine1'].value;
+    userInfo.address[0].addressLine2 = this.formData.controls['addressLine2'].value;
+    userInfo.address[0].city = this.formData.controls['city'].value;
+    userInfo.address[0].zipcode = this.formData.controls['zipcode'].value;
+    userInfo.address[0].stateName = this.formData.controls['stateName'].value;
+    userInfo.address[0].stateAbbr = this.formData.controls['stateAbbr'].value;
+    localStorage.setItem('user-info', JSON.stringify(userInfo));
+
     this.addressSecEdit = false;
     this.addressService.updateAddress(this.formData.value)
       .pipe(first())

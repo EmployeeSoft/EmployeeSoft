@@ -17,6 +17,10 @@ export class UserInfoNameService {
   constructor(private router: Router,
               private http: HttpClient) { }
 
+  getDocumentData(userId: string){
+    return this.http.get(`${environment.backendUrl}/person/getDocuments?userId=${userId}`);
+  }
+
   updateName(name: Name) {
     return this.http.post(`${environment.backendUrl}/person/name`, name);
   }

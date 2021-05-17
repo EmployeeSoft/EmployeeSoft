@@ -1,1 +1,101 @@
-<p>document-section works!</p>
+<div class="card">
+  <div class="card-header">
+    Document Section
+  </div>
+  <div class="card-body" style="width: 23rem;" *ngIf="!SecEdit">
+    <div *ngIf="hasI20">
+      <div class="file-man-box"><a href="" class="file-close"><i class="fa fa-times-circle"></i></a>
+        <div class="file-img-box"><img src="https://coderthemes.com/highdmin/layouts/assets/images/file_icons/pdf.svg" alt="icon"></div>
+        <div class="file-man-title">
+          <label>I-20</label>
+          <button type="button" class="btn-link" style="float: right" (click)="downloadUserFile('Form I-20')">Download</button>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="hasI983">
+      <div class="file-man-box"><a href="" class="file-close"><i class="fa fa-times-circle"></i></a>
+        <div class="file-img-box"><img src="https://coderthemes.com/highdmin/layouts/assets/images/file_icons/pdf.svg" alt="icon"></div>
+        <div class="file-man-title">
+          <label>I-983</label>
+          <button type="button" class="btn-link" style="float: right" (click)="downloadUserFile('Form I-983 submitted to HR')">Download</button>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="hasI983Signed">
+      <div class="file-man-box"><a href="" class="file-close"><i class="fa fa-times-circle"></i></a>
+        <div class="file-img-box"><img src="https://coderthemes.com/highdmin/layouts/assets/images/file_icons/pdf.svg" alt="icon"></div>
+        <div class="file-man-title">
+          <label>I-983 Signed</label>
+          <button type="button" class="btn-link" style="float: right" (click)="downloadUserFile('Form I-983 signed and approved by HR')">Download</button>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="hasOPT">
+      <div class="file-man-box"><a href="" class="file-close"><i class="fa fa-times-circle"></i></a>
+        <div class="file-img-box"><img src="https://coderthemes.com/highdmin/layouts/assets/images/file_icons/pdf.svg" alt="icon"></div>
+        <div class="file-man-title">
+          <label>OPT EAD</label>
+          <button type="button" class="btn-link" style="float: right" (click)="downloadUserFile('OPT EAD')">Download</button>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="hasOPTReceipt">
+      <div class="file-man-box"><a href="" class="file-close"><i class="fa fa-times-circle"></i></a>
+        <div class="file-img-box"><img src="https://coderthemes.com/highdmin/layouts/assets/images/file_icons/pdf.svg" alt="icon"></div>
+        <div class="file-man-title">
+          <label>OPT Receipt</label>
+          <button type="button" class="btn-link" style="float: right" (click)="downloadUserFile('OPT Receipt')">Download</button>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="hasSTEM">
+      <div class="file-man-box"><a href="" class="file-close"><i class="fa fa-times-circle"></i></a>
+        <div class="file-img-box"><img src="https://coderthemes.com/highdmin/layouts/assets/images/file_icons/pdf.svg" alt="icon"></div>
+        <div class="file-man-title">
+          <label>OPT STEM EAD</label>
+          <button type="button" class="btn-link" style="float: right" (click)="downloadUserFile('OPT STEM EAD')">Download</button>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="hasSTEMReceipt">
+      <div class="file-man-box"><a href="" class="file-close"><i class="fa fa-times-circle"></i></a>
+        <div class="file-img-box"><img src="https://coderthemes.com/highdmin/layouts/assets/images/file_icons/pdf.svg" alt="icon"></div>
+        <div class="file-man-title">
+          <label>OPT STEM Receipt</label>
+          <button type="button" class="btn-link" style="float: right" (click)="downloadUserFile('OPT STEM Receipt')">Download</button>
+        </div>
+      </div>
+    </div>
+    <button type="button" class="btn btn-primary" (click)="startEdit()">Edit</button>
+  </div>
+  <div class="card-body" style="width: 23rem;" *ngIf="SecEdit">
+    <form [formGroup]="documentData" (ngSubmit)="onSubmit()">
+      <div class="form-group" *ngIf="hasI20">
+        <label class="card-text">I-20</label>
+        <input type="file" class="form-control" (change)="setI20($event)"/>
+      </div>
+      <div class="form-group" *ngIf="hasI983">
+        <label class="card-text">I-983</label>
+        <input type="file" class="form-control" (change)="setI983($event)"/>
+      </div>
+      <div class="form-group" *ngIf="hasOPT">
+        <label class="card-text">OPT EAD</label>
+        <input type="file" class="form-control" (change)="setOptEad($event)"/>
+      </div>
+      <div class="form-group" *ngIf="hasOPTReceipt">
+        <label class="card-text">OPT Receipt</label>
+        <input type="file" class="form-control" (change)="setOptReceipt($event)"/>
+      </div>
+      <div class="form-group" *ngIf="hasSTEM">
+        <label class="card-text">OPT EAD</label>
+        <input type="file" class="form-control" (change)="setOptStemEad($event)"/>
+      </div>
+      <div class="form-group" *ngIf="hasSTEMReceipt">
+        <label class="card-text">OPT Receipt</label>
+        <input type="file" class="form-control" (change)="setOptStemReceipt($event)"/>
+      </div>
+      <button type="button" class="btn btn-primary" (click)="endEdit()">Cancel</button>
+      <button type="submit" class="btn btn-primary" (click)="onSubmit()">Save</button>
+    </form>
+  </div>
+</div>

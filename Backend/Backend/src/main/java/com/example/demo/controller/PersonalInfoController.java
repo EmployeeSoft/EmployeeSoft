@@ -24,10 +24,21 @@ public class PersonalInfoController {
     private PersonService personService;
 
     @Autowired
+    private PersonalDocService personalDocService;
+
+    @Autowired
     private VisaStatusService visaStatusService;
 
     @Autowired
     private AWSS3Service awss3Service;
+
+    @GetMapping("/person/getDocuments")
+    public PersonalInfoResponse getDocuments(@RequestParam("userId") String userId){
+        PersonalInfoResponse infoResponse = new PersonalInfoResponse();
+        infoResponse.setPersonalDocuments(personalDocService.getEmployeeFilePaths(Integer.parseInt(userId)));
+        infoResponse.setServiceStatus(new ServiceStatus("Success", true, ""));
+        return infoResponse;
+    }
 
     @PostMapping("/person/address")
     public PersonalInfoResponse updateAddress(@RequestBody AddressDomain addressDomain) {
