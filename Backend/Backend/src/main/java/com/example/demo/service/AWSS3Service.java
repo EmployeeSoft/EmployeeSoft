@@ -71,7 +71,7 @@ public class AWSS3Service {
          * mFile = File type - the file the user wants to upload
          * uploadTo = String - can either be "avatar" or "personal document"
          * userId = Integer - the user's ID
-         * fileTitle = String - Can be either "OPT Receipt", "OPT STEM Receipt", "OPT EAD", "I-983", "I-983 signed",
+         * fileTitle = String - Can be either "OPT Receipt", "OPT STEM Receipt", "OPT EAD", "I-983", "I-983 Signed",
          *                      "I-20", or "OPT STEM EAD"
          **/
 
