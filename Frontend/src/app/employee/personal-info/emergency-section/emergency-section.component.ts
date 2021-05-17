@@ -50,7 +50,9 @@ export class EmergencySectionComponent implements OnInit {
       personId: [personId],
       emergency: this.fb.array(arr)
     });
+
     console.log(this.formData.value);
+
   }
   get getContact(){
     return this.formData.get('emergency').controls;
@@ -58,6 +60,7 @@ export class EmergencySectionComponent implements OnInit {
 
   BuildFormDynamic(contact: any): FormGroup{
     return this.fb.group({
+      id: [contact.id],
       fullName: [contact.fullName],
       phone: [contact.phone],
       relationship: [contact.relationship],
@@ -77,7 +80,8 @@ export class EmergencySectionComponent implements OnInit {
 
   onSubmit() {
     this.SecEdit = false;
-    this.emergencyService.updateContact(this.formData.personId.value, this.formData.emergecy.value)
+    console.log(this.formData.value.emergency);
+    this.emergencyService.updateContact(this.formData.value.personId, this.formData.value.emergency)
       .pipe(first())
       .subscribe({
         next: (data) => {
