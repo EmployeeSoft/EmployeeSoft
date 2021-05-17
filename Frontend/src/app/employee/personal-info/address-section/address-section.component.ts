@@ -53,7 +53,7 @@ export class AddressSectionComponent implements OnInit {
     this.formData.controls['stateName'].value = userInfo.address[0].stateName;
     this.formData.controls['stateAbbr'].value = userInfo.address[0].stateAbbr;
 
-    this.alertService.warn('Are you sure to discard all changes?')
+    this.alertService.warn('Are you sure to discard all changes?');
   }
 
   onSubmit() {

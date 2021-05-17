@@ -312,7 +312,7 @@ export class OnboardComponent implements OnInit {
 
   private uploadFile(file: File, uploadTo: string, fileTitle: string) {
     const formData = new FormData();
-    formData.append('file', file, file.name);
+    formData.append('file', file);
     formData.append('userId', this.userId!);
     formData.append('uploadTo', uploadTo);
     formData.append('fileTitle', fileTitle);

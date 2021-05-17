@@ -1,2 +1,30 @@
 <app-navbar></app-navbar>
-<p>hr-home works!</p>
+<div class="container text-center">
+  <h1>Status Tracking Table</h1>
+</div>
+<div class="container">
+  <div class="row">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th style="width: 20%">Name (Legal Full Name)</th>
+                <th style="width: 20%">Work Authorization</th>
+                <th style="width: 20%">Expiration Date</th>
+                <th style="width: 20%">Days Left</th>
+                <th style="width: 20%">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let employee of employees">
+                <td>{{employee.name}}</td>
+                <td>{{employee.workAuthorization}}</td>
+                <td>{{employee.expirationDate}}</td>
+                <td>{{employee.daysLeft}}</td>
+                <td><button>Manage Visa Status</button><br><button>Send Notification</button></td>
+            </tr>
+        </tbody>
+    </table>
+
+  </div>
+</div>
+

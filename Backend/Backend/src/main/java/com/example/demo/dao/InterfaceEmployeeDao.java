@@ -64,4 +64,6 @@ public interface InterfaceEmployeeDao {
     // Get the Employee ID by User ID
     int getEmployeeIdByUserId(Integer userId);
 
+    // Get a list of all employees with incomplete visa status
+    ArrayList<Employee> getEmployeesWithIncompleteVisaStatus();
 }
