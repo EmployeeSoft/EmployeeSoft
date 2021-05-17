@@ -99,12 +99,12 @@ export class EmployeeVisaStatusManagementComponent implements OnInit {
               this.employeeVisa.FileNameFormI983 =  this.data.personalDocuments['I-983'].split('/').pop();
             }
             if (this.data.personalDocuments['I-983 Signed']) {
-              this.employeeVisa.hasUploadedFormI983 = true;
+              this.employeeVisa.hasFormI983HrSignedAndApproved = true;
               this.employeeVisa.AwsUrlFormI983Signed = this.data.personalDocuments['I-983 Signed'];
               this.employeeVisa.FileNameFormI983Signed = this.data.personalDocuments['I-983 Signed'].split('/').pop();
             }
             if (this.data.personalDocuments['I-20']) {
-              this.employeeVisa.hasFormI983HrSignedAndApproved = true;
+              this.employeeVisa.hasUploadedFormI20 = true;
               this.employeeVisa.AwsUrlFormI20 = this.data.personalDocuments['I-20'];
               this.employeeVisa.FileNameFormI20 = this.data.personalDocuments['I-20'];
             }
@@ -131,7 +131,7 @@ export class EmployeeVisaStatusManagementComponent implements OnInit {
 
             for (let i = 0; i < this.documents.length; i++) {
               if (this.documents[i][1] === 'INCOMPLETE') {
-                if (!this.employeeVisa.isOptEadLessThan100Days) {
+                if (this.documents[i][0] === 'OPT EAD' && !this.employeeVisa.isOptEadLessThan100Days) {
                   break;
                 }
                 this.showDocuments.push(this.documents[i]);
@@ -141,7 +141,9 @@ export class EmployeeVisaStatusManagementComponent implements OnInit {
               // console.log(this.documents);
               // console.log(this.showDocuments);
             }
-            // console.log(this.employeeVisa);
+            console.log(this.documents);
+            console.log(this.showDocuments);
+            console.log(this.employeeVisa);
             this.showCurrentStatusNotification();
           }, error => console.log(error)); }
       , 0);
@@ -261,6 +263,8 @@ export class EmployeeVisaStatusManagementComponent implements OnInit {
   }
 
   setOptReceipt(event: any) {
+    console.log('here');
+
     this.optReceiptFile = event.target.files[0];
     this.hasFile = true;
   }
@@ -280,8 +284,16 @@ export class EmployeeVisaStatusManagementComponent implements OnInit {
     this.hasFile = true;
   }
 
-  setOptStemReceipt(event: any) {
-    this.optStemReceiptFile = event.target.files[0];
+  setOptStemReceipt(event: Event) {
+    // @ts-ignore
+    this.optStemReceiptFile = (event.target as HTMLInputElement).files[0];
+    // if (event.target.value) {
+    //   console.log(event.target.files[0]);
+    // }
+    // console.log(typeof event.target.files[0]);
+    // console.log(event.target.files[0]);
+    // this.optStemReceiptFile = event.target.files[0];
+    console.log(this.optStemReceiptFile);
     this.hasFile = true;
   }
 
@@ -300,19 +312,20 @@ export class EmployeeVisaStatusManagementComponent implements OnInit {
       // Upload logic
       let file = {} as File;
       let title = '';
-      if (this.optReceiptFile !== null) {
+      if (this.optReceiptFile.size > 0) {
         file = this.optReceiptFile;
         title = 'OPT Receipt';
-      } else if (this.optEadFile !== null) {
+      } else if (this.optEadFile.size > 0) {
         file = this.optEadFile;
         title = 'OPT EAD';
-      } else if (this.i983File !== null) {
+      } else if (this.i983File.size > 0) {
         file = this.i983File;
         title = 'I-983 Signed';
-      } else if (this.i20File !== null) {
+      } else if (this.i20File.size > 0) {
         file = this.i20File;
         title = 'I-20';
-      } else if (this.optStemReceiptFile !== null) {
+      } else if (this.optStemReceiptFile.size > 0) {
+        console.log(this.optStemReceiptFile);
         file = this.optStemReceiptFile;
         title = 'OPT STEM Receipt';
       } else {
@@ -320,7 +333,8 @@ export class EmployeeVisaStatusManagementComponent implements OnInit {
         title = 'OPT STEM EAD';
       }
       const formData = new FormData();
-      formData.append('file', file, file.name);
+      console.log(file);
+      formData.append('aFile', file);
       formData.append('userId', this.userId);
       formData.append('uploadTo', 'personal document');
       formData.append('fileTitle', title);

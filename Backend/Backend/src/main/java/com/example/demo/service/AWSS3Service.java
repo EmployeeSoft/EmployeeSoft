@@ -116,6 +116,8 @@ public class AWSS3Service {
                     }
 
                     System.out.println("Employee ID " + employeeId + " successfully uploaded document " + fileTitle);
+                } else {
+                    System.out.println("create = null");
                 }
             }
 

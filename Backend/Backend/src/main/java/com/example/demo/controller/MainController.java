@@ -150,7 +150,7 @@ public class MainController {
     }
 
     @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public UploadResponse fileUpload(@RequestParam("file") MultipartFile file, @RequestParam("userId") Integer userId,
+    public UploadResponse fileUpload(@RequestParam("aFile") MultipartFile aFile, @RequestParam("userId") Integer userId,
                                      @RequestParam("uploadTo") String uploadTo, @RequestParam("fileTitle") String fileTitle) {
 
         /*
@@ -161,10 +161,13 @@ public class MainController {
             uploadTo can either be "avatar" or "personal document"
         */
 
-        String filename = file.getOriginalFilename();
+        String filename = aFile.getOriginalFilename();
         UploadResponse response = new UploadResponse();
 
-        if (awss3Service.uploadFile(file, uploadTo, userId, fileTitle)) {
+        System.out.println(filename);
+        System.out.println("userId: " + userId);
+
+        if (awss3Service.uploadFile(aFile, uploadTo, userId, fileTitle)) {
             response.setServiceStatus(new ServiceStatus("Success", true, ""));
             response.setUrl(awss3Service.getURL(userId + "_" + filename));
         } else {
@@ -310,6 +313,7 @@ public class MainController {
         String title = employeeDomain.getTitle();
         String car = employeeDomain.getCar();
         String visaType = employeeDomain.getVisaType();
+        System.out.println("visa type from main controller: " + visaType);
 
         String visaStartDate = employeeDomain.getVisaStartDate();
         String visaEndDate = employeeDomain.getVisaEndDate();
