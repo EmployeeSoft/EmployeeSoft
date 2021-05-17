@@ -21,17 +21,20 @@ export class NameSectionComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
-    this.nameSection = ['Ding Wang', 'Ding Wang', '09/21/1995', '18', 'Male', '*0000'];
+    const userInfo = JSON.parse(localStorage.getItem('user-info')!);
+    const personId = userInfo.personId;
+
+    this.nameSection = [userInfo.preferName, userInfo.dob,
+      userInfo.gender, userInfo.ssn];
     this.genderOp = ['Male', 'Female', 'Do not want to answer'];
     this.nameSecEdit = false;
     this.formData = this.fb.group({
-      fullName: [this.nameSection[0]],
-      preferName: [this.nameSection[1]],
+      personId: [personId],
+      preferName: [userInfo.preferName],
       avatar: [''],
-      dob: [this.nameSection[2]],
-      age: [this.nameSection[3]],
-      gender: [this.nameSection[4]],
-      ssn: [this.nameSection[5]]
+      dob: [userInfo.dob],
+      gender: [userInfo.gender],
+      ssn: [userInfo.ssn]
     });
   }
   get getAvatar() {
@@ -43,19 +46,17 @@ export class NameSectionComponent implements OnInit {
   }
 
   endEdit() {
-    this.alertService.warn('Are you sure to discard all changes?');
-    this.formData.controls.fullName.value = this.nameSection[0];
-    this.formData.controls.preferName.value = this.nameSection[1];
-    this.formData.controls.dob.value = this.nameSection[2];
-    this.formData.controls.age.value = this.nameSection[3];
-    this.formData.controls.gender.value = this.nameSection[4];
-    this.formData.controls.ssn.value = this.nameSection[5];
+    alert('Are you sure to discard all changes?');
+    this.formData.controls.preferName.value = this.nameSection[0];
+    this.formData.controls.dob.value = this.nameSection[1];
+    this.formData.controls.gender.value = this.nameSection[2];
+    this.formData.controls.ssn.value = this.nameSection[3];
     this.nameSecEdit = false;
   }
 
   onSubmit(){
     this.nameSecEdit = false;
-    this.nameService.update(this.formData.value)
+    this.nameService.updateName(this.formData.value)
       .pipe(first())
       .subscribe({
         next: (data) => {

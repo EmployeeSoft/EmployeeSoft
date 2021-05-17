@@ -4,24 +4,56 @@
   </div>
   <div class="card-body" style="width: 23rem;" *ngIf="!addressSecEdit">
     <div>
-      <p class="card-text">Primary Address</p>
-      <h5 class="card-title">{{formData.controls['primaryAddress'].value}}</h5>
+      <p class="card-text">Address Line 1</p>
+      <h5 class="card-title">{{formData.controls['addressLine1'].value}}</h5>
     </div>
     <div>
-      <p class="card-text">Second Address</p>
-      <h5 class="card-title">{{formData.controls['secondAddress'].value}}</h5>
+      <p class="card-text">Address Line 2</p>
+      <h5 class="card-title">{{formData.controls['addressLine2'].value}}</h5>
+    </div>
+    <div>
+      <p class="card-text">City</p>
+      <h5 class="card-title">{{formData.controls['city'].value}}</h5>
+    </div>
+    <div>
+      <p class="card-text">Zipcode</p>
+      <h5 class="card-title">{{formData.controls['zipcode'].value}}</h5>
+    </div>
+    <div>
+      <p class="card-text">State Name</p>
+      <h5 class="card-title">{{formData.controls['stateName'].value}}</h5>
+    </div>
+    <div>
+      <p class="card-text">State Abbreviation</p>
+      <h5 class="card-title">{{formData.controls['stateAbbr'].value}}</h5>
     </div>
     <button type="button" class="btn btn-primary" (click)="startEdit()">Edit</button>
   </div>
   <div class="card-body" style="width: 23rem;" *ngIf="addressSecEdit">
     <form [formGroup]="formData" (ngSubmit)="onSubmit()">
       <div class="form-group">
-        <p class="card-text">Primary Address</p>
-        <input type = 'text' formControlName="primaryAddress">
+        <p class="card-text">Address</p>
+        <input type = 'text' formControlName="addressLine1">
       </div>
       <div class="form-group">
-        <p class="card-text">Primary Address</p>
-        <input type = 'text' formControlName="secondAddress">
+        <p class="card-text">Address Line 2</p>
+        <input type = 'text' formControlName="addressLine2">
+      </div>
+      <div class="form-group">
+        <p class="card-text">City</p>
+        <input type = 'text' formControlName="city">
+      </div>
+      <div class="form-group">
+        <p class="card-text">Zipcode</p>
+        <input type = 'text' formControlName="zipcode">
+      </div>
+      <div class="form-group">
+        <p class="card-text">State</p>
+        <input type = 'text' formControlName="stateName">
+      </div>
+      <div class="form-group">
+        <p class="card-text">State Abbreviation</p>
+        <input type = 'text' formControlName="stateAbbr">
       </div>
       <button type="button" class="btn btn-primary" (click)="endEdit()">Cancel</button>
       <button type="submit" class="btn btn-primary">Save</button>

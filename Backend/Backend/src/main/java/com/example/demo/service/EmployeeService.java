@@ -3,6 +3,7 @@ package com.example.demo.service;
 import com.example.demo.dao.InterfaceEmployeeDao;
 import com.example.demo.dao.implementation.EmployeeDao;
 import com.example.demo.domain.EmployeeDomain;
+import com.example.demo.domain.PersonalEmploymentDomain;
 import com.example.demo.entity.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,7 +53,7 @@ public class EmployeeService {
                 .avatar(employee.getAvatar())
                 .car(employee.getCar())
                 .visaStatusDomain(visaStatusService.getVisaStatusById(employee.getVisaStatusId()))
-                .visaType(employeeDao.getVisaTypeByPersonId(employee.getPersonId()))
+                .visaType(employee.getVisaStatus().getVisaType())
                 .visaStartDate(df.format(employee.getVisaStartDate()))
                 .visaEndDate(df.format(employee.getVisaEndDate()))
                 .driverLicense(employee.getDriverLicense())
@@ -131,7 +132,7 @@ public class EmployeeService {
                 .avatar(employee.getAvatar())
                 .car(employee.getCar())
                 .visaStatusDomain(visaStatusService.getVisaStatusById(employee.getVisaStatusId()))
-                .visaType(employeeDao.getVisaTypeByPersonId(employee.getPersonId()))
+                .visaType(employee.getVisaStatus().getVisaType())
                 .visaStartDate(df.format(employee.getVisaStartDate()))
                 .visaEndDate(df.format(employee.getVisaEndDate()))
                 .driverLicense(employee.getDriverLicense())
@@ -172,7 +173,7 @@ public class EmployeeService {
                     .avatar(employee.getAvatar())
                     .car(employee.getCar())
                     .visaStatusDomain(visaStatusService.getVisaStatusById(employee.getVisaStatusId()))
-                    .visaType(employeeDao.getVisaTypeByPersonId(employee.getPersonId()))
+                    .visaType(employee.getVisaStatus().getVisaType())
                     .visaStartDate(df.format(employee.getVisaStartDate()))
                     .visaEndDate(df.format(employee.getVisaEndDate()))
                     .driverLicense(employee.getDriverLicense())
@@ -186,6 +187,11 @@ public class EmployeeService {
         }
 
         return employeeDomains;
+    }
+
+    @Transactional
+    public boolean updateEmploymentByPersonId(PersonalEmploymentDomain domain){
+        return employeeDao.updateEmployeeByPersonId(domain);
     }
 
     @Transactional

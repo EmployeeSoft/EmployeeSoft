@@ -23,8 +23,10 @@ public class PersonDomain {
     private String ssn;
     private String dob;
     private Integer userId;
-    private ArrayList<AddressDomain> addressDomain;
-    private ArrayList<ContactDomain> contactDomain;
+    private AddressDomain addressDomain;
+    private ContactDomain contactDomain;
+    private ArrayList<AddressDomain> addressDomains;
+    private ArrayList<ContactDomain> contactDomains;
 
     @Override
     public String toString() {

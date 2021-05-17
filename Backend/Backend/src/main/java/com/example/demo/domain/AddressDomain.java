@@ -9,6 +9,7 @@ import lombok.*;
 @Builder
 public class AddressDomain {
     private Integer id;
+    private Integer personId;
     private String addressLine1;
     private String addressLine2;
     private String city;

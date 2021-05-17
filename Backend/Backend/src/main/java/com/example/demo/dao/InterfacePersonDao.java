@@ -1,5 +1,6 @@
 package com.example.demo.dao;
 
+import com.example.demo.domain.*;
 import com.example.demo.entity.Person;
 
 import java.sql.Date;
@@ -70,6 +71,9 @@ public interface InterfacePersonDao {
 
     // Get the person's DoB by user ID
     Date getDobByUserId(Integer userId);
+
+    // Update the person's Name
+    boolean updatePersonInfo(PersonDomain personDomain);
 
     Person addNewPerson(Person person);
 

@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.dao.InterfaceAddressDao;
 import com.example.demo.domain.AddressDomain;
+import com.example.demo.domain.PersonalAddressDomain;
 import com.example.demo.entity.Address;
 import com.example.demo.exceptions.MyException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,5 +97,10 @@ public class AddressService {
         } catch (Exception e) {
             throw new MyException(e);
         }
+    }
+
+    @Transactional
+    public boolean updateAddress(AddressDomain domain){
+        return addressDao.updateAddress(domain);
     }
 }
